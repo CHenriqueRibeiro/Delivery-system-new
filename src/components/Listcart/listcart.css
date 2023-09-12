@@ -1,0 +1,44 @@
+#cartShoppingList {
+  display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 64%;
+    border: 5px #cda93e solid !important;
+    position: absolute;
+    top: 3.7rem;
+    z-index: 1;
+}
+.listCardCart {
+  width: 98%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  overflow: scroll;
+  border: 0px #cda93e solid !important;
+}
+.cartSum {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 103%;
+  height: 1%;
+  position: absolute;
+  bottom: -23px;
+}
+.sumPriceCart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffd439;
+  color: #29292c;
+  border-radius: 0px 0 30px 30px;
+  width: 100%;
+  height: 35px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.teste {
+  margin: 15px auto;
+}

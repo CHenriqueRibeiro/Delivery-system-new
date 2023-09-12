@@ -1,0 +1,83 @@
+.displayCart {
+  height: 40%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px 0;
+  border-radius: 25px !important;
+  background-color: #ffd439 !important;
+  border: 5px solid #cfaa30 !important;
+}
+
+.cardCart:first-child {
+  margin-top: 0;
+}
+
+.card:last-child {
+  margin: 0;
+}
+
+.card img {
+  object-fit: cover;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50px;
+  margin: 0 9px;
+  box-shadow: 0px 0px 5px 2px #555;
+}
+
+.cartDescription {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.cartDescription .imgCard {
+  display: flex !important;
+  width: 25% !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+}
+.quantity-control {
+  position: absolute;
+  bottom: 7%;
+  left: 54%;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.btnquantity {
+  background-color: #29292c;
+  border: #ffd439;
+  border-radius: 8px;
+  width: 2rem;
+  height: 2rem;
+
+  color: #ffd439;
+}
+
+.css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
+  border-bottom: none !important;
+}
+.css-46bh2p-MuiCardContent-root {
+  padding: 5px 2px 10px 5px !important;
+}
+.contentCart .iconDelete {
+  padding: 0 !important;
+
+  bottom: 1.82rem !important;
+  left: 42.5vw !important;
+  color: #29292c !important;
+}
+
+.contentCart .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  position: relative !important;
+  bottom: 0.2rem !important;
+  right: 1.5rem !important;
+  vertical-align: top !important;
+}

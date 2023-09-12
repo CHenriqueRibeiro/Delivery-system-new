@@ -1,0 +1,78 @@
+#sectionsmenu {
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  height: 15%;
+}
+.tabContents {
+  background-color: #29292c;
+  height: 100%;
+  min-height: 340px;
+  width: 100%;
+  min-width: 320px;
+  overflow: auto;
+  padding: 24px 13px 41px 13px;
+}
+#contentmenu {
+  border-radius: 35px 35px 0 0;
+  height: 90%;
+  overflow: hidden;
+  margin-top: 0.2rem
+}
+#sectionsmenu
+  .css-145v6pe-MuiButtonBase-root-MuiTabScrollButton-root.Mui-disabled {
+  display: none;
+}
+#sectionsmenu .css-145v6pe-MuiButtonBase-root-MuiTabScrollButton-root {
+  opacity: 0 !important;
+  width: 0 !important;
+}
+#sectionsmenu span {
+  display: none !important;
+}
+.css-1q0ig8p {
+  display: none !important;
+}
+#sectionsmenu .teste {
+  color: #ffd439 !important;
+  border-radius: 25px !important;
+  background-color: rgb(41, 41, 44);
+  margin-right: 5px;
+  margin-left: 5px;
+  box-shadow: 4px 5px 6px 0px rgba(0, 0, 0, 0.75);
+}
+
+
+
+#sectionsmenu .css-69z67c-MuiTabs-scroller {
+  display: flex;
+  height: 100% !important;
+  align-items: center;
+}
+#sectionsmenu .css-12qnib {
+  height: 60px !important;
+}
+#sectionsmenu .css-1q0ig8p.Mui-disabled {
+  display: none;
+}
+
+
+#cardlistmenu {
+  height: 50%;
+  background-color: red;
+  overflow: auto !important;
+}
+.MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
+  height: 150%;
+}
+.css-2ulfj5-MuiTypography-root {
+  margin: 0;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 700;
+  font-size: 24%;
+  line-height: 1.6;
+  letter-spacing: 0.0075em;
+}

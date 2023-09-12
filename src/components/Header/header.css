@@ -1,0 +1,70 @@
+#containerheader {
+  display: flex;
+  flex-direction: row;
+  top: 0.5rem;
+  padding: 10px 4px;
+  position: absolute;
+  height: 14% !important;
+  width: 78%;
+  min-width: 270px;
+  max-width: 540px;
+  min-height: 78px;
+  background-color: #29292c !important;
+  border-radius: 59px 1px 59px 1px;
+  box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
+  justify-content: flex-start;
+  align-items: center;
+}
+#teste {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  height: 5rem;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
+.css-1wlk0hk-MuiAvatar-root {
+  position: relative;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  height: 110px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 1.25rem;
+  line-height: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+#imglogo {
+  position: absolute;
+  left: 7%;
+  width: 4rem !important;
+  height: 4rem !important;
+}
+.row {
+  display: flex;
+  flex-direction: column;
+  color: #ffd439 !important;
+}
+.row p {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  gap: 12px;
+}
