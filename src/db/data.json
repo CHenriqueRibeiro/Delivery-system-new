@@ -1,0 +1,219 @@
+{
+  "promocoes": [
+    {
+      "id": 1,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Pizza Calabresa + Refrigerante",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 2,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Pizza Pepperoni + Refrigerante",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 3,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Pizza Mista + Refrigerante",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 4,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Pizza 4 Queijos + Refrigerante",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 5,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Pizza Carne do Sol + Refrigerante",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    }
+  ],
+
+  "pizzas": [
+    {
+      "id": 1,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Calabresa",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 2,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Pepperoni",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 3,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Mista",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 4,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Mussarela",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 5,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Carne de Sol",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 6,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "4 Queijos",
+      "valor": 29.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    }
+  ],
+
+  "hamburger": [
+    {
+      "id": 1,
+      "imagem": "https://www.fbgcdn.com/pictures/1be2bbdc-bdaf-49be-bc10-e83d3f9f0f8b_d3.jpg",
+      "sabor": "Smash Tradicional",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 2,
+      "imagem": "https://www.fbgcdn.com/pictures/1be2bbdc-bdaf-49be-bc10-e83d3f9f0f8b_d3.jpg",
+      "sabor": "Smash Bacon",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 3,
+      "imagem": "https://www.fbgcdn.com/pictures/1be2bbdc-bdaf-49be-bc10-e83d3f9f0f8b_d3.jpg",
+      "sabor": "Churrasco",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 4,
+      "imagem": "https://www.fbgcdn.com/pictures/1be2bbdc-bdaf-49be-bc10-e83d3f9f0f8b_d3.jpg",
+      "sabor": "Duplo Smash Bacon",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 5,
+      "imagem": "https://www.fbgcdn.com/pictures/1be2bbdc-bdaf-49be-bc10-e83d3f9f0f8b_d3.jpg",
+      "sabor": "Mega Smash",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 6,
+      "imagem": "https://www.fbgcdn.com/pictures/1be2bbdc-bdaf-49be-bc10-e83d3f9f0f8b_d3.jpg",
+      "sabor": "Double Cheese",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    }
+  ],
+
+  "paoArabe": [
+    {
+      "id": 1,
+      "imagem": "https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60994a_d3.jpg",
+      "sabor": "Smash Tradicional",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 2,
+      "imagem": "https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60994a_d3.jpg",
+      "sabor": "Smash Bacon",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 3,
+      "imagem": "https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60994a_d3.jpg",
+      "sabor": "Churrasco",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 4,
+      "imagem": "https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60994a_d3.jpg",
+      "sabor": "Duplo Smash Bacon",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 5,
+      "imagem": "https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60994a_d3.jpg",
+      "sabor": "Mega Smash",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 6,
+      "imagem": "https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60994a_d3.jpg",
+      "sabor": "Double Cheese",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    }
+  ],
+
+  "drinks": [
+    {
+      "id": 1,
+      "imagem": "https://client-assets.anota.ai/produtos/1688936873587blob",
+      "sabor": "Refrigerante gelado",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 2,
+      "imagem": "https://client-assets.anota.ai/produtos/1688936873587blob",
+      "sabor": "Refrigerante gelado",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 3,
+      "imagem": "https://client-assets.anota.ai/produtos/1688936873587blob",
+      "sabor": "Refrigerante gelado",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 4,
+      "imagem": "https://client-assets.anota.ai/produtos/1688936873587blob",
+      "sabor": "Refrigerante gelado",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 5,
+      "imagem": "https://client-assets.anota.ai/produtos/1688936873587blob",
+      "sabor": "Refrigerante gelado",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    },
+    {
+      "id": 6,
+      "imagem": "https://client-assets.anota.ai/produtos/1688936873587blob",
+      "sabor": "Refrigerante gelado",
+      "valor": 29.99,
+      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+    }
+  ]
+}
