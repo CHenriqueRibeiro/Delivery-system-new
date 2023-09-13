@@ -5,7 +5,7 @@
   align-content: center;
   justify-content: flex-start;
   align-items: center;
-  height: 15%;
+  height: 20%;
 }
 .tabContents {
   background-color: #fb6c1a;
@@ -37,13 +37,13 @@
   display: none !important;
 }
 #sectionsmenu .teste {
+  width: 25%;
   color: #fafafa !important;
   border-radius: 25px !important;
   background-color: #fb6c1a;
   margin-right: 5px;
   margin-left: 5px;
-  box-shadow: 2px 0px 10px 1px rgba(0, 0, 0, 0.2),
-    4px 6px 10px 2px rgba(0, 0, 0, 0.14), 6px 6px 8px 3px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 5px 4px 5px 2px rgba(0, 0, 0, 0.2), 5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12) !important;
 }
 
 #sectionsmenu .css-69z67c-MuiTabs-scroller {
