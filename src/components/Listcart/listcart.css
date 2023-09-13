@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center;
   width: 103%;
-  height: 1%;
+  height: 2%;
   position: absolute;
   bottom: -23px;
 }
@@ -19,8 +19,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fae9de;
-  color: #29292c;
+  background-color: #f46e2f;
+  color: #fae9de;
+  border: 1px #fae9de solid !important;
   border-radius: 0px 0 30px 30px;
   width: 100%;
   height: 35px;
