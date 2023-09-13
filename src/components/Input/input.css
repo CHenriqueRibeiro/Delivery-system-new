@@ -1,5 +1,5 @@
 * {
-  border-color: #29292c !important;
+  border-color: #f46c26 !important;
 }
 
 .inputbox {
@@ -14,12 +14,13 @@
   max-width: 514px;
   width: 75vw;
   min-width: 245px;
+  border-radius: 35px;
+  background-color: #29292c;
   height: 10px;
-  color: #000000 !important;
 }
 
 label {
-  color: #29292c !important;
+  color: #fae9de !important;
   left: 2px !important;
   top: -6px !important;
   transform-origin: -16px 26px !important;
@@ -27,7 +28,7 @@ label {
 
 fieldset {
   border-radius: 59px !important;
-  background-color: #ffd439;
+  background-color: #29292c;
   opacity: 0.5;
   box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
 }

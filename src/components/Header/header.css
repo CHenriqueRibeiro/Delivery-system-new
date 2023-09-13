@@ -9,9 +9,15 @@
   min-width: 270px;
   max-width: 540px;
   min-height: 78px;
-  background-color: #29292c !important;
   border-radius: 59px 1px 59px 1px;
-  box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
+  color: #fafafa !important;
+  border-radius: 25px !important;
+  background-color: #fb6c1a;
+  margin-right: 5px;
+  margin-left: 5px;
+  box-shadow: 2px 0px 10px 1px rgba(0, 0, 0, 0.2),
+    4px 6px 10px 2px rgba(0, 0, 0, 0.14), 6px 6px 8px 3px rgba(0, 0, 0, 0.12) !important;
+  background-color: #ff6b01 !important;
   justify-content: flex-start;
   align-items: center;
 }
@@ -58,7 +64,7 @@
 .row {
   display: flex;
   flex-direction: column;
-  color: #ffd439 !important;
+  color: #fbe9dd !important;
 }
 .row p {
   display: flex;
