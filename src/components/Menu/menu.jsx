@@ -4,8 +4,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Card from "../Card/card";
-import "./menu.css";
 
+import "./menu.css";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,7 +22,6 @@ function CustomTabPanel(props) {
     </div>
   );
 }
-
 
 CustomTabPanel.propTypes = {
   children: PropTypes.node,
@@ -48,19 +47,47 @@ export default function BasicTabs() {
         allowScrollButtonsMobile
         aria-label="scrollable force tabs example"
       >
-        <Tab label="Promoções" className="teste"  /*--Aba do menu---*/ />
-        <Tab label="Pizza" className="teste"  /*--Aba do menu---*/ />
-        <Tab label="Hamburguer" className="teste" /*--Aba do menu---*/ />
-        <Tab label="Pão Arabe" className="teste" /*--Aba do menu---*//>
-        <Tab label="Bebida" className="teste" /*--Aba do menu---*//>
+        <Tab
+          className="teste"
+          label="Combos"
+          icon={
+            <img src="./public/entrega-de-alimentos.png" alt="Imagem" />
+          } /*--Aba do menu---*/
+        />
+        <Tab
+          label="Pizza"
+          className="teste"
+          icon={<img src="./public/pizza (1).png" alt="Imagem" />}
+        />
+        <Tab
+          label="Hamburguer"
+          className="teste"
+          /*--Aba do menu---*/ icon={
+            <img src="./public/hamburguer (1).png" alt="Imagem" />
+          }
+        />
+        <Tab
+          label="Pão Arabe"
+          className="teste"
+          icon={
+            <img src="./public/comida-mexicana.png" alt="Imagem" />
+          } /*--Aba do menu---*/
+        />
+        <Tab
+          label="Bebida"
+          className="teste"
+          icon={
+            <img src="./public/refrigerantes.png" alt="Imagem" />
+          } /*--Aba do menu---*/
+        />
       </Tabs>
 
-
       <Box id="contentmenu" /*--Todo conteudo do Menu---*/>
-
-
-        <CustomTabPanel value={value} index={0} className="tabContents"  /*--Conteudo da primeira aba---*/>
-
+        <CustomTabPanel
+          value={value}
+          index={0}
+          className="tabContents" /*--Conteudo da primeira aba---*/
+        >
           <Card /*--Componente CARD---*/
             imageUrl="https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob"
             flavor="Pizza Calabresa + Refrigerante"
@@ -93,8 +120,11 @@ export default function BasicTabs() {
           />
         </CustomTabPanel>
 
-
-        <CustomTabPanel value={value} index={1} className="tabContents"  /*--Conteudo da segunda aba---*/>
+        <CustomTabPanel
+          value={value}
+          index={1}
+          className="tabContents" /*--Conteudo da segunda aba---*/
+        >
           <Card /*--Componente CARD---*/
             imageUrl="https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob"
             flavor="Pizza Calabresa"
@@ -106,7 +136,7 @@ export default function BasicTabs() {
             flavor="Pizza Pepperoni"
             ingredients="Pepperoni, Queijo, Mussarela, Orégano"
             price={24.99}
-          /> 
+          />
           <Card /*--Componente CARD---*/
             imageUrl="https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493213786blob"
             flavor="Pizza Mista"
@@ -124,11 +154,14 @@ export default function BasicTabs() {
             flavor="Pizza Carne do Sol"
             ingredients="Queijo Mussarela, Carne do Sol, Requeijão, e Orégano "
             price={19.99}
-          /> 
+          />
         </CustomTabPanel>
 
-
-        <CustomTabPanel value={value} index={2} className="tabContents"  /*--Conteudo da terceira aba---*/>
+        <CustomTabPanel
+          value={value}
+          index={2}
+          className="tabContents" /*--Conteudo da terceira aba---*/
+        >
           <Card /*--Componente CARD---*/
             imageUrl="https://www.fbgcdn.com/pictures/1be2bbdc-bdaf-49be-bc10-e83d3f9f0f8b_d3.jpg"
             flavor="Smash Tradicional"
@@ -161,8 +194,11 @@ export default function BasicTabs() {
           />
         </CustomTabPanel>
 
-
-        <CustomTabPanel value={value} index={3} className="tabContents"  /*--Conteudo da quarta aba---*/>
+        <CustomTabPanel
+          value={value}
+          index={3}
+          className="tabContents" /*--Conteudo da quarta aba---*/
+        >
           <Card /*--Componente CARD---*/
             imageUrl="https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60994a_d3.jpg"
             flavor="Frango"
@@ -174,7 +210,7 @@ export default function BasicTabs() {
             flavor="Carne do sol"
             ingredients="Carne do Sol, Queijo Coalho e molho"
             price={22.99}
-          /> 
+          />
           <Card /*--Componente CARD---*/
             imageUrl="https://www.fbgcdn.com/pictures/f83fb99a-64aa-4848-b746-b6dbb9a08030_d3.jpg"
             flavor="Monstrão"
@@ -183,8 +219,11 @@ export default function BasicTabs() {
           />
         </CustomTabPanel>
 
-
-        <CustomTabPanel value={value} index={4} className="tabContents" /*--Conteudo da quinta aba---*/>
+        <CustomTabPanel
+          value={value}
+          index={4}
+          className="tabContents" /*--Conteudo da quinta aba---*/
+        >
           <Card /*--Componente CARD---*/
             imageUrl="https://client-assets.anota.ai/produtos/1688936873587blob"
             flavor="Água sem gás"
@@ -216,7 +255,6 @@ export default function BasicTabs() {
             price={13.99}
           />
         </CustomTabPanel>
-        
       </Box>
     </>
   );
