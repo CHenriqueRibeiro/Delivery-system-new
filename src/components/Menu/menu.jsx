@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Card from '../Card/card';
-import './Menu.css';
+import './menu.css';
 
 import Data from '../../db/data.json';
 
