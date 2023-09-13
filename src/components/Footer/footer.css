@@ -15,8 +15,10 @@
   display: flex;
   height: 100%;
   width: 100%;
-  background-color: #ffd439;
+  /* color: red !important; */
+  background-color: #fbe9dd;
   flex-wrap: nowrap;
+  /* border-radius: 37px; */
   justify-content: space-between;
   align-items: center;
 }
@@ -27,7 +29,7 @@
   text-align: center;
   border-radius: 50%;
   width: 20px !important;
-  background-color: #29292c;
+  background-color: #ffffff;
   color: #ffd439;
   height: 20px;
   position: absolute;
@@ -38,10 +40,10 @@
 #displayItems {
   overflow: hidden;
   display: flex;
-  height: 97vh;
+  height: 90vh;
   max-width: 600px;
   width: 100%;
-  background-color: #29292c;
+  background-color: #fb6c1a;
   border-radius: 30px 30px 0 0;
   position: absolute;
   bottom: -100vh;
@@ -53,30 +55,30 @@
   transition: 1s;
 }
 .displayItemson .btnreturnpurchase {
-  color: #cfaa30 !important;
+  color: #f7e9e1 !important;
+  background-color: #f76d26 !important;
+  border-radius: 35px !important;
+  border: 1px solid #fae9de !important;
   width: 80vw !important;
   max-width: 375px !important;
-  border-radius: 35px !important;
-  border: 1px solid #cfaa30 !important;
 }
 .displayItemson .btncheckout {
-  color: #cfaa30 !important;
-  background-color: #29292c !important;
+  color: #f7e9e1 !important;
+  background-color: #f76d26 !important;
   border-radius: 35px !important;
-  border: 1px solid #cfaa30 !important;
+  border: 1px solid #fae9de !important;
   width: 80vw !important;
   max-width: 375px !important;
 }
 #iconcart-list {
   max-width: none;
   width: 100% !important;
-  background-color: #ffd439;
+  background-color: #f76d26;
   position: absolute;
-  border: 4px solid #cfaa30 !important;
+  border: 1px solid #fae9de !important;
   border-radius: 27px 28px 0 0;
   z-index: 1;
 }
-
 .cartButtons {
   width: 46%;
   height: 100px;
