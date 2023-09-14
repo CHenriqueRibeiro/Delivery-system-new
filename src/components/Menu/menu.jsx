@@ -4,7 +4,11 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Card from '../Card/card';
-import Image1 from '../../../public/pizza.png'
+import Image1 from "../../../public/entrega-de-alimentos.png";
+import Image2 from "../../../public/pizza.png";
+import Image3 from "../../../public/hamburguer.png";
+import Image4 from "../../../public/comida-mexicana.png";
+import Image5 from "../../../public/refrigerantes.png";
 import './menu.css';
 
 import Data from '../../db/data.json';
@@ -60,8 +64,8 @@ export default function Menu() {
           label="Combos"
           icon={
             <img
-              src="../../../public/entrega-de-alimentos.png"
-              alt="Imagem"
+              src={Image1}
+              alt="ImgCombo"
             />
           }
         />
@@ -70,8 +74,8 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src={Image1}
-              alt="Imagem"
+              src={Image2}
+              alt="ImgPizza"
             />
           }
         />
@@ -80,8 +84,8 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="./public/hamburguer(1).png"
-              alt="Imagem"
+              src={Image3}
+              alt="ImgHamburguer"
             />
           }
         />
@@ -90,8 +94,8 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="./public/comida-mexicana.png"
-              alt="Imagem"
+              src={Image4}
+              alt="ImgPaoArabe"
             />
           }
         />
@@ -100,8 +104,8 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="./public/refrigerantes.png"
-              alt="Imagem"
+              src={Image5}
+              alt="ImgBebidas"
             />
           }
         />
