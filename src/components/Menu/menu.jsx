@@ -59,7 +59,7 @@ export default function Menu() {
           label="Combos"
           icon={
             <img
-              src="./public/entrega-de-alimentos.png"
+              src="../../../public/entrega-de-alimentos.png"
               alt="Imagem"
             />
           }
@@ -69,7 +69,7 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="./public/pizza(1).png"
+              src="../../../public/pizza.png"
               alt="Imagem"
             />
           }
