@@ -1,14 +1,14 @@
-import { useState, useContext } from 'react';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import cartContext from './../../context/cartContext';
-import Button from '@mui/material/Button';
-import ListCart from '../Listcart/listcart';
+import { useState, useContext } from "react";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import cartContext from "./../../context/cartContext";
+import Button from "@mui/material/Button";
+import ListCart from "../Listcart/listcart";
 
-import './footer.css';
+import "./footer.css";
 
 export default function SimpleBottomNavigation() {
   const [value, setValue] = useState(0);
@@ -16,9 +16,8 @@ export default function SimpleBottomNavigation() {
   const cart = useContext(cartContext);
 
   function cliqueparaaparecer() {
-    const addproducts =
-      document.getElementById('displayItems');
-    addproducts.classList.toggle('displayItemson');
+    const addproducts = document.getElementById("displayItems");
+    addproducts.classList.toggle("displayItemson");
   }
 
   return (
@@ -41,10 +40,7 @@ export default function SimpleBottomNavigation() {
             continuar Comprando
           </Button>
 
-          <Button
-            className="btncheckout"
-            variant="contained"
-          >
+          <Button className="btncheckout" variant="contained">
             Finalizar Compra
           </Button>
         </div>
@@ -71,10 +67,10 @@ export default function SimpleBottomNavigation() {
             }
           />
 
-          {cart.kart > 0 ? (
-            <div id="cartcount">{cart.kart}</div>
+          {cart.kart.length > 0 ? (
+            <div id="cartcount">{cart.kart.length}</div>
           ) : (
-            ''
+            ""
           )}
           <BottomNavigationAction
             id="carticon "
@@ -86,9 +82,7 @@ export default function SimpleBottomNavigation() {
           <BottomNavigationAction
             className="iconsfooter"
             label="Perfil"
-            icon={
-              <AccountCircleOutlinedIcon className="iconsfooter" />
-            }
+            icon={<AccountCircleOutlinedIcon className="iconsfooter" />}
           />
         </BottomNavigation>
       </div>

@@ -1,12 +1,20 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Card from '../Card/card';
-import './menu.css';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import Card from "../Card/card";
+import Image1 from "../../../public/entrega-de-alimentos.png";
+import Image2 from "../../../public/pizza.png";
+import Image3 from "../../../public/hamburguer.png";
+import Image4 from "../../../public/comida-mexicana.png";
+import Image5 from "../../../public/refrigerantes.png";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useContext } from "react";
+import cartContext from "./../../context/cartContext";
+import "./menu.css";
 
-import Data from '../../db/data.json';
+import Data from "../../db/data.json";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -28,20 +36,29 @@ CustomTabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
+  ctx: PropTypes.Context,
 };
 
 export default function Menu() {
   const [value, setValue] = useState(0);
+  const ctx = useContext(cartContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const promotions = Data.promocoes;
+  const promotions = Data.combos;
   const pizza = Data.pizzas;
   const hamburger = Data.hamburger;
   const paoArabe = Data.paoArabe;
   const drink = Data.drinks;
+
+  function addKart(e) {
+    if(e.target && e.target.nodeName === 'svg') {
+      const arrayIndex = e.target.parentNode.dataset.arrayposition;
+      ctx.setKart([...ctx.kart, promotions[arrayIndex]]);
+    }
+  }
 
   return (
     <>
@@ -57,77 +74,48 @@ export default function Menu() {
         <Tab
           className="teste"
           label="Combos"
-          icon={
-            <img
-              src="./public/entrega-de-alimentos.png"
-              alt="Imagem"
-            />
-          }
+          icon={<img src={Image1} alt="Imagem" />}
         />
         <Tab
           label="Pizza"
           className="teste"
-          icon={
-            <img
-              src="./public/pizza (1).png"
-              alt="Imagem"
-            />
-          }
+          icon={<img src={Image2} alt="Imagem" />}
         />
         <Tab
           label="Hamburguer"
           className="teste"
-          icon={
-            <img
-              src="./public/hamburguer (1).png"
-              alt="Imagem"
-            />
-          }
+          icon={<img src={Image3} alt="Imagem" />}
         />
         <Tab
           label="Pão Arabe"
           className="teste"
-          icon={
-            <img
-              src="./public/comida-mexicana.png"
-              alt="Imagem"
-            />
-          }
+          icon={<img src={Image4} alt="Imagem" />}
         />
         <Tab
           label="Bebida"
           className="teste"
-          icon={
-            <img
-              src="./public/refrigerantes.png"
-              alt="Imagem"
-            />
-          }
+          icon={<img src={Image5} alt="Imagem" />}
         />
       </Tabs>
 
       <Box id="contentmenu">
-        <CustomTabPanel
-          value={value}
-          index={0}
-          className="tabContents"
-        >
-          {promotions.map((item) => (
+        <CustomTabPanel value={value} index={0} className="tabContents">
+          {promotions.map((item, idx) => (
             <Card
               imageUrl={item.imagem}
               key={item.id}
               flavor={item.sabor}
               ingredients={item.ingredientes}
               price={item.valor}
+              buttonUrl={<AddShoppingCartIcon/>}
+              click={e => addKart(e)}
+              arrayPosition={idx}
+              cardClass='card'
             />
           ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={1}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={1} className="tabContents">
           {pizza.map((item) => (
             <Card
               imageUrl={item.imagem}
@@ -135,15 +123,12 @@ export default function Menu() {
               flavor={item.sabor}
               ingredients={item.ingredientes}
               price={item.valor}
+              buttonUrl={<AddShoppingCartIcon />}
             />
           ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={2}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={2} className="tabContents">
           {hamburger.map((item) => (
             <Card
               imageUrl={item.imagem}
@@ -151,15 +136,12 @@ export default function Menu() {
               flavor={item.sabor}
               ingredients={item.ingredientes}
               price={item.valor}
+              buttonUrl={<AddShoppingCartIcon />}
             />
           ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={3}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={3} className="tabContents">
           {paoArabe.map((item) => (
             <Card
               imageUrl={item.imagem}
@@ -167,15 +149,12 @@ export default function Menu() {
               flavor={item.sabor}
               ingredients={item.ingredientes}
               price={item.valor}
+              buttonUrl={<AddShoppingCartIcon />}
             />
           ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={4}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={4} className="tabContents">
           {drink.map((item) => (
             <Card
               imageUrl={item.imagem}
@@ -183,6 +162,7 @@ export default function Menu() {
               flavor={item.sabor}
               ingredients={item.ingredientes}
               price={item.valor}
+              buttonUrl={<AddShoppingCartIcon />}
             />
           ))}
         </CustomTabPanel>

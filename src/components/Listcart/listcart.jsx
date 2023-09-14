@@ -1,46 +1,24 @@
 // eslint-disable-next-line no-unused-vars
 import * as React from "react";
-import Cart from "../Cart/cart";
-import "./listcart.css";
+import cartContext from '../../context/cartContext'
+import Card from "../Cart/cart";
+import styles from "./listcart.css";
 
-export default function listCart() {
-
-  /*Array com os produtos do carrinho--*/
-  const listItemsCart = [
-    {
-      id: 1,
-      imageUrl:
-        "https://img1.gratispng.com/20180202/qrq/kisspng-sicilian-pizza-italian-cuisine-pepperoni-tarte-fla-pepperoni-pizza-5a74bcc6c6e634.1018048315175999428147.jpg",
-      flavor: "Pizza Mista",
-      ingredients: "Calabresa, Queijo, Mussarela, Orégano",
-      price: 19.99,
-    },
-    {
-      id: 2,
-      imageUrl:
-        "https://img1.gratispng.com/20180202/qrq/kisspng-sicilian-pizza-italian-cuisine-pepperoni-tarte-fla-pepperoni-pizza-5a74bcc6c6e634.1018048315175999428147.jpg",
-      flavor: "Pizza Calabresa",
-      ingredients: "Calabresa, Queijo, Mussarela, Orégano",
-      price: 19.99,
-    },
-    {
-      id: 3,
-      imageUrl:
-        "https://img1.gratispng.com/20180202/qrq/kisspng-sicilian-pizza-italian-cuisine-pepperoni-tarte-fla-pepperoni-pizza-5a74bcc6c6e634.1018048315175999428147.jpg",
-      flavor: "Pizza Mussarela",
-      ingredients: "Calabresa, Queijo, Mussarela, Orégano",
-      price: 19.99,
-    },
-    {
-      id: 3,
-      imageUrl:
-        "https://img1.gratispng.com/20180202/qrq/kisspng-sicilian-pizza-italian-cuisine-pepperoni-tarte-fla-pepperoni-pizza-5a74bcc6c6e634.1018048315175999428147.jpg",
-      flavor: "Pizza Mussarela",
-      ingredients: "Calabresa, Queijo, Mussarela, Orégano",
-      price: 19.99,
-    },
-  ];
-  /*Array com os produtos do carrinho--*/
+export default function ListCart() {
+  const ctx = React.useContext(cartContext)
+  let valorTotal = 0;
+ 
+ 
+ /* {listItemsCart.map((item, index) => ( 
+             
+  <Card
+    key={index}
+    imageUrl={item.imageUrl}
+    flavor={item.flavor}
+    price={item.price}
+    ingredients={item.ingredients}
+  />
+))}*/
 
 
   return (
@@ -51,16 +29,21 @@ export default function listCart() {
 
           <div className="teste"  /*O conteudo dessa div é onde faz o uma margem entre os  dos cards do carrinho --*/>
             
-            {listItemsCart.map((item, index) => ( /* onde e usado os itens da lista para alimentar o card com as infomaçoes do produto*/
-              <Cart
-                key={index}
-                imageUrl={item.imageUrl}
-                flavor={item.flavor}
-                price={item.price}
-                ingredients={item.ingredients}
-              />
-            ))}
-
+            {
+              ctx.kart.map((item, idx) => {
+                valorTotal += item.valor;
+                return (<Card
+                  imageUrl={item.imagem}
+                  key={item.id}
+                  flavor={item.sabor}
+                  ingredients={item.ingredientes}
+                  price={item.valor}
+                  arrayPosition={idx}
+                  cardClass={styles.displayCart}
+                />)
+              })
+            }
+            
           </div>
 
         </div>
@@ -68,7 +51,7 @@ export default function listCart() {
         <div className="cartSum"  /*O conteudo dessa div é onde fica o total da compra --*/>
 
           <span className="sumPriceCart "  /*Estilização do total da compra --*/>
-            Total : R$ 50,00
+            Total : R$ {valorTotal}
           </span>
 
         </div>

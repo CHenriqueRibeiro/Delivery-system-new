@@ -80,3 +80,29 @@
   justify-content: space-around;
   align-items: flex-start;
 }
+.btnAddProduct {
+  position: relative;
+}
+.d-flex {
+  display: flex;
+}
+.justify-content-between {
+  justify-content: space-between;
+}
+.align-items-center {
+  align-items: center;
+}
+.w-100 {
+  width: 100% !important;
+}
+.pd-x-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.pd-x-20p {
+  padding-left: 20%;
+  padding-right: 20%;
+}
+.pd-right-20{
+  padding-right: 20px;
+}

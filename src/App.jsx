@@ -7,14 +7,15 @@ import Footer from "./components/Footer/footer";
 import Menu from "./components/Menu/menu";
 import Header from "./components/Header/header";
 import Container from "@mui/material/Container";
-import cartContext from "./context/cartContext"
+import cartContext from "./context/cartContext";
 import { useState } from "react";
 
 export default function App() {
-  const [kart, setKart] = useState(0);
+  const [kart, setKart] = useState([]);
+
   return (
     <Container id="app" maxWidth="sm">
-      <cartContext.Provider value={{kart, setKart}}>
+      <cartContext.Provider value={{ kart, setKart }}>
         <div id="header">
           <Header />
         </div>
@@ -24,7 +25,7 @@ export default function App() {
         </div>
 
         <div id="footer">
-        <Footer />
+          <Footer />
         </div>
       </cartContext.Provider>
     </Container>
