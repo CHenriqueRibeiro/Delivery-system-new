@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Card from '../Card/card';
+import Image1 from '../../../public/pizza.png'
 import './menu.css';
 
 import Data from '../../db/data.json';
@@ -69,7 +70,7 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="../../../public/pizza.png"
+              src={Image1}
               alt="Imagem"
             />
           }
