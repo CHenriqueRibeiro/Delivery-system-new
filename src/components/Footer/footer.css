@@ -15,10 +15,8 @@
   display: flex;
   height: 100%;
   width: 100%;
-  /* color: red !important; */
   background-color: #fbe9dd;
   flex-wrap: nowrap;
-  /* border-radius: 37px; */
   justify-content: space-between;
   align-items: center;
 }
@@ -26,15 +24,17 @@
   color: #29292c !important;
 }
 #cartcount {
-  text-align: center;
+  display: flex;
   border-radius: 50%;
   width: 20px !important;
-  background-color: #ffffff;
-  color: #ffd439;
+  background-color: #29292c;
+  color: #fb6c1a;
   height: 20px;
   position: absolute;
   top: 1%;
   left: 18%;
+  justify-content: center;
+  align-items: center;
 }
 
 #displayItems {
@@ -48,6 +48,9 @@
   position: absolute;
   bottom: -100vh;
   transition: 1s;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
 }
 
 .displayItemson {
@@ -87,7 +90,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 11%;
+  bottom: 13%;
   right: 26.5%;
 }
 
@@ -97,4 +100,12 @@
 
 .cartButtons button:first-child {
   margin-bottom: 10px;
+}
+.cardIconCarinho {
+  display: flex;
+  position: absolute;
+  top: 2%;
+}
+#btnCartIconCarrinho {
+  position: absolute;
 }

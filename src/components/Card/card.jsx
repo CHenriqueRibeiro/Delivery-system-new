@@ -6,7 +6,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-// import cartContext from "./../../context/cartContext";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BottomNavigation from "@mui/material/BottomNavigationAction";
 
@@ -22,13 +21,6 @@ export default function MediaControlCard(props) {
     arrayPosition: PropTypes.number.isRequired,
     click: PropTypes.Event,
   };
-  // const [quantity, setQuantity] = React.useState(0);
-  // const cart = React.useContext(cartContext);
-
-  /*const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-    cart.setKart(cart.kart + 1);
-  };*/
 
   return (
     <Card className="card">
@@ -41,7 +33,11 @@ export default function MediaControlCard(props) {
           </Typography>
           <div className="d-flex justify-content-between align-items-center w-100 pd-right-20">
             <Typography variant="h6">R$ {props.price}</Typography>
-            <div className="btnAddProduct" data-arrayposition={props.arrayPosition} onClick={props.click}>
+            <div
+              className="btnAddProduct"
+              data-arrayposition={props.arrayPosition}
+              onClick={props.click}
+            >
               {props.buttonUrl}
             </div>
           </div>

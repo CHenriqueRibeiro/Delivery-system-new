@@ -18,14 +18,14 @@ export default function SimpleBottomNavigation() {
   function cliqueparaaparecer() {
     const addproducts = document.getElementById("displayItems");
     addproducts.classList.toggle("displayItemson");
+    
   }
-
   return (
     <>
       <div id="displayItems">
-        <BottomNavigationAction
+        <BottomNavigationAction id="btnCartIconCarrinho"
           label="Carrinho"
-          icon={<ShoppingCartOutlinedIcon />}
+          icon={<ShoppingCartOutlinedIcon id="cartIconCarrinho" />}
           onClick={cliqueparaaparecer}
         />
 
@@ -63,6 +63,7 @@ export default function SimpleBottomNavigation() {
               <ShoppingCartOutlinedIcon
                 className="iconsfooter"
                 onClick={cliqueparaaparecer}
+                
               />
             }
           />
