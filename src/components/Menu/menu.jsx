@@ -69,7 +69,7 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="./public/pizza (1).png"
+              src="./public/pizza.png"
               alt="Imagem"
             />
           }
@@ -79,7 +79,7 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="./public/hamburguer (1).png"
+              src="./public/hamburguer.png"
               alt="Imagem"
             />
           }
