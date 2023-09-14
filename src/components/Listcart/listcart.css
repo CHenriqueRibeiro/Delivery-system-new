@@ -1,11 +1,4 @@
-.listCardCart {
-  width: 98%;
-  height: 100%;
-  position: absolute;
-  top: 0px;
-  overflow: scroll;
-  border: 0px #cda93e solid !important;
-}
+
 .cartSum {
   display: flex;
   justify-content: center;
@@ -24,10 +17,10 @@
   border: 1px #fae9de solid !important;
   border-radius: 0px 0 30px 30px;
   width: 100%;
-  height: 35px;
+  height: 3rem;
   font-size: 18px;
   font-weight: 700;
 }
-.teste {
-  margin: 15px auto;
+#teste3 {
+ background-color: red !important;
 }
