@@ -59,7 +59,7 @@ export default function Menu() {
           label="Combos"
           icon={
             <img
-              src="../public/entrega-de-alimentos.png"
+              src="./public/entrega-de-alimentos.png"
               alt="Imagem"
             />
           }
@@ -69,7 +69,7 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="../public/pizza.png"
+              src="./public/pizza(1).png"
               alt="Imagem"
             />
           }
@@ -79,7 +79,7 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="../public/hamburguer.png"
+              src="./public/hamburguer(1).png"
               alt="Imagem"
             />
           }
@@ -89,7 +89,7 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="../public/comida-mexicana.png"
+              src="./public/comida-mexicana.png"
               alt="Imagem"
             />
           }
@@ -99,7 +99,7 @@ export default function Menu() {
           className="teste"
           icon={
             <img
-              src="../public/refrigerantes.png"
+              src="./public/refrigerantes.png"
               alt="Imagem"
             />
           }
