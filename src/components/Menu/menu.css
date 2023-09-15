@@ -34,7 +34,10 @@
 #sectionsmenu .css-1aquho2-MuiTabs-indicator {
   background-color: transparent !important;
 }
-.css-1aquho2-MuiTabs-indicator {
+.MuiTabs-indicator .css-ttwr4n {
+  background-color: transparent !important;
+}
+.css-ttwr4n {
   background-color: transparent !important;
 }
 .css-1q0ig8p {
