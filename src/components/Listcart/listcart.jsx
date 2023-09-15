@@ -1,11 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import { useContext } from 'react';
-import cartContext from '../../context/cartContext';
-import Card from '../Cart/cart';
+// import cartContext from '../../context/cartContext';
 import './listcart.css';
 
 export default function ListCart() {
-  const ctx = useContext(cartContext);
+  // const ctx = useContext(cartContext);
   let valorTotal = 0;
 
   return (
@@ -13,7 +12,7 @@ export default function ListCart() {
       <div id="cartShoppingList">
         <div className="listCardCart">
           <div className="teste">
-            {ctx.kart.map((item, idx) => {
+            {/* {ctx.kart.map((item, idx) => {
               valorTotal += item.valor;
               return (
                 <Card
@@ -25,7 +24,7 @@ export default function ListCart() {
                   arrayPosition={idx}
                 />
               );
-            })}
+            })} */}
           </div>
         </div>
 
