@@ -1,20 +1,22 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import Card from '../Card/card';
 import Image1 from '../../../public/entrega-de-alimentos.png';
 import Image2 from '../../../public/pizza.png';
 import Image3 from '../../../public/hamburguer.png';
 import Image4 from '../../../public/comida-mexicana.png';
 import Image5 from '../../../public/refrigerantes.png';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
-import cartContext from './../../context/cartContext';
 import './menu.css';
 
 import Data from '../../db/data.json';
+import {
+  Card,
+  CardContent,
+  Typography,
+} from '@mui/material';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,7 +43,6 @@ CustomTabPanel.propTypes = {
 
 export default function Menu() {
   const [value, setValue] = useState(0);
-  const ctx = useContext(cartContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -53,26 +54,26 @@ export default function Menu() {
   const paoArabe = Data.paoArabe;
   const drink = Data.drinks;
 
-  function addKart(e) {
-    let arrayIndex;
+  // function addKart(e) {
+  //   let arrayIndex;
 
-    if (e.target && e.target.nodeName === 'DIV') {
-      arrayIndex = e.target.dataset.arrayposition;
-    }
+  //   if (e.target && e.target.nodeName === 'DIV') {
+  //     arrayIndex = e.target.dataset.arrayposition;
+  //   }
 
-    if (e.target && e.target.nodeName === 'svg') {
-      arrayIndex =
-        e.target.parentNode.dataset.arrayposition;
-    }
+  //   if (e.target && e.target.nodeName === 'svg') {
+  //     arrayIndex =
+  //       e.target.parentNode.dataset.arrayposition;
+  //   }
 
-    if (e.target && e.target.nodeName === 'path') {
-      arrayIndex =
-        e.target.parentNode.parentNode.dataset
-          .arrayposition;
-    }
+  //   if (e.target && e.target.nodeName === 'path') {
+  //     arrayIndex =
+  //       e.target.parentNode.parentNode.dataset
+  //         .arrayposition;
+  //   }
 
-    ctx.setKart([...ctx.kart, promotions[arrayIndex]]);
-  }
+  //   ctx.setKart([...ctx.kart, promotions[arrayIndex]]);
+  // }
 
   return (
     <>
@@ -118,18 +119,18 @@ export default function Menu() {
           index={0}
           className="tabContents"
         >
-          {promotions.map((item, idx) => (
+          {promotions.map((item) => (
             <Card
-              imageUrl={item.imagem}
               key={item.id}
-              flavor={item.sabor}
-              ingredients={item.ingredientes}
-              price={item.valor}
-              buttonUrl={<AddShoppingCartIcon />}
-              click={(e) => addKart(e)}
-              arrayPosition={idx}
-              cardClass="card"
-            />
+              sx={{ display: 'flex', flexDirection: 'row' }}
+            >
+              <CardContent>
+                <img src={item.imagem} alt="" />
+                <Typography>{item.ingredientes}</Typography>
+                <Typography>{item.sabor}</Typography>
+                <Typography>{item.valor}</Typography>
+              </CardContent>
+            </Card>
           ))}
         </CustomTabPanel>
 
@@ -138,18 +139,18 @@ export default function Menu() {
           index={1}
           className="tabContents"
         >
-          {pizza.map((item, idx) => (
+          {pizza.map((item) => (
             <Card
-              imageUrl={item.imagem}
               key={item.id}
-              flavor={item.sabor}
-              ingredients={item.ingredientes}
-              price={item.valor}
-              buttonUrl={<AddShoppingCartIcon />}
-              click={(e) => addKart(e)}
-              arrayPosition={idx}
-              cardClass="card"
-            />
+              sx={{ display: 'flex', flexDirection: 'row' }}
+            >
+              <CardContent>
+                <img src={item.imagem} alt="" />
+                <Typography>{item.ingredientes}</Typography>
+                <Typography>{item.sabor}</Typography>
+                <Typography>{item.valor}</Typography>
+              </CardContent>
+            </Card>
           ))}
         </CustomTabPanel>
 
@@ -158,18 +159,18 @@ export default function Menu() {
           index={2}
           className="tabContents"
         >
-          {hamburger.map((item, idx) => (
+          {hamburger.map((item) => (
             <Card
-              imageUrl={item.imagem}
               key={item.id}
-              flavor={item.sabor}
-              ingredients={item.ingredientes}
-              price={item.valor}
-              buttonUrl={<AddShoppingCartIcon />}
-              click={(e) => addKart(e)}
-              arrayPosition={idx}
-              cardClass="card"
-            />
+              sx={{ display: 'flex', flexDirection: 'row' }}
+            >
+              <CardContent>
+                <img src={item.imagem} alt="" />
+                <Typography>{item.ingredientes}</Typography>
+                <Typography>{item.sabor}</Typography>
+                <Typography>{item.valor}</Typography>
+              </CardContent>
+            </Card>
           ))}
         </CustomTabPanel>
 
@@ -178,18 +179,18 @@ export default function Menu() {
           index={3}
           className="tabContents"
         >
-          {paoArabe.map((item, idx) => (
+          {paoArabe.map((item) => (
             <Card
-              imageUrl={item.imagem}
               key={item.id}
-              flavor={item.sabor}
-              ingredients={item.ingredientes}
-              price={item.valor}
-              buttonUrl={<AddShoppingCartIcon />}
-              click={(e) => addKart(e)}
-              arrayPosition={idx}
-              cardClass="card"
-            />
+              sx={{ display: 'flex', flexDirection: 'row' }}
+            >
+              <CardContent>
+                <img src={item.imagem} alt="" />
+                <Typography>{item.ingredientes}</Typography>
+                <Typography>{item.sabor}</Typography>
+                <Typography>{item.valor}</Typography>
+              </CardContent>
+            </Card>
           ))}
         </CustomTabPanel>
 
@@ -198,18 +199,18 @@ export default function Menu() {
           index={4}
           className="tabContents"
         >
-          {drink.map((item, idx) => (
+          {drink.map((item) => (
             <Card
-              imageUrl={item.imagem}
               key={item.id}
-              flavor={item.sabor}
-              ingredients={item.ingredientes}
-              price={item.valor}
-              buttonUrl={<AddShoppingCartIcon />}
-              click={(e) => addKart(e)}
-              arrayPosition={idx}
-              cardClass="card"
-            />
+              sx={{ display: 'flex', flexDirection: 'row' }}
+            >
+              <CardContent>
+                <img src={item.imagem} alt="" />
+                <Typography>{item.ingredientes}</Typography>
+                <Typography>{item.sabor}</Typography>
+                <Typography>{item.valor}</Typography>
+              </CardContent>
+            </Card>
           ))}
         </CustomTabPanel>
       </Box>
