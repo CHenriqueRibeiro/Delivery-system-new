@@ -34,6 +34,9 @@
 #sectionsmenu .css-1aquho2-MuiTabs-indicator {
   background-color: transparent !important;
 }
+.css-1aquho2-MuiTabs-indicator {
+  background-color: transparent !important;
+}
 .css-1q0ig8p {
   display: none !important;
 }
@@ -69,7 +72,6 @@
 
 #cardlistmenu {
   height: 50%;
-
   overflow: auto !important;
 }
 .MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
@@ -82,4 +84,72 @@
   font-size: 24%;
   line-height: 1.6;
   letter-spacing: 0.0075em;
+}
+
+.cardMenu {
+  position: relative;
+  display: flex;
+  background-color: #fae9de !important;
+  height: 11rem;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 29px !important;
+  border: 5px solid #e75603ba !important;
+  margin: 5px 0 10px 0;
+  box-shadow: 2px 8px 7px 5px #0003, 2px 2px 3px -1px #00000024,
+    2px 6px 4px #0000001f !important;
+}
+
+.cardContent {
+  position: absolute;
+  display: flex;
+  background-color: #fae9de;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 !important;
+}
+.cardContent > img {
+  width: 25%;
+  height: 100%;
+  object-fit: cover;
+}
+.descriptionCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: start;
+  background-color: #fae9de;
+  height: 100%;
+  width: 100%;
+  padding-left: 1rem;
+}
+.descriptionCard
+  .MuiTypography-root.MuiTypography-body1.css-ahj2mt-MuiTypography-root {
+  height: auto !important;
+}
+.priceAndIcons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 94%;
+}
+.priceAndIcons .iconAddProduct {
+  width: 50px;
+  height: 35px;
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #fb6c1a;
+  cursor: pointer;
+}
+.priceAndIcons .iconFavoriteMenu {
+  position: absolute;
+  right: 25%;
+  display: flex;
+}
+.priceAndIcons .iconFavoriteMenu:hover {
+  color: #f76d26;
 }

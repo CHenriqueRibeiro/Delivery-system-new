@@ -88,42 +88,42 @@
       "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1657164832463blob",
       "sabor": "Smash Tradicional",
       "valor": 14.99,
-      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+      "ingredientes": "Carne de 100g smash, cheddar, molho especial no pao brioche"
     },
     {
       "id": 2,
       "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1657162955103blob",
       "sabor": "Smash Bacon",
       "valor": 16.99,
-      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+      "ingredientes": "Carne de 100g smash, cheddar, bacon, molho especial no pao brioche"
     },
     {
       "id": 3,
       "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1657163369379blob",
       "sabor": "Churrasco",
       "valor": 19.99,
-      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+      "ingredientes": "Carne de 100g smash Grelhada, cheddar, molho especial no pao brioche"
     },
     {
       "id": 4,
       "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1657163483018blob",
       "sabor": "Duplo Smash Bacon",
       "valor": 22.99,
-      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+      "ingredientes": "2x Carne de 100g smash, cheddar, 2x Bacon, molho especial no pao brioche"
     },
     {
       "id": 5,
       "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1659133028512blob",
       "sabor": "Mega Smash",
       "valor": 26.99,
-      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+      "ingredientes": "2x Carne de 120g smash, cheddar, 2x Bacon, molho especial no pao brioche"
     },
     {
       "id": 6,
       "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1659130674561blob",
       "sabor": "Double Cheese",
       "valor": 29.99,
-      "ingredientes": "Carne de 100g smash + cheddar + molho especial no pao brioche"
+      "ingredientes": "2x Carne de 150g smash, cheddar, molho especial no pao brioche"
     }
   ],
 

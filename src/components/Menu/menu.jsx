@@ -1,22 +1,20 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Image1 from '../../../public/entrega-de-alimentos.png';
-import Image2 from '../../../public/pizza.png';
-import Image3 from '../../../public/hamburguer.png';
-import Image4 from '../../../public/comida-mexicana.png';
-import Image5 from '../../../public/refrigerantes.png';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Image1 from "../../../public/entrega-de-alimentos.png";
+import Image2 from "../../../public/pizza.png";
+import Image3 from "../../../public/hamburguer.png";
+import Image4 from "../../../public/comida-mexicana.png";
+import Image5 from "../../../public/refrigerantes.png";
 
-import './menu.css';
+import "./menu.css";
 
-import Data from '../../db/data.json';
-import {
-  Card,
-  CardContent,
-  Typography,
-} from '@mui/material';
+import Data from "../../db/data.json";
+import { Card, CardContent, Typography } from "@mui/material";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,26 +52,23 @@ export default function Menu() {
   const paoArabe = Data.paoArabe;
   const drink = Data.drinks;
 
-  // function addKart(e) {
-  //   let arrayIndex;
+  /* function addKart(e) {
+    let arrayIndex;
 
-  //   if (e.target && e.target.nodeName === 'DIV') {
-  //     arrayIndex = e.target.dataset.arrayposition;
-  //   }
+    if (e.target && e.target.nodeName === "DIV") {
+      arrayIndex = e.target.dataset.arrayposition;
+    }
 
-  //   if (e.target && e.target.nodeName === 'svg') {
-  //     arrayIndex =
-  //       e.target.parentNode.dataset.arrayposition;
-  //   }
+    if (e.target && e.target.nodeName === "svg") {
+      arrayIndex = e.target.parentNode.dataset.arrayposition;
+    }
 
-  //   if (e.target && e.target.nodeName === 'path') {
-  //     arrayIndex =
-  //       e.target.parentNode.parentNode.dataset
-  //         .arrayposition;
-  //   }
+    if (e.target && e.target.nodeName === "path") {
+      arrayIndex = e.target.parentNode.parentNode.dataset.arrayposition;
+    }
 
-  //   ctx.setKart([...ctx.kart, promotions[arrayIndex]]);
-  // }
+    ctx.setKart([...ctx.kart, promotions[arrayIndex]]);
+  }*/
 
   return (
     <>
@@ -114,101 +109,96 @@ export default function Menu() {
       </Tabs>
 
       <Box id="contentmenu">
-        <CustomTabPanel
-          value={value}
-          index={0}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={0} className="tabContents">
           {promotions.map((item) => (
-            <Card
-              key={item.id}
-              sx={{ display: 'flex', flexDirection: 'row' }}
-            >
-              <CardContent>
+            <Card key={item.id} className="cardMenu">
+              <CardContent className="cardContent">
                 <img src={item.imagem} alt="" />
-                <Typography>{item.ingredientes}</Typography>
-                <Typography>{item.sabor}</Typography>
-                <Typography>{item.valor}</Typography>
+                <Box className="descriptionCard">
+                  <Typography variant="h6">{item.sabor}</Typography>
+                  <Typography>{item.ingredientes}</Typography>
+                  <Box className="priceAndIcons">
+                    <Typography variant="h6">{item.valor}</Typography>
+                    <FavoriteIcon className="iconFavoriteMenu" />
+                    <AddShoppingCartIcon className="iconAddProduct" />
+                  </Box>
+                </Box>
               </CardContent>
             </Card>
           ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={1}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={1} className="tabContents">
           {pizza.map((item) => (
-            <Card
-              key={item.id}
-              sx={{ display: 'flex', flexDirection: 'row' }}
-            >
-              <CardContent>
+            <Card key={item.id} className="cardMenu">
+              <CardContent className="cardContent">
                 <img src={item.imagem} alt="" />
-                <Typography>{item.ingredientes}</Typography>
-                <Typography>{item.sabor}</Typography>
-                <Typography>{item.valor}</Typography>
+                <Box className="descriptionCard">
+                  <Typography variant="h6">{item.sabor}</Typography>
+                  <Typography>{item.ingredientes}</Typography>
+                  <Box className="priceAndIcons">
+                    <Typography variant="h6">{item.valor}</Typography>
+                    <FavoriteIcon className="iconFavoriteMenu" />
+                    <AddShoppingCartIcon className="iconAddProduct" />
+                  </Box>
+                </Box>
               </CardContent>
             </Card>
           ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={2}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={2} className="tabContents">
           {hamburger.map((item) => (
-            <Card
-              key={item.id}
-              sx={{ display: 'flex', flexDirection: 'row' }}
-            >
-              <CardContent>
+            <Card key={item.id} className="cardMenu">
+              <CardContent className="cardContent">
                 <img src={item.imagem} alt="" />
-                <Typography>{item.ingredientes}</Typography>
-                <Typography>{item.sabor}</Typography>
-                <Typography>{item.valor}</Typography>
+                <Box className="descriptionCard">
+                  <Typography variant="h6">{item.sabor}</Typography>
+                  <Typography>{item.ingredientes}</Typography>
+                  <Box className="priceAndIcons">
+                    <Typography variant="h6">{item.valor}</Typography>
+                    <FavoriteIcon className="iconFavoriteMenu" />
+                    <AddShoppingCartIcon className="iconAddProduct" />
+                  </Box>
+                </Box>
               </CardContent>
             </Card>
           ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={3}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={3} className="tabContents">
           {paoArabe.map((item) => (
-            <Card
-              key={item.id}
-              sx={{ display: 'flex', flexDirection: 'row' }}
-            >
-              <CardContent>
+            <Card key={item.id} className="cardMenu">
+              <CardContent className="cardContent">
                 <img src={item.imagem} alt="" />
-                <Typography>{item.ingredientes}</Typography>
-                <Typography>{item.sabor}</Typography>
-                <Typography>{item.valor}</Typography>
+                <Box className="descriptionCard">
+                  <Typography variant="h6">{item.sabor}</Typography>
+                  <Typography>{item.ingredientes}</Typography>
+                  <Box className="priceAndIcons">
+                    <Typography variant="h6">{item.valor}</Typography>
+                    <FavoriteIcon className="iconFavoriteMenu" />
+                    <AddShoppingCartIcon className="iconAddProduct" />
+                  </Box>
+                </Box>
               </CardContent>
             </Card>
           ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={4}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={4} className="tabContents">
           {drink.map((item) => (
-            <Card
-              key={item.id}
-              sx={{ display: 'flex', flexDirection: 'row' }}
-            >
-              <CardContent>
+            <Card key={item.id} className="cardMenu">
+              <CardContent className="cardContent">
                 <img src={item.imagem} alt="" />
-                <Typography>{item.ingredientes}</Typography>
-                <Typography>{item.sabor}</Typography>
-                <Typography>{item.valor}</Typography>
+                <Box className="descriptionCard">
+                  <Typography variant="h6">{item.sabor}</Typography>
+                  <Typography>{item.ingredientes}</Typography>
+                  <Box className="priceAndIcons">
+                    <Typography variant="h6">{item.valor}</Typography>
+                    <FavoriteIcon className="iconFavoriteMenu" />
+                    <AddShoppingCartIcon className="iconAddProduct" />
+                  </Box>
+                </Box>
               </CardContent>
             </Card>
           ))}
