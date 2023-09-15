@@ -1,0 +1,206 @@
+{
+  "combos": [
+    {
+      "id": 1,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Pizza Calabresa + Refrigerante",
+      "valor": 24.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 2,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1643916486366blob",
+      "sabor": "Pizza Pepperoni + Refrigerante",
+      "valor": 24.99,
+      "ingredientes": "Peperoni, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 3,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493213786blob",
+      "sabor": "Pizza Mista + Refrigerante",
+      "valor": 24.99,
+      "ingredientes": "Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 4,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1610659117583blob",
+      "sabor": "Pizza 3 Queijos + Refrigerante",
+      "valor": 29.99,
+      "ingredientes": "Queijo Coalho, Mussarela, Brie, Orégano"
+    },
+    {
+      "id": 5,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1610659977411blob",
+      "sabor": "Pizza Carne do Sol + Refrigerante",
+      "valor": 29.99,
+      "ingredientes": "Carne do Sol, Queijo, Mussarela, Orégano"
+    }
+  ],
+
+  "pizzas": [
+    {
+      "id": 1,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493132361blob",
+      "sabor": "Calabresa",
+      "valor": 19.99,
+      "ingredientes": "Calabresa, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 2,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1643916486366blob",
+      "sabor": "Pepperoni",
+      "valor": 19.99,
+      "ingredientes": "Peperoni, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 3,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493213786blob",
+      "sabor": "Mista",
+      "valor": 19.99,
+      "ingredientes": "Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 4,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1606493179588blob",
+      "sabor": "Mussarela",
+      "valor": 19.99,
+      "ingredientes": "Mussarela, Tomate, Orégano"
+    },
+    {
+      "id": 5,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1610659977411blob",
+      "sabor": "Carne de Sol",
+      "valor": 24.99,
+      "ingredientes": "Carne do Sol, Queijo, Mussarela, Orégano"
+    },
+    {
+      "id": 6,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1610659117583blob",
+      "sabor": "3 Queijos",
+      "valor": 24.99,
+      "ingredientes": "Queijo Coalho, Mussarela, Brie, Orégano"
+    }
+  ],
+
+  "hamburger": [
+    {
+      "id": 1,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1657164832463blob",
+      "sabor": "Smash Tradicional",
+      "valor": 14.99,
+      "ingredientes": "Carne de 100g smash, cheddar, molho especial no pao brioche"
+    },
+    {
+      "id": 2,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1657162955103blob",
+      "sabor": "Smash Bacon",
+      "valor": 16.99,
+      "ingredientes": "Carne de 100g smash, cheddar, bacon, molho especial no pao brioche"
+    },
+    {
+      "id": 3,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1657163369379blob",
+      "sabor": "Churrasco",
+      "valor": 19.99,
+      "ingredientes": "Carne de 100g smash Grelhada, cheddar, molho especial no pao brioche"
+    },
+    {
+      "id": 4,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1657163483018blob",
+      "sabor": "Duplo Smash Bacon",
+      "valor": 22.99,
+      "ingredientes": "2x Carne de 100g smash, cheddar, 2x Bacon, molho especial no pao brioche"
+    },
+    {
+      "id": 5,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1659133028512blob",
+      "sabor": "Mega Smash",
+      "valor": 26.99,
+      "ingredientes": "2x Carne de 120g smash, cheddar, 2x Bacon, molho especial no pao brioche"
+    },
+    {
+      "id": 6,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1659130674561blob",
+      "sabor": "Double Cheese",
+      "valor": 29.99,
+      "ingredientes": "2x Carne de 150g smash, cheddar, molho especial no pao brioche"
+    }
+  ],
+
+  "paoArabe": [
+    {
+      "id": 1,
+      "imagem": "https://www.fbgcdn.com/pictures/799d15db-dd45-459e-9435-40af70d2a0c8.jpg",
+      "sabor": "Pão Árabe Frango",
+      "valor": 14.99,
+      "ingredientes": "Frango Especial, cheddar, molho"
+    },
+    {
+      "id": 2,
+      "imagem": "https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60994a_d3.jpg",
+      "sabor": "Pão Árabe Super Frango",
+      "valor": 19.99,
+      "ingredientes": "Frango Especial, coalho, cheddar, molho"
+    },
+    {
+      "id": 3,
+      "imagem": "https://www.fbgcdn.com/pictures/a6110bf6-449a-4c5d-84bd-fcc292b25f2f_d3.jpg",
+      "sabor": "Pão Árabe Nordestino",
+      "valor": 24.99,
+      "ingredientes": "Frango Especial, carne, coalho, cheddar, molho"
+    },
+    {
+      "id": 4,
+      "imagem": "https://www.fbgcdn.com/pictures/f83fb99a-64aa-4848-b746-b6dbb9a08030_d3.jpg",
+      "sabor": "Pão Árabe Monstrão",
+      "valor": 29.99,
+      "ingredientes": "Frango Especial, 2x carne 150 gr, coalho, cheddar, molho"
+    }
+   
+  ],
+
+  "drinks": [
+    {
+      "id": 1,
+      "imagem": "https://client-assets.anota.ai/produtos/1688936873587blob",
+      "sabor": "Água 300ml",
+      "valor": 2.99,
+      "ingredientes": "Bebida Gelada"
+    },
+    {
+      "id": 2,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1660517293657blob",
+      "sabor": "Coca-cola 600ml",
+      "valor": 5.99,
+      "ingredientes": "Bebida Gelada"
+    },
+    {
+      "id": 3,
+      "imagem": "https://client-assets.anota.ai/produtos/1688772009888blob",
+      "sabor": "Pepsi 1L",
+      "valor": 7.99,
+      "ingredientes": "Bebida Gelada"
+    },
+    {
+      "id": 4,
+      "imagem": "https://client-assets.anota.ai/produtos/1688936873587blob",
+      "sabor": "Coca-cola 1L",
+      "valor": 8.99,
+      "ingredientes": "Bebida Gelada"
+    },
+    {
+      "id": 5,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1660517976941blob",
+      "sabor": "São Geraldo 1L",
+      "valor": 8.99,
+      "ingredientes": "Bebida Gelada"
+    },
+    {
+      "id": 6,
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1660517731434blob",
+      "sabor": "Coca-cola 2L",
+      "valor": 14.99,
+      "ingredientes": "Bebida Gelada"
+    }
+  ]
+}

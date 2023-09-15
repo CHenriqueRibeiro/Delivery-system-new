@@ -1,69 +1,67 @@
-import * as React from "react";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import cartContext from "./../../context/cartContext";
-import Button from "@mui/material/Button";
-import ListCart from "../Listcart/listcart";
+import { useState, useContext } from 'react';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import Button from '@mui/material/Button';
+import ListCart from '../Listcart/listcart';
 
-import "./footer.css";
+import './footer.css';
+import { FoodContext } from '../../context/FoodContext';
 
 export default function SimpleBottomNavigation() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
-  const cart = React.useContext(cartContext);
+  const cart = useContext(FoodContext);
 
-  /*função para quando apertar o botao de continuar comprando*/
   function cliqueparaaparecer() {
-    const addproducts = document.getElementById("displayItems");
-    addproducts.classList.toggle("displayItemson");
+    const addproducts =
+      document.getElementById('displayItems');
+    addproducts.classList.toggle('displayItemson');
   }
-  /*função para quando apertar o botao de continuar comprando*/
-
   return (
     <>
-      <div id="displayItems" /*----Essa div mostra todo os itens quando clica no carrinho e sobe a Tela--*/>
-
-        <BottomNavigationAction  /*----Icone de carrinho que fica na parte de cima da tela de itens--*/
-          id="iconcart-list"
+      <div id="displayItems">
+        <BottomNavigationAction
+          id="btnCartIconCarrinho"
           label="Carrinho"
-          icon={<ShoppingCartOutlinedIcon />}
+          icon={
+            <ShoppingCartOutlinedIcon id="cartIconCarrinho" />
+          }
           onClick={cliqueparaaparecer}
         />
 
-        <ListCart /*----Esse e o componente ListCart--*/ />
+        <ListCart />
 
-        <div className="cartButtons" /*----Essa div mostra todo os Botoes de  quando clica no carrinho e sobe a Tela--*/>
-
-          <Button /*----Botão de continuar Comprando--*/
+        <div className="cartButtons">
+          <Button
             className="btnreturnpurchase"
             variant="outlined"
-            onClick={cliqueparaaparecer}>
+            onClick={cliqueparaaparecer}
+          >
             continuar Comprando
           </Button>
 
-          <Button /*----Botão de Finalizar Compra--*/
+          <Button
             className="btncheckout"
-            variant="contained" >
+            variant="contained"
+          >
             Finalizar Compra
           </Button>
-
         </div>
       </div>
 
-      <div className="footer" /*----Essa div mostra todo os Itens do Footer--*/>
-
+      <div className="footer">
         <BottomNavigation
           className="contentFooter"
           showLabels
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);
-          }}>
-
-          <BottomNavigationAction /*----Icone de carrinho do Footer--*/
+          }}
+        >
+          <BottomNavigationAction
             id="carticon "
             className="iconsfooter"
             label="Carrinho"
@@ -71,23 +69,29 @@ export default function SimpleBottomNavigation() {
               <ShoppingCartOutlinedIcon
                 className="iconsfooter"
                 onClick={cliqueparaaparecer}
-              />}
+              />
+            }
           />
 
-          {cart.kart > 0 ? <div id="cartcount">{cart.kart}</div> : ""}
-          <BottomNavigationAction /*----Icone de Favoritos do Footer--*/
+          {cart.kart.length > 0 ? (
+            <div id="cartcount">{cart.kart.length}</div>
+          ) : (
+            ''
+          )}
+          <BottomNavigationAction
             id="carticon "
             className="iconsfooter"
             label="Favoritos"
             icon={<FavoriteIcon className="iconsfooter" />}
           />
 
-          <BottomNavigationAction /*----Icone de Perfil do Footer--*/
+          <BottomNavigationAction
             className="iconsfooter"
             label="Perfil"
-            icon={<AccountCircleOutlinedIcon className="iconsfooter" />}
+            icon={
+              <AccountCircleOutlinedIcon className="iconsfooter" />
+            }
           />
-          
         </BottomNavigation>
       </div>
     </>
