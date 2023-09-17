@@ -22,7 +22,7 @@
   padding: 0 !important;
 }
 
-#header {
+/* #header {
   display: flex;
   background-color: #fbe9dd;
   width: 100%;
@@ -30,7 +30,7 @@
   min-height: 146px;
   align-items: center;
   justify-content: center;
-}
+} */
 
 #content {
   background-color: #fae9de;

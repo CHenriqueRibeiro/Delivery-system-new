@@ -9,6 +9,7 @@ import ListCart from '../Listcart/listcart';
 
 import './footer.css';
 import { FoodContext } from '../../context/FoodContext';
+import { NavLink } from 'react-router-dom';
 
 export default function SimpleBottomNavigation() {
   const [value, setValue] = useState(0);
@@ -43,12 +44,15 @@ export default function SimpleBottomNavigation() {
             continuar Comprando
           </Button>
 
-          <Button
+          {/* <Button
             className="btncheckout"
             variant="contained"
           >
             Finalizar Compra
-          </Button>
+          </Button> */}
+          <NavLink className="btncheckout" to="/cadastro">
+            Finalizar Compra
+          </NavLink>
         </div>
       </div>
 
