@@ -1,12 +1,4 @@
-#sectionsmenu {
-  margin-bottom: 0px;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: flex-start;
-  align-items: center;
-  height: 20%;
-}
+
 .tabContents {
   background-color: #fb6c1a;
   height: 100%;
@@ -17,12 +9,7 @@
   z-index: 2;
   padding: 12px 13px 70px 13px;
 }
-#contentmenu {
-  border-radius: 35px 35px 0 0;
-  height: 90%;
-  overflow: hidden;
-  margin-top: 0.2rem;
-}
+
 #sectionsmenu
   .css-145v6pe-MuiButtonBase-root-MuiTabScrollButton-root.Mui-disabled {
   display: none;
@@ -43,7 +30,7 @@
 .css-1q0ig8p {
   display: none !important;
 }
-#sectionsmenu .teste {
+#sectionsmenu .tabs {
   width: 25%;
   color: #fafafa !important;
   border-radius: 25px !important;
