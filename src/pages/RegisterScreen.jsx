@@ -1,7 +1,9 @@
+import './teste.css'
+
 const RegisterScreen = () => {
   return (
     <>
-      <div>Teste</div>
+      <div className="tete">Teste</div>
     </>
   );
 };

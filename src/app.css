@@ -5,12 +5,13 @@
 }
 #root {
   height: 100dvh;
-  background-color: #ffffff;
+  background-color: #fae9de;
   overflow: hidden;
   position: relative;
 }
 
 #app {
+  background-color: #fae9de;
   margin: 0 auto;
   display: flex;
   flex-flow: column nowrap;
@@ -42,5 +43,5 @@
 #footer {
   border-radius: 35px;
   width: 100%;
-  height: 8%;
+  height: 10%;
 }
