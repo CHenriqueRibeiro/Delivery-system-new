@@ -21,7 +21,7 @@ import { FoodContext } from "../../context/FoodContext";
 
 import { NavLink } from "react-router-dom";
 
-export default function SimpleBottomNavigation() {
+export default function Footer() {
   const [value, setValue] = useState(0);
   const [open, setOpen] = React.useState(false);
 
