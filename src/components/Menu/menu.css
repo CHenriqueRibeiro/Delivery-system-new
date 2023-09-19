@@ -9,6 +9,31 @@
   padding: 12px 13px 24px 13px;
 }
 
+.inputbox {
+  height: 50px;
+  min-height: 50px;
+  position: relative;
+  top: 35%;
+}
+
+label {
+  color: #000 !important;
+  left: 2px !important;
+  top: -6px !important;
+  transform-origin: -16px 26px !important;
+
+}
+
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+  height: 42px !important
+}
+
+fieldset {
+  border-radius: 59px !important;
+  box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
+  border-color: #f46c26 !important;
+}
+
 #sectionsmenu
   .css-145v6pe-MuiButtonBase-root-MuiTabScrollButton-root.Mui-disabled {
   display: none;

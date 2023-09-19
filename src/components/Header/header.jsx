@@ -2,7 +2,6 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Logo from '@mui/material/Avatar';
-import Input from '../Input/input';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import './header.css';
 
@@ -13,32 +12,24 @@ export default function Header() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Box
-        id="containerheader" /*---Todo o conteudo da descriçao(LOGO e ESTABELECIMENTO)--*/
-      >
-        <div id="teste" /*---(LOGO e ESTABELECIMENTO)--*/>
+      <Box id="containerheader">
+        <div id="teste">
           <Logo
             id="imglogo"
             alt="Remy Sharp"
-            src={imagem} /*---LOGO --*/
+            src={imagem}
           />
 
-          <div
-            className="row" /*---Descrição(ESTABELECIMENTO E TELEFONE)--*/
-          >
-            <h2 /*---Descrição ESTABELECIMENTO--*/>
-              Taco Tex-Mex
-            </h2>
+          <div className="row">
+            <h2>Taco Tex-Mex</h2>
 
-            <p /*---Descrição TELEFONE--*/>
+            <p>
               {<WhatsAppIcon className="iconscontact" />}85
               998767654
             </p>
           </div>
         </div>
       </Box>
-
-      <Input /*---Componente Input--*/ />
     </React.Fragment>
   );
 }
