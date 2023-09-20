@@ -4,10 +4,7 @@ import { Typography } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Button from "@mui/material/Button";
 import InputMask from "react-input-mask";
-//import { useState } from "react";
-
 import "./RegisterScreen.css";
-//import { useEffect } from "react";
 
 const RegisterScreen = () => {
   const { register, handleSubmit, setValue, setFocus } = useForm();
@@ -41,12 +38,7 @@ const RegisterScreen = () => {
     }
   };
 
-  /*useEffect(() => {
-    Inputmask({mask: '99999-999', placeholder: ''}).mask(".cep");
-    Inputmask({mask: '(99) 9 9999-9999', placeholder: ''}).mask(".inputFormEndereco.w9rem");
-    Inputmask({mask: 'a{3,100}', placeholder: '', definitions: {'a': { validator: '[a-zA-Z ]' }}}).mask(".onlyLetters");
-  });*/
-
+  
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -54,12 +46,7 @@ const RegisterScreen = () => {
           <Typography variant="h6">Endereço</Typography>
           <label className="labelFormEndereco">CEP </label>
           <Box id="inputAndBtnSerach">
-            {/*<input
-              type="text"
-              className="inputFormEndereco cep"
-              {...register("cep")}
-              onBlur={checkCEP}
-  />*/}{" "}
+            
             <InputMask
               mask="99999-999"
               maskChar={null}
@@ -123,10 +110,7 @@ const RegisterScreen = () => {
           <Box id="inputTelEWhats">
             <Box id="inputTelefone">
               <label className="labelFormEndereco">Nº Telefone</label>
-              {/*<input
-                type="text"
-                className="inputFormEndereco w9rem"
-  />*/}
+              
               <InputMask
                 mask="(99) 9 99999999"
                 maskChar={null}

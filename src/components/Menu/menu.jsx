@@ -1,6 +1,5 @@
 import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
-
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -13,13 +12,11 @@ import Image3 from "../../../public/hamburguer.png";
 import Image4 from "../../../public/comida-mexicana.png";
 import Image5 from "../../../public/refrigerantes.png";
 import SearchIcon from "@mui/icons-material/Search";
-
-import "./menu.css";
-
 import Data from "../../db/data.json";
 import { Card, CardContent, TextField, Typography } from "@mui/material";
 import Header from "../Header/header";
 import Footer from "../Footer/footer";
+import "./menu.css";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -132,7 +129,7 @@ export default function Menu() {
           width: "100%",
         }}
       >
-        <SearchIcon className="iconSearchFilterMenu"/>
+        <SearchIcon className="iconSearchFilterMenu" />
         <TextField
           label="Ta com fome de quê?"
           variant="outlined"

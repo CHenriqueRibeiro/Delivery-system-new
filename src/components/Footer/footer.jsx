@@ -91,7 +91,7 @@ export default function Footer() {
                     <Typography id="transition-modal-description">
                       <Box id="InputModal">
                         <InputMask
-                        placeholder="Nº telefone"
+                          placeholder="Nº telefone"
                           mask="(99) 9 99999999"
                           maskChar={null}
                           className="inputModalDados"
@@ -126,9 +126,6 @@ export default function Footer() {
               </Fade>
             </Modal>
           </div>
-          {/*<NavLink className="btncheckout" to="/cadastro">
-            Finalizar Compra
-          </NavLink>*/}
         </div>
       </div>
 
