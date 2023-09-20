@@ -13,12 +13,8 @@
 }
 .footer .contentFooter {
   display: flex;
-  height: 100%;
   width: 100%;
   background-color: #fbe9dd;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
 }
 .footer .iconsfooter {
   color: #29292c !important;
@@ -108,4 +104,78 @@
 }
 #btnCartIconCarrinho {
   position: absolute;
+}
+#modalCadastro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fae9de;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  height: 32%;
+  min-height: 276px;
+  border: 6px solid #e5c7b3 !important;
+  border-radius: 30px;
+  box-shadow: 5px 4px 5px 2px rgba(0, 0, 0, 0.2),
+    5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12);
+}
+#modalContent {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#InputModal {
+  height: 50%;
+  width: 100%;
+  gap: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.inputModalDados {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: large;
+  height: 50%;
+  width: 85%;
+  border-radius: 13px;
+  position: relative;
+  padding-left: 15%;
+}
+
+.iconTelefoneInput {
+  position: absolute;
+  top: 21.7%;
+  left: 11%;
+}
+.iconTelefoneName {
+  position: absolute;
+  top: 48%;
+  left: 11%;
+}
+#transition-modal-description {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.btnIrParaPagamento {
+  color: #201e1d !important;
+  border-radius: 11px !important;
+}
+.btnIrParaPagamento:hover {
+  background-color: #f76d26 !important;
+  color: #f9e9df !important;
 }

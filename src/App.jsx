@@ -3,12 +3,10 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import './app.css';
-import Footer from './components/Footer/footer';
-import Menu from './components/Menu/menu';
-import Header from './components/Header/header';
 import Container from '@mui/material/Container';
 import { useState } from 'react';
 import { FoodContext } from './context/FoodContext';
+import { Outlet } from 'react-router-dom';
 
 export default function App() {
   const [kart, setKart] = useState([]);
@@ -16,17 +14,24 @@ export default function App() {
   return (
     <Container id="app" maxWidth="sm">
       <FoodContext.Provider value={{ kart, setKart }}>
-        <div id="header">
+        {/* <Box
+          id="header"
+          sx={{
+            display: 'flex',
+            backgroundColor: '#fbe9dd',
+            width: '100%',
+            height: '38%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <Header />
-        </div>
+        </Box> */}
 
-        <div id="content">
-          <Menu />
-        </div>
-
-        <div id="footer">
+        <Outlet />
+        {/* <Box id="footer">
           <Footer />
-        </div>
+        </Box> */}
       </FoodContext.Provider>
     </Container>
   );
