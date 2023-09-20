@@ -6,7 +6,7 @@
   min-width: 320px;
   overflow: auto;
   z-index: 2;
-  padding: 12px 13px 24px 13px;
+  padding: 85px 13px 24px 13px;
 }
 
 .inputbox {
@@ -16,22 +16,16 @@
   top: 35%;
 }
 
-label {
+.boxInputMenu label {
+  padding-left: 2rem !important;
   color: #000 !important;
   left: 2px !important;
   top: -6px !important;
-  transform-origin: -16px 26px !important;
-
+  transform-origin: -94px 47px !important;
 }
 
 .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
-  height: 42px !important
-}
-
-fieldset {
-  border-radius: 59px !important;
-  box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
-  border-color: #f46c26 !important;
+  height: 42px !important;
 }
 
 #sectionsmenu
@@ -166,4 +160,41 @@ fieldset {
 }
 .priceAndIcons .iconFavoriteMenu:hover {
   color: #f76d26;
+}
+.boxInputMenu {
+  width: 94% !important;
+  max-width: 574px;
+  background: #f9e9df;
+  position: absolute;
+  z-index: 3;
+  top: 32%;
+  border-radius: 15px;
+}
+.boxInputMenu input {
+  padding: 10.5px 14px !important;
+  padding-left: 2.8rem !important;
+}
+fieldset {
+  border-radius: 15px !important;
+  box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
+  border-color: #f46c26 !important;
+}
+.fundoInputFiltro {
+  position: absolute;
+  top: 28%;
+  background-color: #f46c26 !important;
+  width: 100%;
+  max-width: 600px;
+  height: 4.5rem;
+  border-radius: 35px 35px 0 0;
+  z-index: 2;
+}
+.iconSearchFilterMenu {
+  position: absolute;
+  left: 0.8rem !important;
+  top: 0.7rem !important;
+  color: #fb6c1a !important;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
 }

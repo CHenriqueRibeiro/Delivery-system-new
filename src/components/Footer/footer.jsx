@@ -15,6 +15,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import PhoneIcon from "@mui/icons-material/Phone";
 import AbcIcon from "@mui/icons-material/Abc";
+import InputMask from "react-input-mask";
 
 import "./footer.css";
 import { FoodContext } from "../../context/FoodContext";
@@ -89,9 +90,10 @@ export default function Footer() {
                     </Typography>
                     <Typography id="transition-modal-description">
                       <Box id="InputModal">
-                        <input
-                          type="text"
-                          placeholder="Nº Telefone"
+                        <InputMask
+                          placeholder="Nº telefone"
+                          mask="(99) 9 99999999"
+                          maskChar={null}
                           className="inputModalDados"
                         />
                         <PhoneIcon className="iconTelefoneInput" />
@@ -112,16 +114,18 @@ export default function Footer() {
                           </span>
                         </Typography>
                       </Box>
-                      <Button variant="outlined" className="btnIrParaPagamento">Ir para pagamento</Button>
+                      <Button variant="outlined" className="btnIrParaPagamento">
+                        Login
+                      </Button>
+                      <Button variant="outlined" className="btnIrParaPagamento">
+                        Continuar sem cadastro
+                      </Button>
                     </Typography>
                   </Box>
                 </Box>
               </Fade>
             </Modal>
           </div>
-          {/*<NavLink className="btncheckout" to="/cadastro">
-            Finalizar Compra
-          </NavLink>*/}
         </div>
       </div>
 
