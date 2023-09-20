@@ -1,29 +1,25 @@
-import { useState } from 'react';
+import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import Image1 from '../../../public/entrega-de-alimentos.png';
-import Image2 from '../../../public/pizza.png';
-import Image3 from '../../../public/hamburguer.png';
-import Image4 from '../../../public/comida-mexicana.png';
-import Image5 from '../../../public/refrigerantes.png';
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import Image1 from "../../../public/entrega-de-alimentos.png";
+import Image2 from "../../../public/pizza.png";
+import Image3 from "../../../public/hamburguer.png";
+import Image4 from "../../../public/comida-mexicana.png";
+import Image5 from "../../../public/refrigerantes.png";
+import SearchIcon from "@mui/icons-material/Search";
 
-import './menu.css';
+import "./menu.css";
 
-import Data from '../../db/data.json';
-import {
-  Card,
-  CardContent,
-  TextField,
-  Typography,
-} from '@mui/material';
-import Header from '../Header/header';
-import Footer from '../Footer/footer';
+import Data from "../../db/data.json";
+import { Card, CardContent, TextField, Typography } from "@mui/material";
+import Header from "../Header/header";
+import Footer from "../Footer/footer";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,7 +46,7 @@ CustomTabPanel.propTypes = {
 
 export default function Menu() {
   const [value, setValue] = useState(0);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   const handleSearchInputChange = (e) => {
     setSearchValue(e.target.value);
@@ -71,12 +67,12 @@ export default function Menu() {
       <Box
         id="header"
         sx={{
-          display: 'flex',
-          backgroundColor: '#fbe9dd',
-          width: '100%',
-          height: '21%',
-          alignItems: 'center',
-          justifyContent: 'center',
+          display: "flex",
+          backgroundColor: "#fbe9dd",
+          width: "100%",
+          height: "21%",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <Header />
@@ -91,12 +87,12 @@ export default function Menu() {
         allowScrollButtonsMobile
         aria-label="scrollable force tabs example"
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          height: '20%',
-          width: '100%',
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          height: "20%",
+          width: "100%",
         }}
       >
         <Tab
@@ -128,56 +124,46 @@ export default function Menu() {
 
       <Box
         id="boxInput"
+        className="boxInputMenu"
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-          width: '100%',
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          width: "100%",
         }}
       >
+        <SearchIcon className="iconSearchFilterMenu"/>
         <TextField
           label="Ta com fome de quê?"
           variant="outlined"
           onChange={handleSearchInputChange}
         />
       </Box>
-
+      <Box className="fundoInputFiltro"></Box>
       <Box
         id="contentmenu"
         sx={{
-          width: '100%',
-          borderRadius: '35px 35px 0 0',
-          height: '90%',
-          overflow: 'hidden',
-          marginTop: '0.2rem',
+          width: "100%",
+          borderRadius: "35px 35px 0 0",
+          height: "90%",
+          overflow: "hidden",
+          marginTop: "0.2rem",
         }}
       >
-        <CustomTabPanel
-          value={value}
-          index={0}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={0} className="tabContents">
           {promotions
             .filter((item) =>
-              item.sabor
-                .toLowerCase()
-                .includes(searchValue.toLowerCase())
+              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
             )
             .map((item) => (
               <Card key={item.id} className="cardMenu">
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
-                    <Typography>
-                      {item.ingredientes}
-                    </Typography>
+                    <Typography variant="h6">{item.sabor}</Typography>
+                    <Typography>{item.ingredientes}</Typography>
                     <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {item.valor}
-                      </Typography>
+                      <Typography variant="h6">{item.valor}</Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon className="iconAddProduct" />
                     </Box>
@@ -187,32 +173,20 @@ export default function Menu() {
             ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={1}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={1} className="tabContents">
           {pizza
             .filter((item) =>
-              item.sabor
-                .toLowerCase()
-                .includes(searchValue.toLowerCase())
+              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
             )
             .map((item) => (
               <Card key={item.id} className="cardMenu">
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
-                    <Typography>
-                      {item.ingredientes}
-                    </Typography>
+                    <Typography variant="h6">{item.sabor}</Typography>
+                    <Typography>{item.ingredientes}</Typography>
                     <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {item.valor}
-                      </Typography>
+                      <Typography variant="h6">{item.valor}</Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon className="iconAddProduct" />
                     </Box>
@@ -222,32 +196,20 @@ export default function Menu() {
             ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={2}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={2} className="tabContents">
           {hamburger
             .filter((item) =>
-              item.sabor
-                .toLowerCase()
-                .includes(searchValue.toLowerCase())
+              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
             )
             .map((item) => (
               <Card key={item.id} className="cardMenu">
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
-                    <Typography>
-                      {item.ingredientes}
-                    </Typography>
+                    <Typography variant="h6">{item.sabor}</Typography>
+                    <Typography>{item.ingredientes}</Typography>
                     <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {item.valor}
-                      </Typography>
+                      <Typography variant="h6">{item.valor}</Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon className="iconAddProduct" />
                     </Box>
@@ -257,32 +219,20 @@ export default function Menu() {
             ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={3}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={3} className="tabContents">
           {paoArabe
             .filter((item) =>
-              item.sabor
-                .toLowerCase()
-                .includes(searchValue.toLowerCase())
+              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
             )
             .map((item) => (
               <Card key={item.id} className="cardMenu">
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
-                    <Typography>
-                      {item.ingredientes}
-                    </Typography>
+                    <Typography variant="h6">{item.sabor}</Typography>
+                    <Typography>{item.ingredientes}</Typography>
                     <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {item.valor}
-                      </Typography>
+                      <Typography variant="h6">{item.valor}</Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon className="iconAddProduct" />
                     </Box>
@@ -292,32 +242,20 @@ export default function Menu() {
             ))}
         </CustomTabPanel>
 
-        <CustomTabPanel
-          value={value}
-          index={4}
-          className="tabContents"
-        >
+        <CustomTabPanel value={value} index={4} className="tabContents">
           {drink
             .filter((item) =>
-              item.sabor
-                .toLowerCase()
-                .includes(searchValue.toLowerCase())
+              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
             )
             .map((item) => (
               <Card key={item.id} className="cardMenu">
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
-                    <Typography>
-                      {item.ingredientes}
-                    </Typography>
+                    <Typography variant="h6">{item.sabor}</Typography>
+                    <Typography>{item.ingredientes}</Typography>
                     <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {item.valor}
-                      </Typography>
+                      <Typography variant="h6">{item.valor}</Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon className="iconAddProduct" />
                     </Box>
