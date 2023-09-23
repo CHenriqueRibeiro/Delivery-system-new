@@ -1,134 +1,182 @@
-.displayCart {
-  height: 40%;
+.footer {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-around;
-  align-items: center;
-  margin: 10px 0;
-  border-radius: 25px !important;
-  background-color: #fae9de !important;
-  border: 5px solid #f76d26 !important;
-  box-shadow: 2px 8px 7px 5px rgba(0, 0, 0, 0.2),
-    2px 2px 3px -1px rgba(0, 0, 0, 0.14), 2px 6px 4px 0px rgba(0, 0, 0, 0.12) !important;
-}
-
-.cardCart:first-child {
-  margin-top: 0;
-}
-
-.card:last-child {
-  margin: 0;
-}
-
-.card img {
-  object-fit: cover;
-  height: 4rem;
-  width: 4rem;
-  border-radius: 50px;
-  margin: 0 9px;
-  box-shadow: 0px 0px 5px 2px #555;
-}
-
-.cartDescription {
+  width: 100% !important;
+  position: relative;
+  bottom: 0px;
   height: 100%;
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-end;
   flex-direction: row;
-  align-items: center;
+  align-content: center;
   flex-wrap: nowrap;
+  z-index: 3;
 }
-.cartDescription .imgCard {
-  display: flex !important;
-  width: 25% !important;
-  object-fit: cover !important;
-  border-radius: 50% !important;
-}
-.quantity-control {
-  position: absolute;
-  bottom: 7%;
-  left: 54%;
-  width: fit-content;
+.footer .contentFooter {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  width: 100%;
+  background-color: #fbe9dd;
 }
-.btnquantity {
-  background-color: #29292c;
-  border: #ffd439;
-  border-radius: 8px;
-  width: 2rem;
-  height: 2rem;
-
-  color: #ffd439;
-}
-
-.css-v4u5dn-MuiInputBase-root-MuiInput-root:after {
-  border-bottom: none !important;
-}
-.css-46bh2p-MuiCardContent-root {
-  padding: 5px 2px 10px 5px !important;
-}
-.contentCart .iconDelete {
-  padding: 0 !important;
-
-  bottom: 1.82rem !important;
-  left: 42.5vw !important;
+.footer .iconsfooter {
   color: #29292c !important;
 }
-
-.contentCart .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-  position: relative !important;
-  bottom: 0.2rem !important;
-  right: 1.5rem !important;
-  vertical-align: top !important;
+#cartcount {
+  display: flex;
+  border-radius: 50%;
+  width: 20px !important;
+  background-color: #29292c;
+  color: #fb6c1a;
+  height: 20px;
+  position: absolute;
+  top: 1%;
+  left: 18%;
+  justify-content: center;
+  align-items: center;
 }
-#cartShoppingList {
+
+#displayItems {
+  overflow: hidden;
+  display: flex;
+  height: 90vh;
+  max-width: 600px;
+  width: 100%;
+  background-color: #fb6c1a;
+  border-radius: 30px 30px 0 0;
+  position: absolute;
+  bottom: -100vh;
+  transition: 1s;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+}
+
+.displayItemson {
+  bottom: -2vh !important;
+  transition: 1s;
+}
+.displayItemson .btnreturnpurchase {
+  color: #f7e9e1 !important;
+  background-color: #f76d26 !important;
+  border-radius: 35px !important;
+  border: 1px solid #fae9de !important;
+  width: 80vw !important;
+  max-width: 375px !important;
+}
+.displayItemson .btncheckout {
+  color: #f7e9e1 !important;
+  background-color: #f76d26 !important;
+  border-radius: 35px !important;
+  border: 1px solid #fae9de !important;
+  width: 80vw !important;
+  max-width: 375px !important;
+}
+#iconcart-list {
+  max-width: none;
+  width: 100% !important;
+  background-color: #f76d26;
+  position: absolute;
+  border: 1px solid #fae9de !important;
+  border-radius: 27px 28px 0 0;
+  z-index: 1;
+}
+.cartButtons {
+  width: 46%;
+  height: 100px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-height:58%;
-  border: 1px #f7e9e1 solid !important;
   position: absolute;
-  top: 3.1rem !important;
-  background-color: #fae9de !important;
-  z-index: 1;
+  bottom: 13%;
+  right: 26.5%;
 }
-.listCardCart {
-  /*padding: 4px;
+
+.cartButtons button {
+  padding: 10px;
+}
+
+.cartButtons button:first-child {
+  margin-bottom: 10px;
+}
+.cardIconCarinho {
+  display: flex;
+  position: absolute;
+  top: 2%;
+}
+#btnCartIconCarrinho {
+  position: absolute;
+}
+#modalCadastro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fae9de;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  height: 40%;
+  min-height: 276px;
+  border: 6px solid #e5c7b3 !important;
+  border-radius: 30px;
+  box-shadow: 5px 4px 5px 2px rgba(0, 0, 0, 0.2),
+    5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12);
+}
+#modalContent {
+  display: flex;
   width: 100%;
   height: 100%;
-  position: absolute;*/
-  overflow: scroll;
-}
-.cartSum {
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
   align-items: center;
-  width: 103%;
-  height: 2%;
-  position: absolute;
-  bottom: -23px;
+  justify-content: space-evenly;
 }
-.sumPriceCart {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f46e2f;
-  color: #fae9de;
-  border: 1px #fae9de solid !important;
-  border-radius: 0px 0 30px 30px;
+
+#InputModal {
+  height: 40%;
   width: 100%;
-  height: 3rem;
-  font-size: 18px;
-  font-weight: 700;
-}
-.teste {
+  gap: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+}
+.inputModalDados {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: large;
+  height: 50%;
+  width: 85%;
+  border-radius: 13px;
+  position: relative;
+  padding-left: 15%;
+}
+
+.iconTelefoneInput {
+  position: absolute;
+  top: 17.2%;
+  left: 11%;
+}
+.iconTelefoneName {
+  position: absolute;
+  top: 37.9%;
+  left: 11%;
+}
+#transition-modal-description {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.btnIrParaPagamento {
+  color: #201e1d !important;
+  border: 1px #f46c26 solid !important;
+  border-radius: 11px !important;
+}
+.btnIrParaPagamento:hover {
+  background-color: #f76d26 !important;
+  color: #f9e9df !important;
 }

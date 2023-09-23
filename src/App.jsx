@@ -5,15 +5,15 @@ import '@fontsource/roboto/700.css';
 import './app.css';
 import Container from '@mui/material/Container';
 import { useState } from 'react';
-import { FoodContext } from './context/FoodContext';
 import { Outlet } from 'react-router-dom';
+import { CarrinhoProvider } from './context/useCarrinho';
 
 export default function App() {
   const [kart, setKart] = useState([]);
 
   return (
     <Container id="app" maxWidth="sm">
-      <FoodContext.Provider value={{ kart, setKart }}>
+      <CarrinhoProvider value={{ kart, setKart }}>
         {/* <Box
           id="header"
           sx={{
@@ -32,7 +32,7 @@ export default function App() {
         {/* <Box id="footer">
           <Footer />
         </Box> */}
-      </FoodContext.Provider>
+      </CarrinhoProvider>
     </Container>
   );
 }
