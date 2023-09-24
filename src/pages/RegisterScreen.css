@@ -101,6 +101,12 @@
   padding-left: 5px !important;
 }
 .btnIrParaPagamento {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto";
+  height: 5%;
   color: #f46c26 !important;
   min-width: 226px !important;
+   text-decoration: none;
 }

@@ -2,8 +2,9 @@ import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import Button from "@mui/material/Button";
+//import Button from "@mui/material/Button";
 import InputMask from "react-input-mask";
+import { NavLink } from "react-router-dom";
 import "./RegisterScreen.css";
 
 const RegisterScreen = () => {
@@ -38,7 +39,6 @@ const RegisterScreen = () => {
     }
   };
 
-  
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -46,7 +46,6 @@ const RegisterScreen = () => {
           <Typography variant="h6">Endereço</Typography>
           <label className="labelFormEndereco">CEP </label>
           <Box id="inputAndBtnSerach">
-            
             <InputMask
               mask="99999-999"
               maskChar={null}
@@ -72,7 +71,9 @@ const RegisterScreen = () => {
             {...register("addressNumber")}
           />
 
-          <label className="labelFormEndereco">Complemento/Ponto de Referência</label>
+          <label className="labelFormEndereco">
+            Complemento/Ponto de Referência
+          </label>
           <input
             type="text"
             className="inputFormEndereco"
@@ -110,7 +111,7 @@ const RegisterScreen = () => {
           <Box id="inputTelEWhats">
             <Box id="inputTelefone">
               <label className="labelFormEndereco">Nº Telefone</label>
-              
+
               <InputMask
                 mask="(99) 9 99999999"
                 maskChar={null}
@@ -130,9 +131,10 @@ const RegisterScreen = () => {
               />
             </Box>
           </Box>
-          <Button variant="outlined" className="btnIrParaPagamento">
+
+          <NavLink to="/pedido" className="btnIrParaPagamento">
             Ir para pagamento
-          </Button>
+          </NavLink>
         </Box>
       </form>
     </>
