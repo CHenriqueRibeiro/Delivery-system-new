@@ -17,7 +17,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import AbcIcon from '@mui/icons-material/Abc';
 import InputMask from 'react-input-mask';
 
-import './Cart.css';
+import './cart.css';
 
 import { NavLink } from 'react-router-dom';
 

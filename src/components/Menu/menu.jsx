@@ -22,9 +22,9 @@ import {
 } from '@mui/material';
 import Header from '../Header/header';
 import './menu.css';
-import Cart from '../Cart/Cart';
 import { useCarrinho } from '../../context/useCarrinho';
 import { useFormat } from './../../utils/useFormat';
+import Cart from '../Cart/cart';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
