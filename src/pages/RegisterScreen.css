@@ -106,7 +106,9 @@
   align-items: center;
   font-family: "Roboto";
   height: 5%;
+  border: 1px #f46c26 solid;
+  border-radius: 10px;
   color: #f46c26 !important;
   min-width: 226px !important;
-   text-decoration: none;
+  text-decoration: none;
 }

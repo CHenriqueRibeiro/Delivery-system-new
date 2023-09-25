@@ -92,7 +92,7 @@ export default function Footer() {
                       <Box id="InputModal">
                         <InputMask
                           placeholder="Nº telefone"
-                          mask="(99) 9 99999999"
+                          mask="99 9 99999999"
                           maskChar={null}
                           className="inputModalDados"
                         />
@@ -114,10 +114,10 @@ export default function Footer() {
                           </span>
                         </Typography>
                       </Box>
-                      <Button variant="outlined" className="btnIrParaPagamento">
+                      <Button variant="outlined" className="btnGoPay">
                         Login
                       </Button>
-                      <Button variant="outlined" className="btnIrParaPagamento">
+                      <Button variant="outlined" className="btnGoPay">
                         Continuar sem cadastro
                       </Button>
                     </Typography>

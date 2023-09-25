@@ -6,9 +6,13 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import InputMask from "react-input-mask";
 import { NavLink } from "react-router-dom";
 import "./RegisterScreen.css";
+import { useState } from "react";
 
 const RegisterScreen = () => {
   const { register, handleSubmit, setValue, setFocus } = useForm();
+  const [whatsCheckBox, setwhatsCheckBox] = useState(false);
+  const [numberPhone, setNumberPhone] = useState("");
+  const [numberWhats, setNumberWhats] = useState("");
 
   const onSubmit = (e) => {
     console.log(e);
@@ -87,7 +91,7 @@ const RegisterScreen = () => {
             {...register("neighborhood")}
           />
           <Box id="inputCidadeEEstado">
-            <Box>
+            <Box sx={{display:'flex', flexDirection:"column"}}>
               <label className="labelFormEndereco onlyLetters">Cidade</label>
               <input
                 type="text"
@@ -113,21 +117,31 @@ const RegisterScreen = () => {
               <label className="labelFormEndereco">Nº Telefone</label>
 
               <InputMask
-                mask="(99) 9 99999999"
+                mask="99 9 99999999"
                 maskChar={null}
                 className="inputFormEndereco w9rem"
+                value={numberPhone}
+                onChange={(e) => setNumberPhone(e.target.value)}
               />
               <Box className="checkboxWhatsapp">
-                <input type="checkbox" name="oi" id="" />
+                <input
+                  type="checkbox"
+                  name="oi"
+                  id=""
+                  onChange={(e) => setwhatsCheckBox(e.target.checked)}
+                />
                 <span className="spancheckboxWhatsapp">Whatsapp</span>
               </Box>
             </Box>
             <Box id="inputWhatsapp">
               <label className="labelFormEndereco">Whatsapp</label>
               <InputMask
-                mask="(99) 9 99999999"
+                mask="99 9 99999999"
                 maskChar={null}
                 className="inputFormEndereco w9rem"
+                disabled={whatsCheckBox ? "disabled" : ""}
+                value={whatsCheckBox ? numberPhone : numberWhats}
+                onChange={e => setNumberWhats(e.target.value)}
               />
             </Box>
           </Box>
