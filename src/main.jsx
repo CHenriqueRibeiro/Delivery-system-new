@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import RegisterScreen from "./pages/RegisterScreen.jsx";
+import Order from "./pages/Order.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/cadastro",
         element: <RegisterScreen />,
+      },
+      {
+        path: "/pedido",
+        element: <Order />,
       },
     ],
   },
