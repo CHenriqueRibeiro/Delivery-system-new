@@ -57,7 +57,7 @@ const RegisterScreen = () => {
               {...register("cep")}
               onBlur={checkCEP}
             />
-            <button type="submit" className="btnsearch">
+            <button type="submit" className="btnsearch" sx={{color:'#f46c26', background:'black', margin:'15px'}}>
               <SearchRoundedIcon />
             </button>
           </Box>
