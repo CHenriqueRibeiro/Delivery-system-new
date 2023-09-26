@@ -1,34 +1,36 @@
-import { useState } from 'react';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import Button from '@mui/material/Button';
-import ListCart from '../Listcart/listcart';
+import { useState } from "react";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import Button from "@mui/material/Button";
+import ListCart from "../Listcart/listcart";
 
-import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Typography from '@mui/material/Typography';
-import PhoneIcon from '@mui/icons-material/Phone';
-import AbcIcon from '@mui/icons-material/Abc';
-import InputMask from 'react-input-mask';
+import * as React from "react";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Typography from "@mui/material/Typography";
+import PhoneIcon from "@mui/icons-material/Phone";
+import AbcIcon from "@mui/icons-material/Abc";
+import InputMask from "react-input-mask";
+import { useCarrinho } from "../../context/useCarrinho";
+import { useFormat } from "../../utils/useFormat";
 
-import './cart.css';
+import "./cart.css";
 
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 export default function Cart() {
   const [value, setValue] = useState(0);
   const [open, setOpen] = React.useState(false);
+  const { sumValueItems } = useCarrinho();
 
   const openListItems = () => {
-    const addproducts =
-      document.getElementById('displayItems');
-    addproducts.classList.toggle('displayItemson');
+    const addproducts = document.getElementById("displayItems");
+    addproducts.classList.toggle("displayItemson");
   };
 
   const handleOpen = () => setOpen(true);
@@ -37,18 +39,56 @@ export default function Cart() {
   return (
     <>
       <Box id="displayItems">
-        <BottomNavigationAction
-          id="btnCartIconCarrinho"
-          label="Carrinho"
-          icon={
-            <ShoppingCartOutlinedIcon id="cartIconCarrinho" />
-          }
-          onClick={openListItems}
-        />
-
+        <Box
+          sx={{
+            overflow: "hidden",
+            width: "100%",
+            height: "9%",
+            display: "flex",
+            alignContent: "center",
+            justifyContent: "center",
+            flexCirection: "row",
+            zIndex: "3",
+          }}
+        >
+          <BottomNavigationAction
+            id="btnCartIconCarrinho"
+            label="Carrinho"
+            icon={<ShoppingCartOutlinedIcon id="cartIconCarrinho" />}
+            onClick={openListItems}
+          />
+        </Box>
         <ListCart />
-
-        <Box className="cartButtons">
+        <Box
+          sx={{
+            display: "flex",
+            width: "80%",
+            gap: "5px",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            bottom: "8.5rem",
+            position: "absolute",
+          }}
+        >
+          <Typography
+            className="sumPriceCart "
+            variant="h6"
+            sx={{
+              backgroundColor: "#fae9de",
+              color: "#f76d26",
+              height: "3.9rem",
+              width: "10rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "13px",
+              textAlign: "center",
+              boxShadow: " 5px 4px 5px 2px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            Subtotal: {useFormat(sumValueItems())}
+          </Typography>
           <Button
             className="btnreturnpurchase"
             variant="outlined"
@@ -56,7 +96,8 @@ export default function Cart() {
           >
             continuar Comprando
           </Button>
-
+        </Box>
+        <Box className="cartButtons">
           <Button
             className="btncheckout"
             variant="contained"
@@ -106,12 +147,9 @@ export default function Cart() {
                       </Box>
                       <Box>
                         <Typography>
-                          Não tem cadastro?{' '}
+                          Não tem cadastro?{" "}
                           <span>
-                            <NavLink
-                              className="btncheckout"
-                              to="/cadastro"
-                            >
+                            <NavLink className="btncheckout" to="/cadastro">
                               Realizar Cadastro
                             </NavLink>
                           </span>
@@ -120,15 +158,19 @@ export default function Cart() {
                       <Button
                         variant="outlined"
                         className="btnIrParaPagamento"
+                        sx={{ height: "2rem" }}
                       >
                         Login
                       </Button>
-                      <Button
-                        variant="outlined"
-                        className="btnIrParaPagamento"
-                      >
-                        Continuar sem cadastro
-                      </Button>
+                      <NavLink to="/pedido">
+                        <Button
+                          variant="outlined"
+                          className="btnIrParaPagamento"
+                          sx={{ height: "2rem" }}
+                        >
+                          Continuar sem cadastro
+                        </Button>
+                      </NavLink>
                     </Typography>
                   </Box>
                 </Box>
@@ -172,9 +214,7 @@ export default function Cart() {
           <BottomNavigationAction
             className="iconsfooter"
             label="Perfil"
-            icon={
-              <AccountCircleOutlinedIcon className="iconsfooter" />
-            }
+            icon={<AccountCircleOutlinedIcon className="iconsfooter" />}
           />
         </BottomNavigation>
       </Box>

@@ -6,8 +6,9 @@ import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlin
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 import PixOutlinedIcon from "@mui/icons-material/PixOutlined";
-import "./Order.css";
 import { NavLink } from "react-router-dom";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import "./Order.css";
 
 //import Backdrop from "@mui/material/Backdrop";
 
@@ -31,6 +32,7 @@ const Order = () => {
   function changeCondition() {
     setIsDisabled(!isDisabled);
   }
+  
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -70,11 +72,7 @@ const Order = () => {
                     variant="h5"
                   >
                     Telefone:
-                    <TextField
-                      disabled={isDisabled}
-                      type="text"
-                      className="inputCheckout"
-                    />
+                    <TextField type="text" className="inputCheckout" />
                   </Typography>
                 </>
               ) : (
@@ -166,11 +164,7 @@ const Order = () => {
                     variant="h5"
                   >
                     Cep:
-                    <TextField
-                      disabled={isDisabled}
-                      type="text"
-                      className="inputCheckout"
-                    />
+                    <TextField type="text" className="inputCheckout" />
                   </Typography>
                 ) : (
                   <Typography
@@ -189,11 +183,7 @@ const Order = () => {
                     >
                       {" "}
                       Rua :
-                      <TextField
-                        disabled={isDisabled}
-                        type="text"
-                        className="inputCheckout"
-                      />
+                      <TextField type="text" className="inputCheckout" />
                     </Typography>
                   </>
                 ) : (
@@ -213,11 +203,7 @@ const Order = () => {
                     >
                       {" "}
                       Casa/Apto :
-                      <TextField
-                        disabled={isDisabled}
-                        type="text"
-                        className="inputCheckout"
-                      />
+                      <TextField type="text" className="inputCheckout" />
                     </Typography>
                   </>
                 ) : (
@@ -237,11 +223,7 @@ const Order = () => {
                     >
                       {" "}
                       Bairro:
-                      <TextField
-                        disabled={isDisabled}
-                        type="text"
-                        className="inputCheckout"
-                      />
+                      <TextField type="text" className="inputCheckout" />
                     </Typography>
                   </>
                 ) : (
@@ -261,11 +243,7 @@ const Order = () => {
                     >
                       {" "}
                       Cidade:
-                      <TextField
-                        disabled={isDisabled}
-                        type="text"
-                        className="inputCheckout"
-                      />
+                      <TextField type="text" className="inputCheckout" />
                     </Typography>
                   </>
                 ) : (
@@ -285,11 +263,7 @@ const Order = () => {
                     >
                       {" "}
                       Estado:
-                      <TextField
-                        disabled={isDisabled}
-                        type="text"
-                        className="inputCheckout"
-                      />
+                      <TextField type="text" className="inputCheckout" />
                     </Typography>
                   </>
                 ) : (
@@ -409,11 +383,11 @@ const Order = () => {
             <Box className="FormOfPayment">
               <Box display={"flex"} alignItems={"center"} width={"100"}>
                 <Radio
-                  checked={selectedValuePayment === "a"}
+                  checked={selectedValuePayment === "creditCard"}
                   onChange={handleChangePayment}
-                  value="a"
+                  value="creditCard"
                   name="radio-buttons"
-                  inputProps={{ "aria-label": "A" }}
+                  inputProps={{ "aria-label": "creditCard" }}
                 />
                 <CreditCardOutlinedIcon />
                 <Typography variant="h6" sx={{ pl: 2 }}>
@@ -422,11 +396,11 @@ const Order = () => {
               </Box>
               <Box display={"flex"} alignItems={"center"}>
                 <Radio
-                  checked={selectedValuePayment === "b"}
+                  checked={selectedValuePayment === "debitCard"}
                   onChange={handleChangePayment}
-                  value="b"
+                  value="debitCard"
                   name="radio-buttons"
-                  inputProps={{ "aria-label": "B" }}
+                  inputProps={{ "aria-label": "debitCard" }}
                 />
                 <CreditCardOutlinedIcon />
                 <Typography variant="h6" sx={{ pl: 2 }}>
@@ -435,11 +409,11 @@ const Order = () => {
               </Box>
               <Box display={"flex"} alignItems={"center"}>
                 <Radio
-                  checked={selectedValuePayment === "c"}
+                  checked={selectedValuePayment === "pix"}
                   onChange={handleChangePayment}
-                  value="c"
+                  value="pix"
                   name="radio-buttons"
-                  inputProps={{ "aria-label": "C" }}
+                  inputProps={{ "aria-label": "pix" }}
                 />
                 <PixOutlinedIcon />
                 <Typography variant="h6" sx={{ pl: 2 }}>
@@ -448,13 +422,13 @@ const Order = () => {
               </Box>
               <Box display={"flex"} alignItems={"center"}>
                 <Radio
-                  checked={selectedValuePayment === "d"}
+                  checked={selectedValuePayment === "money"}
                   onChange={handleChangePayment}
-                  value="d"
+                  value="money"
                   name="radio-buttons"
-                  inputProps={{ "aria-label": "D" }}
+                  inputProps={{ "aria-label": "money" }}
                 />
-                <StorefrontOutlinedIcon />
+                <AttachMoneyIcon />
                 <Typography variant="h6" sx={{ pl: 2 }}>
                   Dinheiro
                 </Typography>
