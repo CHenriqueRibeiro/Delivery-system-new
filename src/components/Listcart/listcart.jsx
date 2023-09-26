@@ -4,7 +4,7 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 import { useCarrinho } from "../../context/useCarrinho";
 import { useFormat } from "../../utils/useFormat";
 import DeleteIcon from "@mui/icons-material/Delete";
-import "./listCart.css";
+import '../Listcart/listcart.css'
 
 export default function ListCart() {
   // const { cart, sumValueItems, deleteFromCart } = useCarrinho();
@@ -61,6 +61,7 @@ export default function ListCart() {
                     src={item.imagem}
                     alt="imagem do item escolhido"
                     className="ImgCardListCard"
+                   
                   />
 
                   <Box
