@@ -2,7 +2,6 @@ import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
 import { Button, Typography } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-//import Button from "@mui/material/Button";
 import InputMask from "react-input-mask";
 import { NavLink } from "react-router-dom";
 import "./RegisterScreen.css";
@@ -48,50 +47,76 @@ const RegisterScreen = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box className="dadosCadastro">
           <Typography variant="h6">Endereço</Typography>
-          <label className="labelFormEndereco">CEP </label>
           <Box id="inputAndBtnSerach">
-            <InputMask
-              mask="99999-999"
-              maskChar={null}
-              className="inputFormEndereco cep"
-              {...register("cep")}
-              onBlur={checkCEP}
-            />
-            <Button type="submit" className="btnsearch" sx={{color:'#f46c26', background:'black', margin:'15px'}}>
-              <SearchRoundedIcon />
-            </Button>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <label className="labelFormEndereco">CEP </label>
+              <InputMask
+                mask="99999-999"
+                maskChar={null}
+                className="inputFormEndereco cep"
+                {...register("cep")}
+                onBlur={checkCEP}
+                />
+                </Box>
+              <Button
+                type="submit"
+                className="btnsearch"
+                sx={{
+                  color: "#f46c26",
+                  background: "#f9e9df",
+                  marginLeft: "10px",
+                  height: "2rem",
+                  minWidth: "2.3rem",
+                  padding: "0 ",
+                  position:'relative',
+                  top:'0.6rem',
+                  left:'0',
+                  border:'1px solid #f16d2f',
+                  boxShadow:
+                    " 5px 4px 5px 2px rgba(0, 0, 0, 0.2), 5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12) !important;",
+                }}
+              >
+                <SearchRoundedIcon />
+              </Button>
           </Box>
-          <label className="labelFormEndereco">Rua </label>
-          <input
-            type="text"
-            className="inputFormEndereco"
-            {...register("address")}
-          />
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <label className="labelFormEndereco">Rua </label>
+            <input
+              type="text"
+              className="inputFormEndereco"
+              {...register("address")}
+            />
+          </Box>
 
-          <label className="labelFormEndereco">Numero</label>
-          <input
-            type="text"
-            className="inputFormEndereco"
-            {...register("addressNumber")}
-          />
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <label className="labelFormEndereco">Numero</label>
+            <input
+              type="text"
+              className="inputFormEndereco"
+              {...register("addressNumber")}
+            />
+          </Box>
 
-          <label className="labelFormEndereco">
-            Complemento/Ponto de Referência
-          </label>
-          <input
-            type="text"
-            className="inputFormEndereco"
-            {...register("addresscomplement")}
-          />
-
-          <label className="labelFormEndereco">Bairro</label>
-          <input
-            type="text"
-            className="inputFormEndereco"
-            {...register("neighborhood")}
-          />
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <label className="labelFormEndereco">
+              Complemento/Ponto de Referência
+            </label>
+            <input
+              type="text"
+              className="inputFormEndereco"
+              {...register("addresscomplement")}
+            />
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <label className="labelFormEndereco">Bairro</label>
+            <input
+              type="text"
+              className="inputFormEndereco"
+              {...register("neighborhood")}
+            />
+          </Box>
           <Box id="inputCidadeEEstado">
-            <Box sx={{display:'flex', flexDirection:"column"}}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
               <label className="labelFormEndereco onlyLetters">Cidade</label>
               <input
                 type="text"
@@ -99,7 +124,7 @@ const RegisterScreen = () => {
                 {...register("city")}
               />
             </Box>
-            <Box className="dadosEstado">
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
               <label className="labelFormEndereco  onlyLetters">Estado</label>
               <input
                 type="text"
@@ -110,8 +135,10 @@ const RegisterScreen = () => {
           </Box>
           <Typography variant="h6">Dados Pessoais</Typography>
 
-          <label className="labelFormEndereco">Nome</label>
-          <input type="text" className="inputFormEndereco onlyLetters" />
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <label className="labelFormEndereco">Nome</label>
+            <input type="text" className="inputFormEndereco onlyLetters" />
+          </Box>
           <Box id="inputTelEWhats">
             <Box id="inputTelefone">
               <label className="labelFormEndereco">Nº Telefone</label>
@@ -123,6 +150,7 @@ const RegisterScreen = () => {
                 value={numberPhone}
                 onChange={(e) => setNumberPhone(e.target.value)}
               />
+
               <Box className="checkboxWhatsapp">
                 <input
                   type="checkbox"
@@ -141,7 +169,7 @@ const RegisterScreen = () => {
                 className="inputFormEndereco w9rem"
                 disabled={whatsCheckBox ? "disabled" : ""}
                 value={whatsCheckBox ? numberPhone : numberWhats}
-                onChange={e => setNumberWhats(e.target.value)}
+                onChange={(e) => setNumberWhats(e.target.value)}
               />
             </Box>
           </Box>

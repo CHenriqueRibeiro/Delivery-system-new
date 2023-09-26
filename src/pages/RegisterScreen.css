@@ -22,8 +22,8 @@
 .inputFormEndereco {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: large;
-  background-color: #f46c26 !important;
-  color: #f9e9df;
+  background-color: #f46c26 !important ;
+  color: #f9e9df !important;
   text-transform: capitalize;
   padding-left: 5px;
   height: 2rem;
@@ -41,19 +41,7 @@
   justify-content: space-between;
   align-items: center;
 }
-.btnsearch {
-  height: 2rem;
-  width: 2.3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 8px;
-  color: #f46c26;
-  cursor: pointer;
-  box-shadow: 5px 4px 5px 2px rgba(0, 0, 0, 0.2),
-    5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12) !important;
-}
+
 #inputCidadeEEstado {
   display: flex;
   gap: 0.8rem;
