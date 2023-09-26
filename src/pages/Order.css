@@ -168,8 +168,8 @@
   border-color: #070707 !important;
   margin-left: 10px;
 }
-.inputCheckout input {
-  color: #070707;
+.inputCheckout > input {
+  color: #070707 !important;
   padding: 0 0 9px 25px !important;
   text-transform: capitalize;
 }
