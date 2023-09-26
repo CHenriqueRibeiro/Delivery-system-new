@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
-
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -12,9 +12,7 @@ import Image2 from '../../../public/pizza.png';
 import Image3 from '../../../public/hamburguer.png';
 import Image4 from '../../../public/comida-mexicana.png';
 import Image5 from '../../../public/refrigerantes.png';
-
-import './menu.css';
-
+import SearchIcon from '@mui/icons-material/Search';
 import Data from '../../db/data.json';
 import {
   Card,
@@ -23,7 +21,10 @@ import {
   Typography,
 } from '@mui/material';
 import Header from '../Header/header';
-import Footer from '../Footer/footer';
+import './menu.css';
+import { useCarrinho } from '../../context/useCarrinho';
+import { useFormat } from './../../utils/useFormat';
+import Cart from '../Cart/cart';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,12 +46,13 @@ CustomTabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
-  ctx: PropTypes.Context,
 };
 
 export default function Menu() {
   const [value, setValue] = useState(0);
   const [searchValue, setSearchValue] = useState('');
+
+  const { addInCart } = useCarrinho();
 
   const handleSearchInputChange = (e) => {
     setSearchValue(e.target.value);
@@ -128,6 +130,7 @@ export default function Menu() {
 
       <Box
         id="boxInput"
+        className="boxInputMenu"
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -135,13 +138,14 @@ export default function Menu() {
           width: '100%',
         }}
       >
+        <SearchIcon className="iconSearchFilterMenu" />
         <TextField
           label="Ta com fome de quê?"
           variant="outlined"
           onChange={handleSearchInputChange}
         />
       </Box>
-
+      <Box className="fundoInputFiltro"></Box>
       <Box
         id="contentmenu"
         sx={{
@@ -176,10 +180,13 @@ export default function Menu() {
                     </Typography>
                     <Box className="priceAndIcons">
                       <Typography variant="h6">
-                        {item.valor}
+                        {useFormat(item.valor)}
                       </Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
-                      <AddShoppingCartIcon className="iconAddProduct" />
+                      <AddShoppingCartIcon
+                        className="iconAddProduct"
+                        onClick={() => addInCart(item)}
+                      />
                     </Box>
                   </Box>
                 </CardContent>
@@ -211,10 +218,13 @@ export default function Menu() {
                     </Typography>
                     <Box className="priceAndIcons">
                       <Typography variant="h6">
-                        {item.valor}
+                        {useFormat(item.valor)}
                       </Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
-                      <AddShoppingCartIcon className="iconAddProduct" />
+                      <AddShoppingCartIcon
+                        className="iconAddProduct"
+                        onClick={() => addInCart(item)}
+                      />
                     </Box>
                   </Box>
                 </CardContent>
@@ -246,10 +256,13 @@ export default function Menu() {
                     </Typography>
                     <Box className="priceAndIcons">
                       <Typography variant="h6">
-                        {item.valor}
+                        {useFormat(item.valor)}
                       </Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
-                      <AddShoppingCartIcon className="iconAddProduct" />
+                      <AddShoppingCartIcon
+                        className="iconAddProduct"
+                        onClick={() => addInCart(item)}
+                      />
                     </Box>
                   </Box>
                 </CardContent>
@@ -281,10 +294,13 @@ export default function Menu() {
                     </Typography>
                     <Box className="priceAndIcons">
                       <Typography variant="h6">
-                        {item.valor}
+                        {useFormat(item.valor)}
                       </Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
-                      <AddShoppingCartIcon className="iconAddProduct" />
+                      <AddShoppingCartIcon
+                        className="iconAddProduct"
+                        onClick={() => addInCart(item)}
+                      />
                     </Box>
                   </Box>
                 </CardContent>
@@ -316,10 +332,13 @@ export default function Menu() {
                     </Typography>
                     <Box className="priceAndIcons">
                       <Typography variant="h6">
-                        {item.valor}
+                        {useFormat(item.valor)}
                       </Typography>
                       <FavoriteIcon className="iconFavoriteMenu" />
-                      <AddShoppingCartIcon className="iconAddProduct" />
+                      <AddShoppingCartIcon
+                        className="iconAddProduct"
+                        onClick={() => addInCart(item)}
+                      />
                     </Box>
                   </Box>
                 </CardContent>
@@ -328,7 +347,7 @@ export default function Menu() {
         </CustomTabPanel>
       </Box>
       <Box id="footer">
-        <Footer />
+        <Cart />
       </Box>
     </>
   );
