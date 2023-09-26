@@ -4,7 +4,7 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 import { useCarrinho } from "../../context/useCarrinho";
 import { useFormat } from "../../utils/useFormat";
 import DeleteIcon from "@mui/icons-material/Delete";
-import "./ListCart.css";
+import "./listCart.css";
 
 export default function ListCart() {
   // const { cart, sumValueItems, deleteFromCart } = useCarrinho();
