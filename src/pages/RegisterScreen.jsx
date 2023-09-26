@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 //import Button from "@mui/material/Button";
 import InputMask from "react-input-mask";
@@ -57,9 +57,9 @@ const RegisterScreen = () => {
               {...register("cep")}
               onBlur={checkCEP}
             />
-            <button type="submit" className="btnsearch" sx={{color:'#f46c26', background:'black', margin:'15px'}}>
+            <Button type="submit" className="btnsearch" sx={{color:'#f46c26', background:'black', margin:'15px'}}>
               <SearchRoundedIcon />
-            </button>
+            </Button>
           </Box>
           <label className="labelFormEndereco">Rua </label>
           <input
