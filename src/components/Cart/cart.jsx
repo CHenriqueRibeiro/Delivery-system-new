@@ -27,6 +27,7 @@ export default function Cart() {
   const [value, setValue] = useState(0);
   const [open, setOpen] = React.useState(false);
   const { sumValueItems } = useCarrinho();
+  const [nome, setNome] = useState("");
 
   const openListItems = () => {
     const addproducts = document.getElementById("displayItems");
@@ -35,6 +36,14 @@ export default function Cart() {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+
+    if (/^[A-Za-z\s]+$/.test(inputValue) || inputValue === "") {
+      setNome(inputValue);
+    }
+  };
 
   return (
     <>
@@ -133,15 +142,22 @@ export default function Cart() {
                       <Box id="InputModal">
                         <InputMask
                           placeholder="Nº telefone"
-                          mask="(99) 9 99999999"
+                          mask="99 9 99999999"
                           maskChar={null}
                           className="inputModalDados"
                         />
                         <PhoneIcon className="iconTelefoneInput" />
-                        <input
+
+                        <InputMask
+                          mask=""
+                          maskChar=""
+                          spellCheck="false"
                           type="text"
                           placeholder="Nome"
                           className="inputModalDados"
+                          value={nome}
+                          onChange={handleInputChange}
+                          maxLength={20}
                         />
                         <AbcIcon className="iconTelefoneName" />
                       </Box>
