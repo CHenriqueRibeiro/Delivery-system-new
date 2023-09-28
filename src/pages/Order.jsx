@@ -6,20 +6,42 @@ import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlin
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import CreditCardOutlinedIcon from "@mui/icons-material/CreditCardOutlined";
 import PixOutlinedIcon from "@mui/icons-material/PixOutlined";
-import "./Order.css";
 import { NavLink } from "react-router-dom";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import InputMask from "react-input-mask";
+
+/*import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";*/
+import "./Order.css";
 
 //import Backdrop from "@mui/material/Backdrop";
 
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 
+/*const schema = yup
+  .object({
+    firstName: yup.string().required(),
+    age: yup.number().positive().integer().required(),
+  })
+  .required();*/
 const Order = () => {
   const [selectedValueDelivery, setSelectedValueDelivery] =
     useState("delivery");
   const [selectedValuePayment, setSelectedValuePayment] = useState();
   const [isDisabled, setIsDisabled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [nome, setNome] = useState("");
+
+  /* const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = (data) => console.log(data);*/
 
   const handleChangeDelivery = (event) => {
     setSelectedValueDelivery(event.target.value);
@@ -31,8 +53,17 @@ const Order = () => {
   function changeCondition() {
     setIsDisabled(!isDisabled);
   }
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+
+    if (/^[A-Za-z\s]+$/.test(inputValue) || inputValue === "") {
+      setNome(inputValue);
+    }
+  };
 
   return (
     <Box className="screenOrder">
@@ -49,6 +80,15 @@ const Order = () => {
           <Box className="contentPersonalData">
             {" "}
             <Box className="backgroundTitle"></Box>
+            {/* <form onSubmit={handleSubmit(onSubmit)}>
+              <input {...register("firstName")} />
+              <p>{errors.firstName?.message}</p>
+
+              <input {...register("age")} />
+              <p>{errors.age?.message}</p>
+
+              <input type="submit" />
+  </form>*/}
             <Typography variant="h6" className="editInformation">
               Quem pediu
               <Button onClick={changeCondition} className="btnEditInformation">
@@ -60,19 +100,28 @@ const Order = () => {
                 <>
                   <Typography
                     sx={{ display: "flex", flexDirection: "row" }}
-                    variant="h5"
+                    variant="h6"
                   >
                     Nome:
-                    <TextField type="text" className="inputCheckout" />
+                    <InputMask
+                      mask=""
+                      maskChar=""
+                      spellCheck="false"
+                      type="text"
+                      className="inputCheckout"
+                      value={nome}
+                      onChange={handleInputChange}
+                      maxLength={20}
+                    />
                   </Typography>
                   <Typography
                     sx={{ display: "flex", flexDirection: "row" }}
-                    variant="h5"
+                    variant="h6"
                   >
                     Telefone:
-                    <TextField
-                      disabled={isDisabled}
-                      type="text"
+                    <InputMask
+                      mask="99 9 99999999"
+                      maskChar={null}
                       className="inputCheckout"
                     />
                   </Typography>
@@ -89,10 +138,10 @@ const Order = () => {
                     }}
                   >
                     <span>
-                      <Typography variant="h5"> Nome: Henrique</Typography>
+                      <Typography variant="h6"> Nome: Henrique</Typography>
                     </span>
                     <span>
-                      <Typography variant="h5">
+                      <Typography variant="h6">
                         {" "}
                         Telefone: 85 988888888
                       </Typography>
@@ -120,7 +169,7 @@ const Order = () => {
               Forma de Entrega
             </Typography>
             <Box className="deliveryMethod">
-              <Box display={"flex"} width={"100"}>
+              <Box display={"flex"} width={"100%"} alignItems={"center"}>
                 <Radio
                   checked={selectedValueDelivery === "delivery"}
                   onChange={handleChangeDelivery}
@@ -161,144 +210,146 @@ const Order = () => {
               </Typography>
               <Box className="addressData">
                 {isDisabled ? (
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h5"
-                  >
-                    Cep:
-                    <TextField
-                      disabled={isDisabled}
-                      type="text"
-                      className="inputCheckout"
-                    />
-                  </Typography>
-                ) : (
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h5"
-                  >
-                    <span className="inputCheckout"> Cep: 12345-678</span>
-                  </Typography>
-                )}
-
-                {isDisabled ? (
                   <>
                     <Typography
                       sx={{ display: "flex", flexDirection: "column" }}
-                      variant="h5"
+                      variant="h6"
+                    >
+                      Cep:
+                      <InputMask
+                        mask="999999-999"
+                        maskChar={null}
+                        //style={{ background:'red', width:'50%', borderRadius:'15px', border:'none',paddingLeft:'10px'}}
+                      />
+                    </Typography>
+
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
                     >
                       {" "}
                       Rua :
-                      <TextField
-                        disabled={isDisabled}
+                      <InputMask
+                        mask=""
+                        maskChar=""
+                        spellCheck="false"
                         type="text"
-                        className="inputCheckout"
+                        maxLength={50}
                       />
                     </Typography>
-                  </>
-                ) : (
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h5"
-                  >
-                    <span className="inputCheckout"> Rua: Luz Branca</span>
-                  </Typography>
-                )}
-
-                {isDisabled ? (
-                  <>
                     <Typography
                       sx={{ display: "flex", flexDirection: "column" }}
-                      variant="h5"
+                      variant="h6"
                     >
                       {" "}
                       Casa/Apto :
-                      <TextField
-                        disabled={isDisabled}
+                      <InputMask
+                        mask=""
+                        maskChar=""
+                        spellCheck="false"
                         type="text"
-                        className="inputCheckout"
+                        maxLength={50}
                       />
                     </Typography>
-                  </>
-                ) : (
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h5"
-                  >
-                    <span className="inputCheckout"> Casa/Apto: 12B</span>
-                  </Typography>
-                )}
-
-                {isDisabled ? (
-                  <>
                     <Typography
                       sx={{ display: "flex", flexDirection: "column" }}
-                      variant="h5"
+                      variant="h6"
+                    >
+                      {" "}
+                      Complemento :
+                      <InputMask
+                        mask=""
+                        maskChar=""
+                        spellCheck="false"
+                        type="text"
+                        maxLength={50}
+                      />
+                    </Typography>
+
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
                     >
                       {" "}
                       Bairro:
-                      <TextField
-                        disabled={isDisabled}
+                      <InputMask
+                        mask=""
+                        maskChar={null}
+                        spellCheck="false"
                         type="text"
-                        className="inputCheckout"
+                        maxLength={20}
                       />
                     </Typography>
-                  </>
-                ) : (
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h5"
-                  >
-                    <span className="inputCheckout">Bairro: Camuntaga</span>
-                  </Typography>
-                )}
 
-                {isDisabled ? (
-                  <>
                     <Typography
                       sx={{ display: "flex", flexDirection: "column" }}
-                      variant="h5"
+                      variant="h6"
                     >
                       {" "}
                       Cidade:
-                      <TextField
-                        disabled={isDisabled}
+                      <InputMask
+                        mask=""
+                        maskChar=""
+                        spellCheck="false"
                         type="text"
-                        className="inputCheckout"
+                        maxLength={50}
                       />
                     </Typography>
-                  </>
-                ) : (
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h5"
-                  >
-                    <span className="inputCheckout">Cidade: Caucaia</span>
-                  </Typography>
-                )}
 
-                {isDisabled ? (
-                  <>
                     <Typography
                       sx={{ display: "flex", flexDirection: "column" }}
-                      variant="h5"
+                      variant="h6"
                     >
                       {" "}
                       Estado:
-                      <TextField
-                        disabled={isDisabled}
+                      <InputMask
+                        mask=""
+                        maskChar=""
+                        spellCheck="false"
                         type="text"
-                        className="inputCheckout"
+                        maxLength={50}
                       />
                     </Typography>
                   </>
                 ) : (
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h5"
-                  >
-                    <span className="inputCheckout">Estado: Ceará</span>
-                  </Typography>
+                  <>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout"> Cep: 12345-678</span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout"> Rua: Luz Branca</span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout"> Casa/Apto: 12B</span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout">Bairro: Camuntaga</span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout">Cidade: Caucaia</span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout">Estado: Ceará</span>
+                    </Typography>
+                  </>
                 )}
               </Box>
             </Box>
@@ -315,7 +366,7 @@ const Order = () => {
               <Box className="addressData">
                 <Typography
                   sx={{ display: "flex", flexDirection: "column" }}
-                  variant="h5"
+                  variant="h6"
                 >
                   Cep:{" "}
                   <TextField
@@ -328,7 +379,7 @@ const Order = () => {
 
                 <Typography
                   sx={{ display: "flex", flexDirection: "column" }}
-                  variant="h5"
+                  variant="h6"
                 >
                   Rua/Av:{" "}
                   <TextField
@@ -340,7 +391,7 @@ const Order = () => {
                 </Typography>
                 <Typography
                   sx={{ display: "flex", flexDirection: "column" }}
-                  variant="h5"
+                  variant="h6"
                 >
                   Complemento:{" "}
                   <TextField
@@ -352,7 +403,7 @@ const Order = () => {
                 </Typography>
                 <Typography
                   sx={{ display: "flex", flexDirection: "column" }}
-                  variant="h5"
+                  variant="h6"
                 >
                   Bairro:{" "}
                   <TextField
@@ -364,7 +415,7 @@ const Order = () => {
                 </Typography>
                 <Typography
                   sx={{ display: "flex", flexDirection: "column" }}
-                  variant="h5"
+                  variant="h6"
                 >
                   Cidade:{" "}
                   <TextField
@@ -376,7 +427,7 @@ const Order = () => {
                 </Typography>
                 <Typography
                   sx={{ display: "flex", flexDirection: "column" }}
-                  variant="h5"
+                  variant="h6"
                 >
                   Estado:{" "}
                   <TextField
@@ -409,11 +460,11 @@ const Order = () => {
             <Box className="FormOfPayment">
               <Box display={"flex"} alignItems={"center"} width={"100"}>
                 <Radio
-                  checked={selectedValuePayment === "a"}
+                  checked={selectedValuePayment === "creditCard"}
                   onChange={handleChangePayment}
-                  value="a"
+                  value="creditCard"
                   name="radio-buttons"
-                  inputProps={{ "aria-label": "A" }}
+                  inputProps={{ "aria-label": "creditCard" }}
                 />
                 <CreditCardOutlinedIcon />
                 <Typography variant="h6" sx={{ pl: 2 }}>
@@ -422,11 +473,11 @@ const Order = () => {
               </Box>
               <Box display={"flex"} alignItems={"center"}>
                 <Radio
-                  checked={selectedValuePayment === "b"}
+                  checked={selectedValuePayment === "debitCard"}
                   onChange={handleChangePayment}
-                  value="b"
+                  value="debitCard"
                   name="radio-buttons"
-                  inputProps={{ "aria-label": "B" }}
+                  inputProps={{ "aria-label": "debitCard" }}
                 />
                 <CreditCardOutlinedIcon />
                 <Typography variant="h6" sx={{ pl: 2 }}>
@@ -435,11 +486,11 @@ const Order = () => {
               </Box>
               <Box display={"flex"} alignItems={"center"}>
                 <Radio
-                  checked={selectedValuePayment === "c"}
+                  checked={selectedValuePayment === "pix"}
                   onChange={handleChangePayment}
-                  value="c"
+                  value="pix"
                   name="radio-buttons"
-                  inputProps={{ "aria-label": "C" }}
+                  inputProps={{ "aria-label": "pix" }}
                 />
                 <PixOutlinedIcon />
                 <Typography variant="h6" sx={{ pl: 2 }}>
@@ -448,13 +499,13 @@ const Order = () => {
               </Box>
               <Box display={"flex"} alignItems={"center"}>
                 <Radio
-                  checked={selectedValuePayment === "d"}
+                  checked={selectedValuePayment === "money"}
                   onChange={handleChangePayment}
-                  value="d"
+                  value="money"
                   name="radio-buttons"
-                  inputProps={{ "aria-label": "D" }}
+                  inputProps={{ "aria-label": "money" }}
                 />
-                <StorefrontOutlinedIcon />
+                <AttachMoneyIcon />
                 <Typography variant="h6" sx={{ pl: 2 }}>
                   Dinheiro
                 </Typography>
@@ -484,7 +535,7 @@ const Order = () => {
             <Box id="modalContent">
               <Box className="wrapper">
                 <Typography variant="h6">Obrigado por sua compra</Typography>
-                <Typography variant="h5">Pedido Realizado</Typography>
+                <Typography variant="h6">Pedido Realizado</Typography>
                 <svg
                   className="checkmark"
                   xmlns="http://www.w3.org/2000/svg"
