@@ -7,8 +7,6 @@ import "./RegisterScreen.css";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-
-
 const RegisterScreen = () => {
   const { register, handleSubmit, setValue, setFocus } = useForm();
   const [whatsCheckBox, setwhatsCheckBox] = useState(false);
@@ -19,23 +17,18 @@ const RegisterScreen = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // Função para salvar os valores no localStorage
   const saveToLocalStorage = (key, value) => {
     const formData = JSON.parse(localStorage.getItem("formData")) || {};
     formData[key] = value;
     localStorage.setItem("formData", JSON.stringify(formData));
   };
   const handleFormSubmit = (data) => {
-    // Salvar os valores no localStorage
     Object.entries(data).forEach(([key, value]) => {
       saveToLocalStorage(key, value);
     });
 
-    // Navegar para a página desejada
-    history.push("/pedido"); // Substitua "/pedido" pela rota desejada
+    history.push("/pedido");
   };
-
-  
 
   const checkCEP = (e) => {
     const cep = e.target.value.replace(/\D/g, "");
