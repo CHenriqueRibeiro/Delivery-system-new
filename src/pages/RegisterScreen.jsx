@@ -1,27 +1,47 @@
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
-import { Button, Typography } from "@mui/material";
+import { Button, Fade, Modal, Typography } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import InputMask from "react-input-mask";
-import { NavLink } from "react-router-dom";
 import "./RegisterScreen.css";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
+
+
 
 const RegisterScreen = () => {
   const { register, handleSubmit, setValue, setFocus } = useForm();
   const [whatsCheckBox, setwhatsCheckBox] = useState(false);
   const [numberPhone, setNumberPhone] = useState("");
   const [numberWhats, setNumberWhats] = useState("");
+  const [open, setOpen] = useState(false);
 
-  const onSubmit = (e) => {
-    console.log(e);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  // Função para salvar os valores no localStorage
+  const saveToLocalStorage = (key, value) => {
+    const formData = JSON.parse(localStorage.getItem("formData")) || {};
+    formData[key] = value;
+    localStorage.setItem("formData", JSON.stringify(formData));
   };
+  const handleFormSubmit = (data) => {
+    // Salvar os valores no localStorage
+    Object.entries(data).forEach(([key, value]) => {
+      saveToLocalStorage(key, value);
+    });
+
+    // Navegar para a página desejada
+    history.push("/pedido"); // Substitua "/pedido" pela rota desejada
+  };
+
+  
 
   const checkCEP = (e) => {
     const cep = e.target.value.replace(/\D/g, "");
     if (cep === "") {
       setValue("address");
-      setValue("addressNumber");
+      setValue("casaApto");
       setValue("addresscomplement");
       setValue("neighborhood");
       setValue("city");
@@ -31,20 +51,19 @@ const RegisterScreen = () => {
       fetch(`https://viacep.com.br/ws/${cep}/json/`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-
-          setValue("address", data.logradouro);
-          setValue("neighborhood", data.bairro);
-          setValue("city", data.localidade);
-          setValue("uf", data.uf);
-          setFocus("addressNumber");
+          setValue("cep", data.cep);
+          setValue("rua", data.logradouro);
+          setValue("bairro", data.bairro);
+          setValue("cidade", data.localidade);
+          setValue("estado", data.uf);
+          setFocus("casaApto");
         });
     }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Box className="dadosCadastro">
           <Typography variant="h6">Endereço</Typography>
           <Box id="inputAndBtnSerach">
@@ -55,36 +74,41 @@ const RegisterScreen = () => {
                 maskChar={null}
                 className="inputFormEndereco cep"
                 {...register("cep")}
-                onBlur={checkCEP}
-                />
-                </Box>
-              <Button
-                type="submit"
-                className="btnsearch"
-                sx={{
-                  color: "#f46c26",
-                  background: "#f9e9df",
-                  marginLeft: "10px",
-                  height: "2rem",
-                  minWidth: "2.3rem",
-                  padding: "0 ",
-                  position:'relative',
-                  top:'0.6rem',
-                  left:'0',
-                  border:'1px solid #f16d2f',
-                  boxShadow:
-                    " 5px 4px 5px 2px rgba(0, 0, 0, 0.2), 5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12) !important;",
+                onChange={(e) => {
+                  saveToLocalStorage("cep", e.target.value);
                 }}
-              >
-                <SearchRoundedIcon />
-              </Button>
+                onBlur={checkCEP}
+              />
+            </Box>
+            <Button
+              className="btnsearch"
+              sx={{
+                color: "#f46c26",
+                background: "#f9e9df",
+                marginLeft: "10px",
+                height: "2rem",
+                minWidth: "2.3rem",
+                padding: "0 ",
+                position: "relative",
+                top: "0.6rem",
+                left: "0",
+                border: "1px solid #f16d2f",
+                boxShadow:
+                  " 5px 4px 5px 2px rgba(0, 0, 0, 0.2), 5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12) !important;",
+              }}
+            >
+              <SearchRoundedIcon />
+            </Button>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <label className="labelFormEndereco">Rua </label>
             <input
               type="text"
               className="inputFormEndereco"
-              {...register("address")}
+              {...register("rua")}
+              onChange={(e) => {
+                saveToLocalStorage("rua", e.target.value);
+              }}
             />
           </Box>
 
@@ -93,7 +117,10 @@ const RegisterScreen = () => {
             <input
               type="text"
               className="inputFormEndereco"
-              {...register("addressNumber")}
+              {...register("casaApto")}
+              onChange={(e) => {
+                saveToLocalStorage("casaApto", e.target.value);
+              }}
             />
           </Box>
 
@@ -104,7 +131,10 @@ const RegisterScreen = () => {
             <input
               type="text"
               className="inputFormEndereco"
-              {...register("addresscomplement")}
+              {...register("complemento")}
+              onChange={(e) => {
+                saveToLocalStorage("complemento", e.target.value);
+              }}
             />
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -112,7 +142,10 @@ const RegisterScreen = () => {
             <input
               type="text"
               className="inputFormEndereco"
-              {...register("neighborhood")}
+              {...register("bairro")}
+              onChange={(e) => {
+                saveToLocalStorage("bairro", e.target.value);
+              }}
             />
           </Box>
           <Box id="inputCidadeEEstado">
@@ -121,15 +154,21 @@ const RegisterScreen = () => {
               <input
                 type="text"
                 className="inputFormEndereco"
-                {...register("city")}
+                {...register("cidade")}
+                onChange={(e) => {
+                  saveToLocalStorage("cidade", e.target.value);
+                }}
               />
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <label className="labelFormEndereco  onlyLetters">Estado</label>
+              <label className="labelFormEndereco onlyLetters">Estado</label>
               <input
                 type="text"
                 className="inputFormEndereco w4rem"
-                {...register("uf")}
+                {...register("estado")}
+                onChange={(e) => {
+                  saveToLocalStorage("estado", e.target.value);
+                }}
               />
             </Box>
           </Box>
@@ -137,7 +176,12 @@ const RegisterScreen = () => {
 
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <label className="labelFormEndereco">Nome</label>
-            <input type="text" className="inputFormEndereco onlyLetters" />
+            <input
+              type="text"
+              className="inputFormEndereco onlyLetters"
+              {...register("nome")}
+              onBlur={(e) => saveToLocalStorage("nome", e.target.value)}
+            />
           </Box>
           <Box id="inputTelEWhats">
             <Box id="inputTelefone">
@@ -148,7 +192,11 @@ const RegisterScreen = () => {
                 maskChar={null}
                 className="inputFormEndereco w9rem"
                 value={numberPhone}
-                onChange={(e) => setNumberPhone(e.target.value)}
+                {...register("telefone")}
+                onChange={(e) => {
+                  setNumberPhone(e.target.value);
+                  saveToLocalStorage("telefone", e.target.value);
+                }}
               />
 
               <Box className="checkboxWhatsapp">
@@ -173,9 +221,64 @@ const RegisterScreen = () => {
               />
             </Box>
           </Box>
+          <input
+            type="submit"
+            className="btnIrParaPagamento"
+            value={"Finalizar Cadastro"}
+            onClick={handleOpen}
+          />
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            closeAfterTransition
+          >
+            <Fade in={open}>
+              <Box id="modalCadastro">
+                <Box id="modalContent">
+                  <Box className="wrapper">
+                    <Typography variant="h6">
+                      Cadastro Realizado com Sucesso!
+                    </Typography>
 
+                    <svg
+                      className="checkmark"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 52 52"
+                    >
+                      {" "}
+                      <Box
+                        className="checkmark__circle"
+                        cx="26"
+                        cy="26"
+                        r="25"
+                      ></Box>{" "}
+                      <path
+                        className="checkmark__check"
+                        fill="none"
+                        d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                      ></path>
+                    </svg>
+                  </Box>
+
+                  <Button style={{ color: "#f9e9df" }}>
+                    <input
+                      onClick={handleClose}
+                      className="btnCloseService"
+                      value="fechar"
+                      style={{
+                        textAlign: "center",
+                        color: "white",
+                        textTransform: "capitalize",
+                      }}
+                    />
+                  </Button>
+                </Box>
+              </Box>
+            </Fade>
+          </Modal>
           <NavLink to="/pedido" className="btnIrParaPagamento">
-            Ir para pagamento
+            Ir para Pagamento
           </NavLink>
         </Box>
       </form>
