@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import RegisterScreen from "./pages/RegisterScreen.jsx";
 import Order from "./pages/Order.jsx";
+import OrdersWithoutRegistration from "./pages/OrdersWithoutRegistration.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/pedido",
         element: <Order />,
+      },
+      {
+        path: "/pedidosemcadastro",
+        element: <OrdersWithoutRegistration />,
       },
     ],
   },
