@@ -2,6 +2,7 @@
 
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Typography,
@@ -15,10 +16,32 @@ import RemoveIcon from '@mui/icons-material/Remove';
 
 export default function ListCart() {
   // const { cart, sumValueItems, deleteFromCart } = useCarrinho();
-  const { cart, deleteFromCart } = useCarrinho();
+  const {
+    cart,
+    deleteFromCart,
+    addToCart,
+    removeQuantityFromCart,
+  } = useCarrinho();
 
   const handleDelete = (itemId) => {
     deleteFromCart(itemId);
+  };
+
+  const handleIncrement = (itemId) => {
+    const item = cart.find((item) => item.id === itemId);
+    if (item) {
+      addToCart(item);
+    }
+  };
+
+  const handleDecrement = (itemId) => {
+    const item = cart.find((item) => item.id === itemId);
+    if (item && item.quantidade > 1) {
+      const updatedItem = { ...item };
+      updatedItem.quantidade -= 1;
+      removeQuantityFromCart(updatedItem);
+      console.log(updatedItem), 'removendo';
+    }
   };
 
   return (
@@ -99,21 +122,36 @@ export default function ListCart() {
                       <Typography variant="h6">
                         {useFormat(item.valor)}
                       </Typography>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                        }}
+                      >
+                        <Button
+                          onClick={() =>
+                            handleDecrement(item.id)
+                          }
+                          disabled={item.quantidade === 1}
+                        >
+                          <RemoveIcon />
+                        </Button>
+                        <span>{item.quantidade}</span>
+                        <Button
+                          onClick={() =>
+                            handleIncrement(item.id)
+                          }
+                        >
+                          <AddIcon />
+                        </Button>
+                      </Box>
                       <DeleteIcon
                         onClick={() =>
                           handleDelete(item.id)
                         }
                         style={{ cursor: 'pointer' }}
                       />
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1,
-                      }}
-                    >
-                      <RemoveIcon />1<AddIcon />
                     </Box>
                   </Box>
                 </CardContent>

@@ -52,7 +52,7 @@ export default function Menu() {
   const [value, setValue] = useState(0);
   const [searchValue, setSearchValue] = useState('');
 
-  const { addInCart } = useCarrinho();
+  const { addToCart } = useCarrinho();
 
   const handleSearchInputChange = (e) => {
     setSearchValue(e.target.value);
@@ -172,10 +172,16 @@ export default function Menu() {
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'space-between',
+                      }}
+                    >
                       <Typography
                         variant="h6"
-                        sx={{ width: '85%' }}
+                        sx={{ width: '55%' }}
                       >
                         {item.sabor}
                       </Typography>
@@ -190,7 +196,7 @@ export default function Menu() {
                       </Typography>
                       <AddShoppingCartIcon
                         className="iconAddProduct"
-                        onClick={() => addInCart(item)}
+                        onClick={() => addToCart(item)}
                       />
                     </Box>
                   </Box>
@@ -215,9 +221,21 @@ export default function Menu() {
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{ width: '55%' }}
+                      >
+                        {item.sabor}
+                      </Typography>
+                      <FavoriteIcon className="iconFavoriteMenu" />
+                    </Box>
                     <Typography>
                       {item.ingredientes}
                     </Typography>
@@ -225,10 +243,9 @@ export default function Menu() {
                       <Typography variant="h6">
                         {useFormat(item.valor)}
                       </Typography>
-                      <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon
                         className="iconAddProduct"
-                        onClick={() => addInCart(item)}
+                        onClick={() => addToCart(item)}
                       />
                     </Box>
                   </Box>
@@ -253,9 +270,21 @@ export default function Menu() {
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{ width: '55%' }}
+                      >
+                        {item.sabor}
+                      </Typography>
+                      <FavoriteIcon className="iconFavoriteMenu" />
+                    </Box>
                     <Typography>
                       {item.ingredientes}
                     </Typography>
@@ -263,10 +292,9 @@ export default function Menu() {
                       <Typography variant="h6">
                         {useFormat(item.valor)}
                       </Typography>
-                      <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon
                         className="iconAddProduct"
-                        onClick={() => addInCart(item)}
+                        onClick={() => addToCart(item)}
                       />
                     </Box>
                   </Box>
@@ -291,9 +319,21 @@ export default function Menu() {
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{ width: '55%' }}
+                      >
+                        {item.sabor}
+                      </Typography>
+                      <FavoriteIcon className="iconFavoriteMenu" />
+                    </Box>
                     <Typography>
                       {item.ingredientes}
                     </Typography>
@@ -301,10 +341,9 @@ export default function Menu() {
                       <Typography variant="h6">
                         {useFormat(item.valor)}
                       </Typography>
-                      <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon
                         className="iconAddProduct"
-                        onClick={() => addInCart(item)}
+                        onClick={() => addToCart(item)}
                       />
                     </Box>
                   </Box>
@@ -329,9 +368,21 @@ export default function Menu() {
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{ width: '55%' }}
+                      >
+                        {item.sabor}
+                      </Typography>
+                      <FavoriteIcon className="iconFavoriteMenu" />
+                    </Box>
                     <Typography>
                       {item.ingredientes}
                     </Typography>
@@ -339,10 +390,9 @@ export default function Menu() {
                       <Typography variant="h6">
                         {useFormat(item.valor)}
                       </Typography>
-                      <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon
                         className="iconAddProduct"
-                        onClick={() => addInCart(item)}
+                        onClick={() => addToCart(item)}
                       />
                     </Box>
                   </Box>
