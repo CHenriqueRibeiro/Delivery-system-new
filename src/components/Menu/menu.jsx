@@ -172,9 +172,15 @@ export default function Menu() {
                 <CardContent className="cardContent">
                   <img src={item.imagem} alt="" />
                   <Box className="descriptionCard">
-                    <Typography variant="h6">
-                      {item.sabor}
-                    </Typography>
+                    <Box>
+                      <Typography
+                        variant="h6"
+                        sx={{ width: '85%' }}
+                      >
+                        {item.sabor}
+                      </Typography>
+                      <FavoriteIcon className="iconFavoriteMenu" />
+                    </Box>
                     <Typography>
                       {item.ingredientes}
                     </Typography>
@@ -182,7 +188,6 @@ export default function Menu() {
                       <Typography variant="h6">
                         {useFormat(item.valor)}
                       </Typography>
-                      <FavoriteIcon className="iconFavoriteMenu" />
                       <AddShoppingCartIcon
                         className="iconAddProduct"
                         onClick={() => addInCart(item)}

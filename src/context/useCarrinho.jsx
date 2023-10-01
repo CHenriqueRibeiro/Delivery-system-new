@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from 'react';
 
 const CarrinhoContext = createContext();
@@ -13,7 +14,9 @@ export function CarrinhoProvider({ children }) {
   function addInCart(item) {
     const newCart = [...cart, item];
     setCart(newCart);
-    sumQtdItems();
+    console.log(newCart, 'new cart');
+
+    // sumQtdItems();
   }
 
   const deleteFromCart = (itemId) => {
@@ -21,12 +24,12 @@ export function CarrinhoProvider({ children }) {
       (item) => item.id !== itemId
     );
     setCart(updatedCart);
+    console.log(updatedCart, 'delete item');
   };
 
-  const sumQtdItems = () => {
-    const qtdItems = cart.length + 1;
-    console.log(qtdItems);
-  };
+  // const sumQtdItems = () => {
+  //   const qtdItems = cart.length + 1;
+  // };
 
   const sumValueItems = () => {
     let initialValue = 0;
@@ -42,7 +45,7 @@ export function CarrinhoProvider({ children }) {
         cart,
         addInCart,
         sumValueItems,
-        sumQtdItems,
+        // sumQtdItems,
         deleteFromCart,
       }}
     >
