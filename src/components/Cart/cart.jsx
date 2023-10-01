@@ -27,6 +27,7 @@ export default function Cart() {
   const [value, setValue] = useState(0);
   const [open, setOpen] = React.useState(false);
   const { sumValueItems } = useCarrinho();
+  const [telefone, setTelefone] = useState("");
   const [nome, setNome] = useState("");
 
   const openListItems = () => {
@@ -34,15 +35,44 @@ export default function Cart() {
     addproducts.classList.toggle("displayItemson");
   };
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    consultarDadosLocalStorage();
+  };
   const handleClose = () => setOpen(false);
 
-  const handleInputChange = (e) => {
-    const inputValue = e.target.value;
+  const handleTelefoneChange = (event) => {
+    const novoTelefone = event.target.value;
+    setTelefone(novoTelefone);
+  };
+  const consultarDadosLocalStorage = () => {
+    const formDataJSON = localStorage.getItem("formData");
+    if (formDataJSON) {
+      const formData = JSON.parse(formDataJSON);
+      const telefoneArmazenado = formData.telefone || "";
+      const nomeArmazenado = formData.nome || "";
 
-    if (/^[A-Za-z\s]+$/.test(inputValue) || inputValue === "") {
-      setNome(inputValue);
+      if (telefoneArmazenado === telefone) {
+        // Preenche o campo de nome somente se o telefone for igual ao armazenado
+        setNome(nomeArmazenado);
+      } else {
+        setNome(""); // Caso contrário, deixa o campo de nome vazio
+      }
     }
+  };
+  const consultarNomeNoLocalStorage = () => {
+    const formDataJSON = localStorage.getItem("formData");
+    if (formDataJSON) {
+      const formData = JSON.parse(formDataJSON);
+      const nomeArmazenado = formData.nome; // Procurar o nome pelo número de telefone
+      if (nomeArmazenado) {
+        setNome(nomeArmazenado);
+      }
+    }
+  };
+  const handleTelefoneBlur = () => {
+    // Consultar o Local Storage para obter o nome correspondente ao telefone quando o campo de telefone perde o foco
+    consultarNomeNoLocalStorage();
   };
 
   return (
@@ -136,7 +166,7 @@ export default function Cart() {
                       variant="h6"
                       component="h2"
                     >
-                      Login
+                      Entre com seus dados
                     </Typography>
                     <Typography id="transition-modal-description">
                       <Box id="InputModal">
@@ -145,18 +175,19 @@ export default function Cart() {
                           mask="99 9 99999999"
                           maskChar={null}
                           className="inputModalDados"
+                          value={telefone}
+                          onChange={handleTelefoneChange}
+                          onBlur={handleTelefoneBlur}
                         />
                         <PhoneIcon className="iconTelefoneInput" />
 
                         <InputMask
-                          mask=""
-                          maskChar=""
                           spellCheck="false"
                           type="text"
                           placeholder="Nome"
                           className="inputModalDados"
                           value={nome}
-                          onChange={handleInputChange}
+                          onChange={(event) => setNome(event.target.value)} // Permite que o usuário também edite o campo de nome
                           maxLength={20}
                         />
                         <AbcIcon className="iconTelefoneName" />
@@ -171,14 +202,16 @@ export default function Cart() {
                           </span>
                         </Typography>
                       </Box>
-                      <Button
-                        variant="outlined"
-                        className="btnIrParaPagamento"
-                        sx={{ height: "2rem" }}
-                      >
-                        Login
-                      </Button>
                       <NavLink to="/pedido">
+                        <Button
+                          variant="outlined"
+                          className="btnIrParaPagamento"
+                          sx={{ height: "2rem" }}
+                        >
+                          Entrar
+                        </Button>
+                      </NavLink>
+                      <NavLink to="/pedidosemcadastro">
                         <Button
                           variant="outlined"
                           className="btnIrParaPagamento"
