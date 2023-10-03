@@ -1,4 +1,10 @@
-import { Box, Radio, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/base";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -16,20 +22,19 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import "./Order.css";
 
-const SignupSchema = yup.object().shape({
-  estado: yup.string(),
-  cidade: yup.string().required(),
-  bairro: yup.string().required(),
-  complemento: yup.string(),
-  casaApto: yup.string().required(),
-  rua: yup.string().required(),
-  cep: yup.string(),
-  formaDeEntrega: yup.string().required(),
-  telefone: yup.number().required(),
-  nome: yup.string().required(),
-});
-
 const Order = () => {
+  const SignupSchema = yup.object().shape({
+    estado: yup.string(),
+    cidade: yup.string().required(),
+    bairro: yup.string().required(),
+    complemento: yup.string(),
+    casaApto: yup.string().required(),
+    rua: yup.string().required(),
+    cep: yup.string(),
+    formaDeEntrega: yup.string().required(),
+    telefone: yup.number().required(),
+    nome: yup.string().required(),
+  });
   const [isDisabled, setIsDisabled] = useState(false);
   const [open, setOpen] = useState(false);
   const [nomeLocalStorage, setNomeLocalStorage] = useState("");
@@ -44,7 +49,7 @@ const Order = () => {
   const [selectedValueDelivery, setSelectedValueDelivery] =
     useState("delivery");
   const [selectedValuePayment, setSelectedValuePayment] =
-    useState("creditCard");
+    useState("cartaoDeCredito");
 
   const { register, handleSubmit } = useForm({
     resolver: yupResolver(SignupSchema),
@@ -54,13 +59,28 @@ const Order = () => {
     localStorage.setItem("formData", JSON.stringify(data));
     console.log(data);
   };
+  const handleDeliveryChange = (event) => {
+    const value = event.target.value;
+    setSelectedValueDelivery(value);
 
-  const handleChangeDelivery = (event) => {
-    setSelectedValueDelivery(event.target.value);
+    const storedData = localStorage.getItem("formData");
+    const formData = storedData ? JSON.parse(storedData) : {};
+
+    formData.formaDeEntrega = value;
+
+    localStorage.setItem("formData", JSON.stringify(formData));
   };
 
   const handleChangePayment = (event) => {
-    setSelectedValuePayment(event.target.value);
+    const value = event.target.value;
+    setSelectedValuePayment(value);
+
+    const storedData = localStorage.getItem("formData");
+    const formData = storedData ? JSON.parse(storedData) : {};
+
+    formData.formaDePagamento = value;
+
+    localStorage.setItem("formData", JSON.stringify(formData));
   };
 
   function changeCondition() {
@@ -69,10 +89,13 @@ const Order = () => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   useEffect(() => {
-    const storedData = localStorage.getItem("formData");
+    const storedSelectedDelivery = localStorage.getItem("selectedDelivery");
+    if (storedSelectedDelivery) {
+      setSelectedValueDelivery(storedSelectedDelivery);
+    }
 
+    const storedData = localStorage.getItem("formData");
     if (storedData) {
       const parsedData = JSON.parse(storedData);
       setNomeLocalStorage(parsedData.nome);
@@ -84,9 +107,49 @@ const Order = () => {
       setBairroLocalStorage(parsedData.bairro);
       setCidadeLocalStorage(parsedData.cidade);
       setEstadoLocalStorage(parsedData.estado);
+      setSelectedValueDelivery(parsedData.formaDeEntrega || "delivery"); // Defina a forma de entrega
+      setSelectedValuePayment(parsedData.formaDePagamento || "cartaoDeCredito"); // Defina a forma de pagamento
     }
   }, []);
 
+  const handleInputChange = (fieldName, value) => {
+    switch (fieldName) {
+      case "nome":
+        setNomeLocalStorage(value);
+        break;
+      case "telefone":
+        setTelefoneLocalStorage(value);
+        break;
+      case "cep":
+        setCepLocalStorage(value);
+        break;
+      case "rua":
+        setRuaLocalStorage(value);
+        break;
+      case "casaApto":
+        setCasaLocalStorage(value);
+        break;
+      case "complemento":
+        setComplementoLocalStorage(value);
+        break;
+      case "bairro":
+        setBairroLocalStorage(value);
+        break;
+      case "cidade":
+        setCidadeLocalStorage(value);
+        break;
+      case "estado":
+        setEstadoLocalStorage(value);
+        break;
+      default:
+        break;
+    }
+
+    const storedData = localStorage.getItem("formData");
+    const formData = storedData ? JSON.parse(storedData) : {};
+    formData[fieldName] = value;
+    localStorage.setItem("formData", JSON.stringify(formData));
+  };
   return (
     <Box className="screenOrder">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -119,16 +182,23 @@ const Order = () => {
                       sx={{ display: "flex", flexDirection: "row" }}
                       variant="h6"
                     >
-                      <label>Nome:</label>
+                      <label>Nome: </label>
                       <input
+                        style={{
+                          textTransform: "capitalize",
+                          border: "1px #f16d2f solid",
+                          borderRadius: "8px",
+                          paddingLeft: ".5rem",
+                          fontFamily: "Roboto",
+                          fontWeight: "500",
+                          marginLeft: ".5rem",
+                        }}
                         type="text"
                         name="nome"
-                        {...register("nome")}
-                        style={{ textTransform: "capitalize" }}
                         value={nomeLocalStorage}
-                        onChange={(e) => {
-                          setNomeLocalStorage(e.target.value);
-                        }}
+                        onChange={(e) =>
+                          handleInputChange("nome", e.target.value)
+                        }
                       />
                     </Typography>
                     <Typography
@@ -137,15 +207,23 @@ const Order = () => {
                     >
                       <label>Telefone:</label>
                       <InputMask
+                        style={{
+                          textTransform: "capitalize",
+                          border: "1px #f16d2f solid",
+                          borderRadius: "8px",
+                          paddingLeft: ".5rem",
+                          fontFamily: "Roboto",
+                          fontWeight: "500",
+                          marginLeft: ".5rem",
+                        }}
                         mask="99 9 99999999"
                         maskChar={null}
-                        className="inputCheckout"
+                        type="text"
                         name="telefone"
-                        {...register("telefone")}
                         value={telefoneLocalStorage}
-                        onChange={(e) => {
-                          setTelefoneLocalStorage(e.target.value);
-                        }}
+                        onChange={(e) =>
+                          handleInputChange("telefone", e.target.value)
+                        }
                       />
                     </Typography>
                   </>
@@ -191,41 +269,80 @@ const Order = () => {
                 width: "100%",
               }}
             >
-              {" "}
               <Box className="backgroundTitleDelivery"></Box>
               <Typography variant="h6" className="editInformation">
                 Forma de Entrega
               </Typography>
-              <Box className="deliveryMethod">
-                <Box display={"flex"} width={"100%"} alignItems={"center"}>
-                  <Radio
-                    type="radio"
-                    checked={selectedValueDelivery === "delivery"}
-                    onChange={handleChangeDelivery}
+
+              <RadioGroup
+                sx={{ paddingLeft: "1.2rem" }}
+                name="formaDeEntrega"
+                value={selectedValueDelivery}
+                onChange={handleDeliveryChange}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
+                  <FormControlLabel
                     value="delivery"
-                    name="formaDeEntrega"
+                    name="delivery"
                     {...register("formaDeEntrega")}
+                    control={<Radio />}
+                    label={
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <DeliveryDiningOutlinedIcon />
+                          <Typography variant="h6" sx={{ pl: 2 }}>
+                            Delivery
+                          </Typography>
+                        </Box>
+                      </>
+                    }
                   />
-                  <DeliveryDiningOutlinedIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Delivery
-                  </Typography>
                 </Box>
-                <Box display={"flex"} alignItems={"center"}>
-                  <Radio
-                    type="text"
-                    checked={selectedValueDelivery === "pickUpDelivery"}
-                    onChange={handleChangeDelivery}
-                    value="pickUpDelivery"
-                    name="formaDeEntrega"
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
+                  <FormControlLabel
+                    value="Retirada"
+                    name="Retirada"
                     {...register("formaDeEntrega")}
-                  />
-                  <StorefrontOutlinedIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Retirar no Local
-                  </Typography>
+                    control={<Radio />}
+                    label={
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <StorefrontOutlinedIcon />
+                          <Typography variant="h6" sx={{ pl: 2 }}>
+                            Retirar no local
+                          </Typography>
+                        </Box>
+                      </>
+                    }
+                  />{" "}
                 </Box>
-              </Box>
+              </RadioGroup>
             </Box>
           </Box>
 
@@ -246,118 +363,176 @@ const Order = () => {
                   {isDisabled ? (
                     <>
                       <Typography
-                        sx={{ display: "flex", flexDirection: "column" }}
+                        sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
                         <label>Cep:</label>
                         <InputMask
+                          style={{
+                            textTransform: "capitalize",
+                            border: "1px #f16d2f solid",
+                            borderRadius: "8px",
+                            paddingLeft: ".5rem",
+                            fontFamily: "Roboto",
+                            fontWeight: "500",
+                            marginLeft: ".5rem",
+                          }}
                           mask="99999-999"
                           maskChar={null}
+                          type="text"
                           name="cep"
-                          {...register("cep")}
                           value={cepLocalStorage}
-                          onChange={(e) => {
-                            setCepLocalStorage(e.target.value);
-                          }}
+                          onChange={(e) =>
+                            handleInputChange("cep", e.target.value)
+                          }
                         />
                       </Typography>
 
                       <Typography
-                        sx={{ display: "flex", flexDirection: "column" }}
+                        sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
                         {" "}
-                        <label>Rua/ Av :</label>
+                        <label>Rua / Av :</label>
                         <input
-                          name="rua"
-                          {...register("rua")}
-                          value={ruaLocalStorage}
-                          onChange={(e) => {
-                            setRuaLocalStorage(e.target.value);
+                          style={{
+                            textTransform: "capitalize",
+                            border: "1px #f16d2f solid",
+                            borderRadius: "8px",
+                            paddingLeft: ".5rem",
+                            fontFamily: "Roboto",
+                            fontWeight: "500",
+                            marginLeft: ".5rem",
                           }}
+                          type="text"
+                          name="rua"
+                          value={ruaLocalStorage}
+                          onChange={(e) =>
+                            handleInputChange("rua", e.target.value)
+                          }
                         />
                       </Typography>
                       <Typography
-                        sx={{ display: "flex", flexDirection: "column" }}
+                        sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
                         {" "}
                         <label>Casa/Apto :</label>
                         <input
-                          spellCheck="false"
-                          name="casaApto"
-                          {...register("casaApto")}
-                          value={casaLocalStorage}
-                          onChange={(e) => {
-                            setCasaLocalStorage(e.target.value);
+                          style={{
+                            textTransform: "capitalize",
+                            border: "1px #f16d2f solid",
+                            borderRadius: "8px",
+                            paddingLeft: ".5rem",
+                            fontFamily: "Roboto",
+                            fontWeight: "500",
+                            marginLeft: ".5rem",
                           }}
+                          type="text"
+                          name="casaApto"
+                          value={casaLocalStorage}
+                          onChange={(e) =>
+                            handleInputChange("casaApto", e.target.value)
+                          }
                         />
                       </Typography>
                       <Typography
-                        sx={{ display: "flex", flexDirection: "column" }}
+                        sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
                         {" "}
-                        <label>Complemento :</label>
+                        <label>Ponto de Ref :</label>
                         <input
-                          spellCheck="false"
-                          name="complemento"
-                          {...register("complemento")}
-                          value={complementoLocalStorage}
-                          onChange={(e) => {
-                            setComplementoLocalStorage(e.target.value);
+                          style={{
+                            textTransform: "capitalize",
+                            border: "1px #f16d2f solid",
+                            borderRadius: "8px",
+                            paddingLeft: ".5rem",
+                            fontFamily: "Roboto",
+                            fontWeight: "500",
+                            marginLeft: ".5rem",
                           }}
+                          type="text"
+                          name="complemento"
+                          value={complementoLocalStorage}
+                          onChange={(e) =>
+                            handleInputChange("complemento", e.target.value)
+                          }
                         />
                       </Typography>
 
                       <Typography
-                        sx={{ display: "flex", flexDirection: "column" }}
+                        sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
                         {" "}
                         <label> Bairro:</label>
                         <input
-                          spellCheck="false"
-                          name="bairro"
-                          {...register("bairro")}
-                          value={bairroLocalStorage}
-                          onChange={(e) => {
-                            setBairroLocalStorage(e.target.value);
+                          style={{
+                            textTransform: "capitalize",
+                            border: "1px #f16d2f solid",
+                            borderRadius: "8px",
+                            paddingLeft: ".5rem",
+                            fontFamily: "Roboto",
+                            fontWeight: "500",
+                            marginLeft: ".5rem",
                           }}
+                          type="text"
+                          name="bairro"
+                          value={bairroLocalStorage}
+                          onChange={(e) =>
+                            handleInputChange("bairro", e.target.value)
+                          }
                         />
                       </Typography>
 
                       <Typography
-                        sx={{ display: "flex", flexDirection: "column" }}
+                        sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
                         {" "}
                         <label>Cidade:</label>
                         <input
-                          spellCheck="false"
-                          name="cidade"
-                          {...register("cidade")}
-                          value={cidadeLocalStorage}
-                          onChange={(e) => {
-                            setCidadeLocalStorage(e.target.value);
+                          style={{
+                            textTransform: "capitalize",
+                            border: "1px #f16d2f solid",
+                            borderRadius: "8px",
+                            paddingLeft: ".5rem",
+                            fontFamily: "Roboto",
+                            fontWeight: "500",
+                            marginLeft: ".5rem",
                           }}
+                          type="text"
+                          name="cidade"
+                          value={cidadeLocalStorage}
+                          onChange={(e) =>
+                            handleInputChange("cidade", e.target.value)
+                          }
                         />
                       </Typography>
 
                       <Typography
-                        sx={{ display: "flex", flexDirection: "column" }}
+                        sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
                         {" "}
                         <label>Estado:</label>
                         <input
-                          spellCheck="false"
-                          name="estado"
-                          {...register("estado")}
-                          value={estadoLocalStorage}
-                          onChange={(e) => {
-                            setEstadoLocalStorage(e.target.value);
+                          style={{
+                            textTransform: "capitalize",
+                            border: "1px #f16d2f solid",
+                            borderRadius: "8px",
+                            paddingLeft: ".5rem",
+                            fontFamily: "Roboto",
+                            fontWeight: "500",
+                            marginLeft: ".5rem",
                           }}
+                          type="text"
+                          name="estado"
+                          value={estadoLocalStorage}
+                          onChange={(e) =>
+                            handleInputChange("estado", e.target.value)
+                          }
                         />
                       </Typography>
                     </>
@@ -378,7 +553,7 @@ const Order = () => {
                       >
                         <span className="inputCheckout">
                           {" "}
-                          Rua: {ruaLocalStorage}
+                          Rua / AV: {ruaLocalStorage}
                         </span>
                       </Typography>
                       <Typography
@@ -395,7 +570,7 @@ const Order = () => {
                         variant="h6"
                       >
                         <span className="inputCheckout">
-                          Complemento: {complementoLocalStorage}
+                          Ponto de Ref: {complementoLocalStorage}
                         </span>
                       </Typography>
                       <Typography
@@ -429,7 +604,7 @@ const Order = () => {
             </Box>
           )}
 
-          {selectedValueDelivery === "pickUpDelivery" && (
+          {selectedValueDelivery === "Retirada" && (
             <Box className="cardDeliveryAddress">
               <Box className="contentDeliveryAddress">
                 <Box className="backgroundTitleAddressRetirada"></Box>
@@ -441,74 +616,50 @@ const Order = () => {
                     sx={{ display: "flex", flexDirection: "column" }}
                     variant="h6"
                   >
-                    Cep:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"61600-000"}
-                    />
-                  </Typography>
-
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h6"
-                  >
-                    Rua/Av:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"Rua da Luz"}
-                    />
+                    <span className="inputCheckout"> Cep: 61600-00</span>
                   </Typography>
                   <Typography
                     sx={{ display: "flex", flexDirection: "column" }}
                     variant="h6"
                   >
-                    Complemento:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"casa 17"}
-                    />
+                    <span className="inputCheckout">
+                      {" "}
+                      Rua / AV: Alameda luiza
+                    </span>
                   </Typography>
                   <Typography
                     sx={{ display: "flex", flexDirection: "column" }}
                     variant="h6"
                   >
-                    Bairro:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"Cumbuco"}
-                    />
+                    <span className="inputCheckout"> Casa/Apto: 300 B</span>
                   </Typography>
                   <Typography
                     sx={{ display: "flex", flexDirection: "column" }}
                     variant="h6"
                   >
-                    Cidade:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"Caucaia"}
-                    />
+                    <span className="inputCheckout">
+                      Ponto de Ref: Prox.a Lagoa
+                    </span>
                   </Typography>
                   <Typography
                     sx={{ display: "flex", flexDirection: "column" }}
                     variant="h6"
                   >
-                    Estado:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"Ceará"}
-                    />
+                    <span className="inputCheckout">
+                      Bairro: Lagoa Do Banana
+                    </span>
+                  </Typography>
+                  <Typography
+                    sx={{ display: "flex", flexDirection: "column" }}
+                    variant="h6"
+                  >
+                    <span className="inputCheckout">Cidade: Caucaia</span>
+                  </Typography>
+                  <Typography
+                    sx={{ display: "flex", flexDirection: "column" }}
+                    variant="h6"
+                  >
+                    <span className="inputCheckout">Estado: CE</span>
                   </Typography>
                 </Box>
               </Box>
@@ -531,65 +682,130 @@ const Order = () => {
                 Forma de Pagamento
               </Typography>
               <Box className="FormOfPayment">
-                <Box display={"flex"} alignItems={"center"} width={"100"}>
-                  <Radio
-                    checked={selectedValuePayment === "creditCard"}
-                    onChange={handleChangePayment}
-                    value="creditCard"
-                    name="formaDePagamento"
-                    {...register("formaDeEPagamento")}
+                <RadioGroup
+                  sx={{ paddingLeft: "1.2rem" }}
+                  name="formaDePagamento"
+                  value={selectedValuePayment}
+                  onChange={handleChangePayment}
+                >
+                  <FormControlLabel
+                    sx={{ alignItems: "baseline" }}
+                    value="cartaoDeCredito"
+                    name="cartao de credito"
+                    {...register("formaDePagamento")}
+                    control={<Radio />}
+                    label={
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <CreditCardOutlinedIcon />
+                          <Typography variant="h6" sx={{ pl: 2 }}>
+                            Cartão de Crédito
+                          </Typography>
+                        </Box>
+                      </>
+                    }
                   />
-                  <CreditCardOutlinedIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Cartão de Credito
-                  </Typography>
-                </Box>
-                <Box display={"flex"} alignItems={"center"}>
-                  <Radio
-                    checked={selectedValuePayment === "debitCard"}
-                    onChange={handleChangePayment}
-                    value="debitCard"
-                    name="formaDePagamento"
-                    {...register("formaDeEPagamento")}
+
+                  <FormControlLabel
+                    sx={{ alignItems: "baseline" }}
+                    value="cartaoDeDebito"
+                    name="cartao de debito"
+                    {...register("formaDePagamento")}
+                    control={<Radio />}
+                    label={
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <CreditCardOutlinedIcon />
+                          <Typography variant="h6" sx={{ pl: 2 }}>
+                            Cartão de Debito
+                          </Typography>
+                        </Box>
+                      </>
+                    }
                   />
-                  <CreditCardOutlinedIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Cartão de Debito
-                  </Typography>
-                </Box>
-                <Box display={"flex"} alignItems={"center"}>
-                  <Radio
-                    checked={selectedValuePayment === "pix"}
-                    onChange={handleChangePayment}
+
+                  <FormControlLabel
+                    sx={{ alignItems: "baseline" }}
                     value="pix"
-                    name="formaDePagamento"
-                    {...register("formaDeEPagamento")}
+                    name="pix"
+                    {...register("formaDePagamento")}
+                    control={<Radio />}
+                    label={
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <PixOutlinedIcon />
+                          <Typography variant="h6" sx={{ pl: 2 }}>
+                            Pix
+                          </Typography>
+                        </Box>
+                      </>
+                    }
                   />
-                  <PixOutlinedIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Pix
-                  </Typography>
-                </Box>
-                <Box display={"flex"} alignItems={"center"}>
-                  <Radio
-                    checked={selectedValuePayment === "money"}
-                    onChange={handleChangePayment}
-                    value="money"
-                    name="formaDePagamento"
-                    {...register("formaDeEPagamento")}
+
+                  <FormControlLabel
+                    sx={{ alignItems: "baseline" }}
+                    value="dinheiro"
+                    name="dinheiro"
+                    {...register("formaDePagamento")}
+                    control={<Radio />}
+                    label={
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <AttachMoneyIcon />
+                          <Typography variant="h6" sx={{ pl: 2 }}>
+                            Dinheiro
+                          </Typography>
+                        </Box>
+                      </>
+                    }
                   />
-                  <AttachMoneyIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Dinheiro
-                  </Typography>
-                </Box>
+                </RadioGroup>
               </Box>
             </Box>
           </Box>
 
           <Box className="totalPurchase">
             <Box className="contentTotalPurchase">
-              <Typography variant="h6">Total:R$ 50,00</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "75%",
+                  height: "100%",
+                  alignItems: "left",
+                  justifyContent: "center",
+                  pl: 1,
+                }}
+              >
+                <Typography style={{ fontSize: "12px", height: "auto" }}>
+                  + Entrega: R$ 3,00
+                </Typography>
+                <Typography variant="h6">Total:R$ 50,00</Typography>
+              </Box>
               <input
                 className="btnSendRequest"
                 type="submit"

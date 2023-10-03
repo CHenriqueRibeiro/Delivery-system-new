@@ -7,15 +7,12 @@
   width: 100vw;
 }
 .dadosCadastro {
+  overflow: auto;
   height: 100dvh;
   width: 100%;
-  background-color: #fae9de;
+  background-color: #f16d2f;
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 1rem;
-  position: absolute;
-  top: 0;
-  left: 0;
   justify-content: space-evenly;
 }
 

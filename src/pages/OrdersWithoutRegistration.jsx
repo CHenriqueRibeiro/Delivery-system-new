@@ -1,4 +1,4 @@
-import { Box, Radio, TextField, Typography } from "@mui/material";
+import { Box, Radio, Typography } from "@mui/material";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
@@ -83,8 +83,15 @@ const Order = () => {
                   <input
                     type="text"
                     name="nome"
-                    {...register("nome")}
-                    style={{ textTransform: "capitalize" }}
+                    style={{
+                      textTransform: "capitalize",
+                      border: "1px #f16d2f solid",
+                      borderRadius: "8px",
+                      paddingLeft: ".5rem",
+                      fontFamily: "Roboto",
+                      fontWeight: "500",
+                      marginLeft: ".5rem",
+                    }}
                   />
                 </Typography>
                 <Typography
@@ -95,9 +102,16 @@ const Order = () => {
                   <InputMask
                     mask="99 9 99999999"
                     maskChar={null}
-                    className="inputCheckout"
                     name="telefone"
-                    {...register("telefone")}
+                    style={{
+                      textTransform: "capitalize",
+                      border: "1px #f16d2f solid",
+                      borderRadius: "8px",
+                      paddingLeft: ".5rem",
+                      fontFamily: "Roboto",
+                      fontWeight: "500",
+                      marginLeft: ".5rem",
+                    }}
                   />
                 </Typography>
               </Box>
@@ -122,9 +136,9 @@ const Order = () => {
               <Box className="deliveryMethod">
                 <Box display={"flex"} width={"100%"} alignItems={"center"}>
                   <Radio
-                    type="radio"
                     checked={selectedValueDelivery === "delivery"}
                     onChange={handleChangeDelivery}
+                    value="delivery"
                   />
                   <DeliveryDiningOutlinedIcon />
                   <Typography variant="h6" sx={{ pl: 2 }}>
@@ -133,9 +147,9 @@ const Order = () => {
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
                   <Radio
-                    type="text"
                     checked={selectedValueDelivery === "pickUpDelivery"}
                     onChange={handleChangeDelivery}
+                    value="pickUpDelivery"
                   />
                   <StorefrontOutlinedIcon />
                   <Typography variant="h6" sx={{ pl: 2 }}>
@@ -155,63 +169,143 @@ const Order = () => {
                 </Typography>
                 <Box className="addressData">
                   <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
+                    sx={{ display: "flex", flexDirection: "row" }}
                     variant="h6"
                   >
                     <label>Cep:</label>
-                    <InputMask mask="99999-999" maskChar={null} />
+                    <InputMask
+                      style={{
+                        textTransform: "capitalize",
+                        border: "1px #f16d2f solid",
+                        borderRadius: "8px",
+                        paddingLeft: ".5rem",
+                        fontFamily: "Roboto",
+                        fontWeight: "500",
+                        marginLeft: ".5rem",
+                      }}
+                      mask="99999-999"
+                      maskChar={null}
+                    />
                   </Typography>
 
                   <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
+                    sx={{ display: "flex", flexDirection: "row" }}
                     variant="h6"
                   >
                     {" "}
                     <label>Rua/ Av :</label>
-                    <input name="rua" {...register("rua")} />
+                    <input
+                      style={{
+                        textTransform: "capitalize",
+                        border: "1px #f16d2f solid",
+                        borderRadius: "8px",
+                        paddingLeft: ".5rem",
+                        fontFamily: "Roboto",
+                        fontWeight: "500",
+                        marginLeft: ".5rem",
+                      }}
+                      name="rua"
+                      {...register("rua")}
+                    />
                   </Typography>
                   <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
+                    sx={{ display: "flex", flexDirection: "row" }}
                     variant="h6"
                   >
                     {" "}
                     <label>Casa/Apto :</label>
-                    <input spellCheck="false" name="casaApto" />
+                    <input
+                      style={{
+                        textTransform: "capitalize",
+                        border: "1px #f16d2f solid",
+                        borderRadius: "8px",
+                        paddingLeft: ".5rem",
+                        fontFamily: "Roboto",
+                        fontWeight: "500",
+                        marginLeft: ".5rem",
+                      }}
+                      spellCheck="false"
+                      name="casaApto"
+                    />
                   </Typography>
                   <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
+                    sx={{ display: "flex", flexDirection: "row" }}
                     variant="h6"
                   >
                     {" "}
                     <label>Complemento :</label>
-                    <input spellCheck="false" />
+                    <input
+                      style={{
+                        textTransform: "capitalize",
+                        border: "1px #f16d2f solid",
+                        borderRadius: "8px",
+                        paddingLeft: ".5rem",
+                        fontFamily: "Roboto",
+                        fontWeight: "500",
+                        marginLeft: ".5rem",
+                      }}
+                      spellCheck="false"
+                    />
                   </Typography>
 
                   <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
+                    sx={{ display: "flex", flexDirection: "row" }}
                     variant="h6"
                   >
                     {" "}
                     <label> Bairro:</label>
-                    <input spellCheck="false" />
+                    <input
+                      style={{
+                        textTransform: "capitalize",
+                        border: "1px #f16d2f solid",
+                        borderRadius: "8px",
+                        paddingLeft: ".5rem",
+                        fontFamily: "Roboto",
+                        fontWeight: "500",
+                        marginLeft: ".5rem",
+                      }}
+                      spellCheck="false"
+                    />
                   </Typography>
 
                   <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
+                    sx={{ display: "flex", flexDirection: "row" }}
                     variant="h6"
                   >
                     {" "}
                     <label>Cidade:</label>
-                    <input spellCheck="false" />
+                    <input
+                      style={{
+                        textTransform: "capitalize",
+                        border: "1px #f16d2f solid",
+                        borderRadius: "8px",
+                        paddingLeft: ".5rem",
+                        fontFamily: "Roboto",
+                        fontWeight: "500",
+                        marginLeft: ".5rem",
+                      }}
+                      spellCheck="false"
+                    />
                   </Typography>
 
                   <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
+                    sx={{ display: "flex", flexDirection: "row" }}
                     variant="h6"
                   >
                     {" "}
                     <label>Estado:</label>
-                    <input spellCheck="false" />
+                    <input
+                      style={{
+                        textTransform: "capitalize",
+                        border: "1px #f16d2f solid",
+                        borderRadius: "8px",
+                        paddingLeft: ".5rem",
+                        fontFamily: "Roboto",
+                        fontWeight: "500",
+                        marginLeft: ".5rem",
+                      }}
+                      spellCheck="false"
+                    />
                   </Typography>
                 </Box>
               </Box>
@@ -226,79 +320,56 @@ const Order = () => {
                   Retirar no Endereço
                 </Typography>
                 <Box className="addressData">
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h6"
-                  >
-                    Cep:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"61600-000"}
-                    />
-                  </Typography>
-
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h6"
-                  >
-                    Rua/Av:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"Rua da Luz"}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h6"
-                  >
-                    Complemento:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"casa 17"}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h6"
-                  >
-                    Bairro:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"Cumbuco"}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h6"
-                  >
-                    Cidade:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"Caucaia"}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{ display: "flex", flexDirection: "column" }}
-                    variant="h6"
-                  >
-                    Estado:{" "}
-                    <TextField
-                      disabled
-                      type="text"
-                      className="inputCheckout"
-                      value={"Ceará"}
-                    />
-                  </Typography>
+                  <Box className="addressData">
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout"> Cep: 61600-00</span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout">
+                        Rua / AV: Alameda luiza
+                      </span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout"> Casa/Apto: 300 B</span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout">
+                        Ponto de Ref: Prox.a Lagoa
+                      </span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout">
+                        Bairro: Lagoa Do Banana
+                      </span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout">Cidade: Caucaia</span>
+                    </Typography>
+                    <Typography
+                      sx={{ display: "flex", flexDirection: "column" }}
+                      variant="h6"
+                    >
+                      <span className="inputCheckout">Estado: CE</span>
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
             </Box>
@@ -369,14 +440,28 @@ const Order = () => {
           </Box>
 
           <Box className="totalPurchase">
-            <Box className="contentTotalPurchase">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "75%",
+                height: "100%",
+                alignItems: "left",
+                justifyContent: "center",
+                pl: 1,
+                color: "#f9e9df",
+              }}
+            >
+              <Typography style={{ fontSize: "12px", height: "auto" }}>
+                + Entrega: R$ 3,00
+              </Typography>
               <Typography variant="h6">Total:R$ 50,00</Typography>
-              <input
-                className="btnSendRequest"
-                type="submit"
-                onClick={handleOpen}
-              />
             </Box>
+            <input
+              className="btnSendRequest"
+              type="submit"
+              onClick={handleOpen}
+            />
           </Box>
         </Box>
 
