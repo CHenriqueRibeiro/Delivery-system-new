@@ -27,14 +27,14 @@ export default function Cart() {
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [usuarioValidado, setUsuarioValidado] = useState(false);
-
+  const [loginMessage, setLoginMessage] = useState("");
   const openListItems = () => {
     const addproducts = document.getElementById("displayItems");
     addproducts.classList.toggle("displayItemson");
   };
 
   const handleOpen = () => {
-    consultarDadosLocalStorage();
+    consultarDadosLocalStorage(false);
     setOpen(true);
   };
 
@@ -47,7 +47,7 @@ export default function Cart() {
     setTelefone(novoTelefone);
   };
 
-  const consultarDadosLocalStorage = () => {
+  const consultarDadosLocalStorage = (btnEntrar) => {
     const formDataJSON = localStorage.getItem("formData");
     if (formDataJSON) {
       const formData = JSON.parse(formDataJSON);
@@ -56,14 +56,13 @@ export default function Cart() {
 
       if (telefoneArmazenado === telefone && nomeArmazenado === nome) {
         setNome(nomeArmazenado);
-
         setUsuarioValidado(true);
-
+        if (btnEntrar) setLoginMessage("");
         console.log("validado");
       } else {
         setNome("");
         setUsuarioValidado(false);
-
+        if (btnEntrar) setLoginMessage("Usuario nao encontrado");
         console.log("nao validado");
       }
     }
@@ -206,22 +205,21 @@ export default function Cart() {
                         />
                         <AbcIcon className="iconTelefoneName" />
                       </Box>
-                      {usuarioValidado ? null : (
-                        <Typography
-                          style={{
-                            color: "red",
-                            fontSize: "12px",
-                            textAlign: "center",
-                          }}
-                        >
-                          nao encontrado
-                        </Typography>
-                      )}
+                      <Typography
+                        style={{
+                          color: "red",
+                          fontSize: "12px",
+                          textAlign: "center",
+                          height: "auto",
+                        }}
+                      >
+                        {loginMessage}
+                      </Typography>
                       <Button
                         variant="outlined"
                         className="btnIrParaPagamento"
                         sx={{ height: "2rem" }}
-                        onClick={consultarDadosLocalStorage}
+                        onClick={() => consultarDadosLocalStorage(true)}
                       >
                         Entrar
                       </Button>

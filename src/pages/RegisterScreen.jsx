@@ -29,8 +29,12 @@ const RegisterScreen = () => {
   const handleClose = () => setOpen(false);
 
   const saveToLocalStorage = (key, value) => {
+    const val = value
+      .split(" ")
+      .map((name) => name.charAt(0).toUpperCase() + name.slice(1))
+      .join(" ");
     const formData = JSON.parse(localStorage.getItem("formData")) || {};
-    formData[key] = value;
+    formData[key] = val;
     localStorage.setItem("formData", JSON.stringify(formData));
   };
   const handleFormSubmit = (data) => {
@@ -46,6 +50,7 @@ const RegisterScreen = () => {
     if (cep === "") {
       setValue("address");
       setValue("casaApto");
+      
       setValue("addresscomplement");
       setValue("neighborhood");
       setValue("city");
@@ -89,14 +94,14 @@ const RegisterScreen = () => {
           </Box>
           <Box
             sx={{
-              backgroundColor:'#f9e9df ',
+              backgroundColor: "#f9e9df ",
               display: "flex",
               paddingLeft: "1rem",
               paddingRight: "1rem",
               flexDirection: "column",
               height: "100%",
               justifyContent: "space-around",
-              borderRadius: '25px 25px 0 0',
+              borderRadius: "25px 25px 0 0",
             }}
           >
             <Typography variant="h6">Endereço</Typography>
@@ -127,7 +132,7 @@ const RegisterScreen = () => {
                   top: "0.6rem",
                   left: "0",
                   border: "1px solid #f16d2f",
-                  borderRadius:'8px',
+                  borderRadius: "8px",
                   boxShadow:
                     " 5px 4px 5px 2px rgba(0, 0, 0, 0.2), 5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12) !important;",
                 }}
@@ -212,8 +217,9 @@ const RegisterScreen = () => {
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <label className="labelFormEndereco">Nome</label>
               <input
+                style={{ textTransform: "captalize" }}
                 type="text"
-                className="inputFormEndereco onlyLetters"
+                className="inputFormEndereco "
                 {...register("nome")}
                 onBlur={(e) => saveToLocalStorage("nome", e.target.value)}
               />
