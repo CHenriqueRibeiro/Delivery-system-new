@@ -4,7 +4,6 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Button from "@mui/material/Button";
 import ListCart from "../Listcart/listcart";
-
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -15,10 +14,8 @@ import AbcIcon from "@mui/icons-material/Abc";
 import InputMask from "react-input-mask";
 import { useCarrinho } from "../../context/useCarrinho";
 import { useFormat } from "../../utils/useFormat";
-
-import "./cart.css";
-
 import { NavLink } from "react-router-dom";
+import "./cart.css";
 
 export default function Cart() {
   const [value, setValue] = useState(0);
@@ -28,6 +25,7 @@ export default function Cart() {
   const [telefone, setTelefone] = useState("");
   const [usuarioValidado, setUsuarioValidado] = useState(false);
   const [loginMessage, setLoginMessage] = useState("");
+
   const openListItems = () => {
     const addproducts = document.getElementById("displayItems");
     addproducts.classList.toggle("displayItemson");
@@ -47,6 +45,15 @@ export default function Cart() {
     setTelefone(novoTelefone);
   };
 
+  const handleTelefoneBlur = () => {
+    const formDataJSON = localStorage.getItem("formData");
+    if (formDataJSON) {
+      const formData = JSON.parse(formDataJSON);
+      const nomeArmazenado = formData.nome;
+      setNome(nomeArmazenado);
+    }
+  };
+
   const consultarDadosLocalStorage = (btnEntrar) => {
     const formDataJSON = localStorage.getItem("formData");
     if (formDataJSON) {
@@ -54,7 +61,13 @@ export default function Cart() {
       const telefoneArmazenado = formData.telefone;
       const nomeArmazenado = formData.nome;
 
-      if (telefoneArmazenado === telefone && nomeArmazenado === nome) {
+      const nomeDigitadoFormatado =
+        nome.charAt(0).toUpperCase() + nome.slice(1);
+
+      if (
+        telefoneArmazenado === telefone &&
+        nomeArmazenado === nomeDigitadoFormatado
+      ) {
         setNome(nomeArmazenado);
         setUsuarioValidado(true);
         if (btnEntrar) setLoginMessage("");
@@ -62,8 +75,8 @@ export default function Cart() {
       } else {
         setNome("");
         setUsuarioValidado(false);
-        if (btnEntrar) setLoginMessage("Usuario nao encontrado");
-        console.log("nao validado");
+        if (btnEntrar) setLoginMessage("Usuário não encontrado");
+        console.log("não validado");
       }
     }
   };
@@ -191,6 +204,7 @@ export default function Cart() {
                           className="inputModalDados"
                           value={telefone}
                           onChange={handleTelefoneChange}
+                          onBlur={handleTelefoneBlur}
                         />
                         <PhoneIcon className="iconTelefoneInput" />
 

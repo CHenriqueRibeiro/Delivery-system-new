@@ -161,6 +161,7 @@
   border-radius: 13px;
   position: relative;
   padding-left: 15%;
+  text-transform: capitalize;
 }
 
 .iconTelefoneInput {
