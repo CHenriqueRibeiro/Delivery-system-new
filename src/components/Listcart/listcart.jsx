@@ -102,6 +102,7 @@ export default function ListCart() {
                       sx={{
                         display: "flex",
                         justifyContent: "space-between",
+                        alignItems: "center",
                         width: "90%",
                       }}
                     >
@@ -112,24 +113,28 @@ export default function ListCart() {
                         sx={{
                           display: "flex",
                           alignItems: "center",
-                          gap: 1,
+                          gap: "5px",
+                          marginLeft: "1rem",
                         }}
                       >
-                        <Button
+                        <DeleteIcon
+                          onClick={() => handleDelete(item.id)}
+                          style={{ cursor: "pointer" }}
+                        />
+                        <Button sx={{ color: "#201e1d" }}
                           onClick={() => handleDecrement(item.id)}
                           disabled={item.quantidade === 1}
                         >
                           <RemoveIcon />
                         </Button>
                         <span>{item.quantidade}</span>
-                        <Button onClick={() => handleIncrement(item.id)}>
+                        <Button
+                          sx={{ color: "#201e1d" }}
+                          onClick={() => handleIncrement(item.id)}
+                        >
                           <AddIcon />
                         </Button>
                       </Box>
-                      <DeleteIcon
-                        onClick={() => handleDelete(item.id)}
-                        style={{ cursor: "pointer" }}
-                      />
                     </Box>
                   </Box>
                 </CardContent>

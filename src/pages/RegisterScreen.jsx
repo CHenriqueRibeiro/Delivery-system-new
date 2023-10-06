@@ -50,7 +50,6 @@ const RegisterScreen = () => {
     if (cep === "") {
       setValue("address");
       setValue("casaApto");
-      
       setValue("addresscomplement");
       setValue("neighborhood");
       setValue("city");
