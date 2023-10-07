@@ -10,7 +10,6 @@ export function useCarrinho() {
 // eslint-disable-next-line react/prop-types
 export function CarrinhoProvider({ children }) {
   const [cart, setCart] = useState([]);
-  const [qtdCart, setQtdCart] = useState(0);
 
   const addToCart = (item) => {
     const existingItemIndex = cart.findIndex(
@@ -20,7 +19,7 @@ export function CarrinhoProvider({ children }) {
     if (existingItemIndex !== -1) {
       const updatedCart = [...cart];
       updatedCart[existingItemIndex].quantidade += 1;
-      sumValueItems();
+      calculateSubtotal();
       setCart(updatedCart);
     } else {
       const newItem = { ...item, quantidade: 1 };
@@ -47,12 +46,17 @@ export function CarrinhoProvider({ children }) {
     setCart(updatedCart);
   };
 
-  const sumValueItems = () => {
-    let initialValue = 0;
-    cart.map((item) => {
-      initialValue += item.valor;
+  const calculateSubtotal = (cart) => {
+    let subtotal = 0;
+
+    cart?.map((item) => {
+      const qtd = item.quantidade;
+      if (qtd > 0) {
+        subtotal += item.valor * qtd;
+      }
     });
-    return initialValue;
+
+    return subtotal;
   };
 
   return (
@@ -60,9 +64,9 @@ export function CarrinhoProvider({ children }) {
       value={{
         cart,
         addToCart,
-        sumValueItems,
         deleteFromCart,
         removeQuantityFromCart,
+        calculateSubtotal,
       }}
     >
       {children}
