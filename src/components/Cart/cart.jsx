@@ -1,37 +1,35 @@
-import { useState } from 'react';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import Button from '@mui/material/Button';
-import ListCart from '../Listcart/listcart';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Typography from '@mui/material/Typography';
-import PhoneIcon from '@mui/icons-material/Phone';
-import AbcIcon from '@mui/icons-material/Abc';
-import InputMask from 'react-input-mask';
-import { useCarrinho } from '../../context/useCarrinho';
-import { useFormat } from '../../utils/useFormat';
-import { NavLink } from 'react-router-dom';
-import './cart.css';
+import { useState } from "react";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import Button from "@mui/material/Button";
+import ListCart from "../Listcart/listcart";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Typography from "@mui/material/Typography";
+import PhoneIcon from "@mui/icons-material/Phone";
+import AbcIcon from "@mui/icons-material/Abc";
+import InputMask from "react-input-mask";
+import { useCarrinho } from "../../context/useCarrinho";
+import { useFormat } from "../../utils/useFormat";
+import { NavLink } from "react-router-dom";
+import "./cart.css";
 
 export default function Cart() {
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
-  const [nome, setNome] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [usuarioValidado, setUsuarioValidado] =
-    useState(false);
-  const [loginMessage, setLoginMessage] = useState('');
-
+  const [nome, setNome] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [usuarioValidado, setUsuarioValidado] = useState(false);
+  const [loginMessage, setLoginMessage] = useState("");
   const { cart, calculateSubtotal } = useCarrinho();
+  const [showValidationModal, setShowValidationModal] = useState(false);
 
   const openListItems = () => {
-    const addproducts =
-      document.getElementById('displayItems');
-    addproducts.classList.toggle('displayItemson');
+    const addproducts = document.getElementById("displayItems");
+    addproducts.classList.toggle("displayItemson");
   };
 
   const handleOpen = () => {
@@ -49,16 +47,21 @@ export default function Cart() {
   };
 
   const handleTelefoneBlur = () => {
-    const formDataJSON = localStorage.getItem('formData');
+    const formDataJSON = localStorage.getItem("formData");
     if (formDataJSON) {
       const formData = JSON.parse(formDataJSON);
       const nomeArmazenado = formData.nome;
-      setNome(nomeArmazenado);
+      const telefoneArmazenado = formData.telefone;
+      if (telefoneArmazenado === telefone) {
+        setNome(nomeArmazenado);
+      } else {
+        setNome("");
+      }
     }
   };
 
   const consultarDadosLocalStorage = (btnEntrar) => {
-    const formDataJSON = localStorage.getItem('formData');
+    const formDataJSON = localStorage.getItem("formData");
     if (formDataJSON) {
       const formData = JSON.parse(formDataJSON);
       const telefoneArmazenado = formData.telefone;
@@ -73,14 +76,15 @@ export default function Cart() {
       ) {
         setNome(nomeArmazenado);
         setUsuarioValidado(true);
-        if (btnEntrar) setLoginMessage('');
-        console.log('validado');
+        if (btnEntrar) setLoginMessage("");
+        setShowValidationModal(true);
+        setTimeout(() => {
+          setShowValidationModal(false);
+        }, 2000);
       } else {
-        setNome('');
+        setNome("");
         setUsuarioValidado(false);
-        if (btnEntrar)
-          setLoginMessage('Usuário não encontrado');
-        console.log('não validado');
+        if (btnEntrar) setLoginMessage("Usuário não encontrado");
       }
     }
   };
@@ -90,72 +94,69 @@ export default function Cart() {
       <Box id="displayItems">
         <Box
           sx={{
-            overflow: 'hidden',
-            width: '100%',
-            height: '9%',
-            display: 'flex',
-            alignContent: 'center',
-            justifyContent: 'center',
-            flexCirection: 'row',
-            zIndex: '3',
+            overflow: "hidden",
+            width: "100%",
+            height: "9%",
+            display: "flex",
+            alignContent: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+            zIndex: "3",
           }}
         >
           <BottomNavigationAction
             id="btnCartIconCarrinho"
             label="Carrinho"
-            icon={
-              <ShoppingCartOutlinedIcon id="cartIconCarrinho" />
-            }
+            icon={<ShoppingCartOutlinedIcon id="cartIconCarrinho" />}
             onClick={openListItems}
           />
         </Box>
         <ListCart />
         <Box
           sx={{
-            display: 'flex',
-            width: '80%',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            bottom: '8.5rem',
-            position: 'absolute',
+            display: "flex",
+            width: "80%",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            bottom: "8.5rem",
+            position: "absolute",
           }}
         >
           <Box
             sx={{
-              color: '#f76d26',
-              height: '4.9rem',
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              borderRadius: '13px',
-              textAlign: 'center',
+              color: "#f76d26",
+              height: "4.9rem",
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderRadius: "13px",
+              textAlign: "center",
             }}
           >
             <Typography
               className="sumPriceCart "
               variant="h6"
               sx={{
-                backgroundColor: '#fae9de',
-                color: '#f76d26',
-                height: '3.9rem',
-                width: '8rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: '13px',
-                textAlign: 'center',
-                boxShadow:
-                  ' 5px 4px 5px 2px rgba(0, 0, 0, 0.2)',
+                backgroundColor: "#fae9de",
+                color: "#f76d26",
+                height: "3.9rem",
+                width: "8rem",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "13px",
+                textAlign: "center",
+                boxShadow: " 5px 4px 5px 2px rgba(0, 0, 0, 0.2)",
               }}
             >
               Subtotal: {useFormat(calculateSubtotal(cart))}
             </Typography>
             <Button
-              sx={{ width: '50%' }}
+              sx={{ width: "50%" }}
               className="btnreturnpurchase"
               variant="outlined"
               onClick={openListItems}
@@ -165,10 +166,7 @@ export default function Cart() {
           </Box>
           {usuarioValidado ? (
             <NavLink to="/pedido">
-              <Button
-                variant="contained"
-                className="btncheckout"
-              >
+              <Button variant="contained" className="btncheckout">
                 Ir para Pagamento
               </Button>
             </NavLink>
@@ -188,11 +186,9 @@ export default function Cart() {
               open={open && !usuarioValidado}
               onClose={handleClose}
               closeAfterTransition
-              slots={{ backdrop: Backdrop }}
-              slotProps={{
-                backdrop: {
-                  timeout: 500,
-                },
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
               }}
             >
               <Fade in={open && !usuarioValidado}>
@@ -224,19 +220,17 @@ export default function Cart() {
                           placeholder="Nome"
                           className="inputModalDados"
                           value={nome}
-                          onChange={(event) =>
-                            setNome(event.target.value)
-                          }
+                          onChange={(event) => setNome(event.target.value)}
                           maxLength={20}
                         />
                         <AbcIcon className="iconTelefoneName" />
                       </Box>
                       <Typography
                         style={{
-                          color: 'red',
-                          fontSize: '12px',
-                          textAlign: 'center',
-                          height: 'auto',
+                          color: "red",
+                          fontSize: "12px",
+                          textAlign: "center",
+                          height: "auto",
                         }}
                       >
                         {loginMessage}
@@ -244,21 +238,16 @@ export default function Cart() {
                       <Button
                         variant="outlined"
                         className="btnIrParaPagamento"
-                        sx={{ height: '2rem' }}
-                        onClick={() =>
-                          consultarDadosLocalStorage(true)
-                        }
+                        sx={{ height: "2rem" }}
+                        onClick={() => consultarDadosLocalStorage(true)}
                       >
                         Entrar
                       </Button>
                       <Box>
                         <Typography>
-                          Não tem cadastro?{' '}
+                          Não tem cadastro?{" "}
                           <span>
-                            <NavLink
-                              className="btncheckout"
-                              to="/cadastro"
-                            >
+                            <NavLink className="btncheckout" to="/cadastro">
                               Realizar Cadastro
                             </NavLink>
                           </span>
@@ -269,7 +258,7 @@ export default function Cart() {
                         <Button
                           variant="outlined"
                           className="btnIrParaPagamento"
-                          sx={{ height: '2rem' }}
+                          sx={{ height: "2rem" }}
                         >
                           Continuar sem cadastro
                         </Button>
@@ -299,7 +288,7 @@ export default function Cart() {
             icon={
               <Box
                 sx={{
-                  display: 'flex',
+                  display: "flex",
                 }}
               >
                 <ShoppingCartOutlinedIcon
@@ -310,24 +299,66 @@ export default function Cart() {
                 {cart.length > 0 ? (
                   <Box
                     sx={{
-                      backgroundColor: '#fb6c1a',
-                      width: '17px',
-                      height: '17px',
-                      color: '#fff',
-                      borderRadius: '50%',
-                      margin: '-5px 0 0 -9px',
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: "#fb6c1a",
+                      width: "17px",
+                      height: "17px",
+                      color: "#fff",
+                      borderRadius: "50%",
+                      margin: "-5px 0 0 -9px",
                     }}
                   >
                     {cart.length}
                   </Box>
                 ) : (
-                  ''
+                  ""
                 )}
               </Box>
             }
           />
         </BottomNavigation>
       </Box>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={showValidationModal}
+        onClose={() => setShowValidationModal(false)}
+        closeAfterTransition
+      >
+        <Fade in={showValidationModal}>
+          <Box id="modalCadastro">
+            <Box id="modalContent">
+              <Box className="wrapper">
+                <Typography variant="h6">
+                  Login Realizado com sucesso!
+                </Typography>
+
+                <svg
+                  className="checkmark"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 52 52"
+                >
+                  {" "}
+                  <Box
+                    className="checkmark__circle"
+                    cx="26"
+                    cy="26"
+                    r="25"
+                  ></Box>{" "}
+                  <path
+                    className="checkmark__check"
+                    fill="none"
+                    d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                  ></path>
+                </svg>
+              </Box>
+            </Box>
+          </Box>
+        </Fade>
+      </Modal>
     </>
   );
 }

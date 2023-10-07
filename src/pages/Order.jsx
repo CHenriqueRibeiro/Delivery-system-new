@@ -20,6 +20,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
+import { useCarrinho } from "../context/useCarrinho";
+import { useFormat } from "../utils/useFormat";
 import "./Order.css";
 
 const Order = () => {
@@ -46,6 +48,7 @@ const Order = () => {
   const [bairroLocalStorage, setBairroLocalStorage] = useState("");
   const [cidadeLocalStorage, setCidadeLocalStorage] = useState("");
   const [estadoLocalStorage, setEstadoLocalStorage] = useState("");
+  const { cart, calculateSubtotal } = useCarrinho();
   const [selectedValueDelivery, setSelectedValueDelivery] =
     useState("delivery");
   const [selectedValuePayment, setSelectedValuePayment] =
@@ -804,7 +807,9 @@ const Order = () => {
                 <Typography style={{ fontSize: "12px", height: "auto" }}>
                   + Entrega: R$ 3,00
                 </Typography>
-                <Typography variant="h6">Total:R$ 50,00</Typography>
+                <Typography variant="h6">
+                  Total:{useFormat(calculateSubtotal(cart))}
+                </Typography>
               </Box>
               <input
                 className="btnSendRequest"

@@ -13,6 +13,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
+import { useCarrinho } from "../context/useCarrinho";
+import { useFormat } from "../utils/useFormat";
 import "./Order.css";
 
 const SignupSchema = yup.object().shape({
@@ -30,6 +32,7 @@ const SignupSchema = yup.object().shape({
 
 const Order = () => {
   const [open, setOpen] = useState(false);
+  const { cart, calculateSubtotal } = useCarrinho();
 
   const [selectedValueDelivery, setSelectedValueDelivery] =
     useState("delivery");
@@ -455,7 +458,10 @@ const Order = () => {
               <Typography style={{ fontSize: "12px", height: "auto" }}>
                 + Entrega: R$ 3,00
               </Typography>
-              <Typography variant="h6">Total:R$ 50,00</Typography>
+              <Typography variant="h6">
+                {" "}
+                Total:{useFormat(calculateSubtotal(cart))}
+              </Typography>
             </Box>
             <input
               className="btnSendRequest"

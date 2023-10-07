@@ -3,12 +3,12 @@ import { useForm } from "react-hook-form";
 import { Button, Fade, Modal, Typography } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import InputMask from "react-input-mask";
-import "./RegisterScreen.css";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import "./RegisterScreen.css";
 
 const RegisterScreen = () => {
   const schema = yup
@@ -262,8 +262,20 @@ const RegisterScreen = () => {
               </Box>
             </Box>
             <input
+              style={{
+                background: " #f16d2f",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontFamily: "Roboto",
+                height: "5%",
+                border: " 1px #f46c26 solid",
+                borderRadius: "10px",
+                color: "#f9e9df",
+                minWidth: "226px ",
+                textDecoration: "none",
+              }}
               type="submit"
-              className="btnIrParaPagamento"
               value={"Finalizar Cadastro"}
               onClick={handleOpen}
             />
