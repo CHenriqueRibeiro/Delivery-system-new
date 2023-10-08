@@ -97,4 +97,18 @@
   color: #f46c26 !important;
   min-width: 226px !important;
   text-decoration: none;
+  box-shadow: rgba(0, 0, 0, 0.5) 2px 3px 5px 1px;
+}
+
+.click:active {
+  transform: scale(0.98) !important;
+}
+.cartbtn:hover {
+  background-color: #f16d2f !important;
+  color: #f9e9df !important;
+  border: 1px solid #fae9de !important;
+}
+
+.box-shadow {
+  box-shadow: rgba(0, 0, 0, 0.5) 2px 3px 5px 1px !important;
 }

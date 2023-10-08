@@ -812,7 +812,7 @@ const Order = () => {
                 </Typography>
               </Box>
               <input
-                className="btnSendRequest"
+                className="btnSendRequest click"
                 type="submit"
                 onClick={handleOpen}
               />
@@ -855,7 +855,7 @@ const Order = () => {
                 <NavLink to="/" style={{ color: "#f9e9df" }}>
                   <input
                     onClick={handleClose}
-                    className="btnCloseService"
+                    className="btnCloseService click"
                     value="fechar"
                     style={{
                       textAlign: "center",

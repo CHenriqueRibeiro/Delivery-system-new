@@ -119,7 +119,7 @@ const RegisterScreen = () => {
                 />
               </Box>
               <Button
-                className="btnsearch"
+                className="btnsearch click"
                 sx={{
                   color: "#f46c26",
                   background: "#f9e9df",
@@ -263,18 +263,21 @@ const RegisterScreen = () => {
             </Box>
             <input
               style={{
-                background: " #f16d2f",
+                background: "#f16d2f",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 fontFamily: "Roboto",
                 height: "5%",
-                border: " 1px #f46c26 solid",
+                border: "1px solid #f46c26",
                 borderRadius: "10px",
                 color: "#f9e9df",
-                minWidth: "226px ",
+                minWidth: "226px",
                 textDecoration: "none",
+                transition: "background-color 0.3s",
+               
               }}
+              className="click box-shadow"
               type="submit"
               value={"Finalizar Cadastro"}
               onClick={handleOpen}
@@ -316,7 +319,7 @@ const RegisterScreen = () => {
                     <Button style={{ color: "#f9e9df" }}>
                       <input
                         onClick={handleClose}
-                        className="btnCloseService"
+                        className="btnCloseService click"
                         value="fechar"
                         style={{
                           textAlign: "center",
@@ -329,7 +332,7 @@ const RegisterScreen = () => {
                 </Box>
               </Fade>
             </Modal>
-            <NavLink to="/pedido" className="btnIrParaPagamento">
+            <NavLink to="/pedido" className="btnIrParaPagamento click">
               Ir para Pagamento
             </NavLink>
           </Box>

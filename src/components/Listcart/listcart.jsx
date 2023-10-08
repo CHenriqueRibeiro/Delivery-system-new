@@ -118,6 +118,7 @@ export default function ListCart() {
                         }}
                       >
                         <DeleteIcon
+                          className="click"
                           onClick={() => handleDelete(item.id)}
                           style={{ cursor: "pointer" }}
                         />

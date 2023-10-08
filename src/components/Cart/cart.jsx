@@ -4,7 +4,7 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Button from "@mui/material/Button";
 import ListCart from "../Listcart/listcart";
-import Backdrop from "@mui/material/Backdrop";
+
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
@@ -78,9 +78,6 @@ export default function Cart() {
         setUsuarioValidado(true);
         if (btnEntrar) setLoginMessage("");
         setShowValidationModal(true);
-        setTimeout(() => {
-          setShowValidationModal(false);
-        }, 2000);
       } else {
         setNome("");
         setUsuarioValidado(false);
@@ -157,7 +154,7 @@ export default function Cart() {
             </Typography>
             <Button
               sx={{ width: "50%" }}
-              className="btnreturnpurchase"
+              className="btnreturnpurchase click"
               variant="outlined"
               onClick={openListItems}
             >
@@ -166,13 +163,13 @@ export default function Cart() {
           </Box>
           {usuarioValidado ? (
             <NavLink to="/pedido">
-              <Button variant="contained" className="btncheckout">
+              <Button variant="contained" className="btncheckout click">
                 Ir para Pagamento
               </Button>
             </NavLink>
           ) : (
             <Button
-              className="btncheckout"
+              className="btncheckout click"
               variant="contained"
               onClick={handleOpen}
             >
@@ -186,10 +183,6 @@ export default function Cart() {
               open={open && !usuarioValidado}
               onClose={handleClose}
               closeAfterTransition
-              BackdropComponent={Backdrop}
-              BackdropProps={{
-                timeout: 500,
-              }}
             >
               <Fade in={open && !usuarioValidado}>
                 <Box id="modalCadastro">
@@ -237,7 +230,7 @@ export default function Cart() {
                       </Typography>
                       <Button
                         variant="outlined"
-                        className="btnIrParaPagamento"
+                        className="btnIrParaPagamento click"
                         sx={{ height: "2rem" }}
                         onClick={() => consultarDadosLocalStorage(true)}
                       >
@@ -247,7 +240,7 @@ export default function Cart() {
                         <Typography>
                           Não tem cadastro?{" "}
                           <span>
-                            <NavLink className="btncheckout" to="/cadastro">
+                            <NavLink className="btncheckout " to="/cadastro">
                               Realizar Cadastro
                             </NavLink>
                           </span>
@@ -257,7 +250,7 @@ export default function Cart() {
                       <NavLink to="/pedidosemcadastro">
                         <Button
                           variant="outlined"
-                          className="btnIrParaPagamento"
+                          className="btnIrParaPagamento click"
                           sx={{ height: "2rem" }}
                         >
                           Continuar sem cadastro
@@ -331,11 +324,17 @@ export default function Cart() {
         <Fade in={showValidationModal}>
           <Box id="modalCadastro">
             <Box id="modalContent">
-              <Box className="wrapper">
-                <Typography variant="h6">
-                  Login Realizado com sucesso!
-                </Typography>
-
+              <Box
+                sx={{
+                  height: "100%",
+                  width: "100%",
+                  display: " flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: " #fae9de",
+                }}
+              >
                 <svg
                   className="checkmark"
                   xmlns="http://www.w3.org/2000/svg"
@@ -354,6 +353,27 @@ export default function Cart() {
                     d="M14.1 27.2l7.1 7.2 16.7-16.8"
                   ></path>
                 </svg>
+                <Typography variant="h6">
+                  Login Realizado com sucesso!
+                </Typography>
+                <NavLink to="/pedido">
+                  <Button
+                    sx={{
+                      marginTop: "1.2rem",
+                      color: " #f7e9e1",
+                      backgroundColor: " #f76d26 ",
+                      borderRadius: "13px",
+                      border: "1px solid #fae9de",
+                      width: " 100%",
+                      maxWidth: "375px",
+                      boxShadow:
+                        "5px 4px 5px 2px rgba(0, 0, 0, 0.2), 5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12)",
+                    }}
+                    className="click cartbtn"
+                  >
+                    Ir para Pagamento
+                  </Button>
+                </NavLink>
               </Box>
             </Box>
           </Box>

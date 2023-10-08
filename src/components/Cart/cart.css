@@ -73,10 +73,11 @@
   border-radius: 13px !important;
   border: 1px solid #fae9de !important;
   width: 100% !important;
-  max-width: 375px !important;
+  max-width: 480px !important;
   box-shadow: 5px 4px 5px 2px rgba(0, 0, 0, 0.2),
     5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12) !important;
 }
+
 #iconcart-list {
   max-width: none;
   width: 100% !important;
