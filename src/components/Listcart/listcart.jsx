@@ -118,16 +118,20 @@ export default function ListCart() {
                         }}
                       >
                         <DeleteIcon
+                          className="click"
                           onClick={() => handleDelete(item.id)}
                           style={{ cursor: "pointer" }}
                         />
-                        <Button sx={{ color: "#201e1d" }}
+                        <Button
+                          sx={{ color: "#201e1d" }}
                           onClick={() => handleDecrement(item.id)}
                           disabled={item.quantidade === 1}
                         >
                           <RemoveIcon />
                         </Button>
-                        <span>{item.quantidade}</span>
+                        <span style={{ maxWidth: "10px" }}>
+                          {item.quantidade}
+                        </span>
                         <Button
                           sx={{ color: "#201e1d" }}
                           onClick={() => handleIncrement(item.id)}

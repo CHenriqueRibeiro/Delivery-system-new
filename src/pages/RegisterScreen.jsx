@@ -3,12 +3,12 @@ import { useForm } from "react-hook-form";
 import { Button, Fade, Modal, Typography } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import InputMask from "react-input-mask";
-import "./RegisterScreen.css";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import "./RegisterScreen.css";
 
 const RegisterScreen = () => {
   const schema = yup
@@ -119,7 +119,7 @@ const RegisterScreen = () => {
                 />
               </Box>
               <Button
-                className="btnsearch"
+                className="btnsearch click"
                 sx={{
                   color: "#f46c26",
                   background: "#f9e9df",
@@ -262,8 +262,23 @@ const RegisterScreen = () => {
               </Box>
             </Box>
             <input
+              style={{
+                background: "#f16d2f",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontFamily: "Roboto",
+                height: "5%",
+                border: "1px solid #f46c26",
+                borderRadius: "10px",
+                color: "#f9e9df",
+                minWidth: "226px",
+                textDecoration: "none",
+                transition: "background-color 0.3s",
+               
+              }}
+              className="click box-shadow"
               type="submit"
-              className="btnIrParaPagamento"
               value={"Finalizar Cadastro"}
               onClick={handleOpen}
             />
@@ -304,7 +319,7 @@ const RegisterScreen = () => {
                     <Button style={{ color: "#f9e9df" }}>
                       <input
                         onClick={handleClose}
-                        className="btnCloseService"
+                        className="btnCloseService click"
                         value="fechar"
                         style={{
                           textAlign: "center",
@@ -317,7 +332,7 @@ const RegisterScreen = () => {
                 </Box>
               </Fade>
             </Modal>
-            <NavLink to="/pedido" className="btnIrParaPagamento">
+            <NavLink to="/pedido" className="btnIrParaPagamento click">
               Ir para Pagamento
             </NavLink>
           </Box>

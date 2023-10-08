@@ -177,7 +177,7 @@ export default function Menu() {
                         {useFormat(item.valor)}
                       </Typography>
                       <AddShoppingCartIcon
-                        className="iconAddProduct"
+                        className="iconAddProduct click"
                         onClick={() => addToCart(item)}
                       />
                     </Box>
@@ -214,7 +214,7 @@ export default function Menu() {
                         {useFormat(item.valor)}
                       </Typography>
                       <AddShoppingCartIcon
-                        className="iconAddProduct"
+                        className="iconAddProduct click"
                         onClick={() => addToCart(item)}
                       />
                     </Box>
@@ -251,7 +251,7 @@ export default function Menu() {
                         {useFormat(item.valor)}
                       </Typography>
                       <AddShoppingCartIcon
-                        className="iconAddProduct"
+                        className="iconAddProduct click"
                         onClick={() => addToCart(item)}
                       />
                     </Box>
@@ -288,7 +288,7 @@ export default function Menu() {
                         {useFormat(item.valor)}
                       </Typography>
                       <AddShoppingCartIcon
-                        className="iconAddProduct"
+                        className="iconAddProduct click"
                         onClick={() => addToCart(item)}
                       />
                     </Box>
@@ -325,7 +325,7 @@ export default function Menu() {
                         {useFormat(item.valor)}
                       </Typography>
                       <AddShoppingCartIcon
-                        className="iconAddProduct"
+                        className="iconAddProduct click"
                         onClick={() => addToCart(item)}
                       />
                     </Box>
