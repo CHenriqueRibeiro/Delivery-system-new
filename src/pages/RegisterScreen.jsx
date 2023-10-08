@@ -275,7 +275,7 @@ const RegisterScreen = () => {
                 minWidth: "226px",
                 textDecoration: "none",
                 transition: "background-color 0.3s",
-               
+                fontSize: "16px",
               }}
               className="click box-shadow"
               type="submit"

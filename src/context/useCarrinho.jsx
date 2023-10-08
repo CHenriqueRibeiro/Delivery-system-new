@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 
 const CarrinhoContext = createContext();
 
@@ -11,19 +11,24 @@ export function useCarrinho() {
 export function CarrinhoProvider({ children }) {
   const [cart, setCart] = useState([]);
 
+  const saveCartToSessionStorage = (cart) => {
+    sessionStorage.setItem("itensSelecionados", JSON.stringify(cart));
+  };
+
   const addToCart = (item) => {
-    const existingItemIndex = cart.findIndex(
-      (c) => c.id === item.id
-    );
+    const existingItemIndex = cart.findIndex((c) => c.id === item.id);
 
     if (existingItemIndex !== -1) {
       const updatedCart = [...cart];
       updatedCart[existingItemIndex].quantidade += 1;
-      calculateSubtotal();
+      calculateSubtotal(updatedCart);
       setCart(updatedCart);
+      saveCartToSessionStorage(updatedCart);
     } else {
       const newItem = { ...item, quantidade: 1 };
-      setCart([...cart, newItem]);
+      const updatedCart = [...cart, newItem];
+      setCart(updatedCart);
+      saveCartToSessionStorage(updatedCart);
     }
   };
 
@@ -37,13 +42,13 @@ export function CarrinhoProvider({ children }) {
     });
 
     setCart(updatedCart);
+    saveCartToSessionStorage(updatedCart);
   };
 
   const deleteFromCart = (itemId) => {
-    const updatedCart = cart.filter(
-      (item) => item.id !== itemId
-    );
+    const updatedCart = cart.filter((item) => item.id !== itemId);
     setCart(updatedCart);
+    saveCartToSessionStorage(updatedCart);
   };
 
   const calculateSubtotal = (cart) => {
@@ -67,6 +72,7 @@ export function CarrinhoProvider({ children }) {
         deleteFromCart,
         removeQuantityFromCart,
         calculateSubtotal,
+        saveCartToSessionStorage,
       }}
     >
       {children}

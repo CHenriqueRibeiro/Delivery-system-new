@@ -62,6 +62,11 @@ export default function Menu() {
   const paoArabe = Data.paoArabe;
   const drink = Data.drinks;
 
+  window.onload = function () {
+    // Limpar a sessionStorage
+    sessionStorage.clear();
+  };
+
   return (
     <>
       <Box
