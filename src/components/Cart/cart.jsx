@@ -20,6 +20,7 @@ import "./cart.css";
 export default function Cart() {
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
+  const [openModalCarrinho, setOpenModalCarrinho] = useState(false);
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [usuarioValidado, setUsuarioValidado] = useState(false);
@@ -31,7 +32,12 @@ export default function Cart() {
     const addproducts = document.getElementById("displayItems");
     addproducts.classList.toggle("displayItemson");
   };
-
+  const handleOpenModalCarrinho = () => {
+    setOpenModalCarrinho(true);
+  };
+  const handleCloseModalCarrinho = () => {
+    setOpenModalCarrinho(false);
+  };
   const handleOpen = () => {
     consultarDadosLocalStorage(false);
     setOpen(true);
@@ -284,11 +290,61 @@ export default function Cart() {
                   display: "flex",
                 }}
               >
-                <ShoppingCartOutlinedIcon
-                  className="iconsfooter"
-                  onClick={openListItems}
-                />
-
+                {" "}
+                {cart.length === 0 ? (
+                  <>
+                    <ShoppingCartOutlinedIcon
+                      className="iconsfooter"
+                      onClick={handleOpenModalCarrinho}
+                    />
+                    <Modal
+                      aria-labelledby="transition-modal-title"
+                      aria-describedby="transition-modal-description"
+                      open={openModalCarrinho}
+                      onClose={handleCloseModalCarrinho}
+                      closeAfterTransition
+                    >
+                      <Fade in={openModalCarrinho}>
+                        <Box
+                          sx={{
+                            overflow: "hidden",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "#fae9de",
+                            position: " absolute",
+                            top: " 50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            width: " 90%",
+                            maxWidth: "600px",
+                            height: "5%",
+                            minHeight: " 100px",
+                            border: "6px solid #e5c7b3",
+                            borderRadius: " 30px",
+                            boxShadow: "5px 4px 5px 2px rgba(0, 0, 0, 0.2)",
+                          }}
+                        >
+                          <Box id="modalContent">
+                            <Box className="wrapper">
+                              <Typography variant="h6">
+                                Carrinho vazio
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Fade>
+                    </Modal>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCartOutlinedIcon
+                      className="iconsfooter"
+                      onClick={openListItems}
+                    />
+                  </>
+                )}
                 {cart.length > 0 ? (
                   <Box
                     sx={{
