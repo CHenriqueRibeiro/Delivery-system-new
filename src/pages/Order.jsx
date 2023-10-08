@@ -153,6 +153,59 @@ const Order = () => {
     formData[fieldName] = value;
     localStorage.setItem("formData", JSON.stringify(formData));
   };
+
+  const createWhatsAppMessage = () => {
+    const sessionStorageData = JSON.parse(
+      sessionStorage.getItem("itensSelecionados")
+    );
+
+    if (sessionStorageData) {
+      const formData = JSON.parse(localStorage.getItem("formData"));
+
+      if (!formData) {
+        console.error(
+          "Os dados do formulário não foram encontrados no Local Storage."
+        );
+        return;
+      }
+
+      const { nome, telefone } = formData;
+
+      let message = `Olá ${nome},\n\nTelefone: ${telefone}\n\n---------------------------------------\nPedido:\n---------------------------------------\n`;
+
+      const items = sessionStorageData.map((item, index) => {
+        return `Item ${index + 1}:\nSabor: ${item.sabor}\nQuantidade: ${
+          item.quantidade
+        }\nPreço: R$ ${item.valor.toFixed(2)}\n`;
+      });
+
+      message += `CEP: ${formData.cep || ""}\n`;
+      message += `Casa/Apto: ${formData.casaApto || ""}\n`;
+      message += `Rua: ${formData.rua || ""}\n`;
+      message += `Complemento: ${formData.complemento || ""}\n`;
+      message += `Bairro: ${formData.bairro || ""}\n`;
+      message += `Cidade: ${formData.cidade || ""}\n`;
+      message += `Estado: ${formData.estado || ""}\n`;
+
+      message += `---------------------------------------\n`;
+      message += `Forma de Pagamento: ${formData.formaDePagamento || ""}\n`;
+      message += `Forma de Entrega: ${formData.formaDeEntrega || ""}\n`;
+      message += `---------------------------------------\n`;
+
+      message += `${items.join("\n")}\n`;
+
+      const totalValue = calculateSubtotal(cart);
+      message += `Valor Total: R$ ${totalValue.toFixed(2)}`;
+
+      const formattedPhoneNumber = telefone.replace(/\s+/g, "");
+
+      const whatsappLink = `https://api.whatsapp.com/send?phone=55${formattedPhoneNumber}&text=${encodeURIComponent(
+        message
+      )}`;
+
+      window.open(whatsappLink);
+    }
+  };
   return (
     <Box className="screenOrder">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -854,7 +907,7 @@ const Order = () => {
 
                 <NavLink to="/" style={{ color: "#f9e9df" }}>
                   <input
-                    onClick={handleClose}
+                    onClick={(handleClose, createWhatsAppMessage)}
                     className="btnCloseService click"
                     value="fechar"
                     style={{

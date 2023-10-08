@@ -26,7 +26,6 @@ const RegisterScreen = () => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const saveToLocalStorage = (key, value) => {
     const val = value
@@ -275,7 +274,7 @@ const RegisterScreen = () => {
                 minWidth: "226px",
                 textDecoration: "none",
                 transition: "background-color 0.3s",
-               
+                fontSize: "16px",
               }}
               className="click box-shadow"
               type="submit"
@@ -293,9 +292,9 @@ const RegisterScreen = () => {
                   <Box id="modalContent">
                     <Box className="wrapper">
                       <Typography variant="h6">
-                        Cadastro Realizado com Sucesso!
+                        Obrigado por sua compra
                       </Typography>
-
+                      <Typography variant="h6">Pedido Realizado</Typography>
                       <svg
                         className="checkmark"
                         xmlns="http://www.w3.org/2000/svg"
@@ -316,25 +315,22 @@ const RegisterScreen = () => {
                       </svg>
                     </Box>
 
-                    <Button style={{ color: "#f9e9df" }}>
+                    <NavLink to="/pedido" style={{ color: "#f9e9df" }}>
                       <input
-                        onClick={handleClose}
                         className="btnCloseService click"
-                        value="fechar"
+                        value="Ir para Pagamento"
                         style={{
+                          width: "100%",
                           textAlign: "center",
                           color: "white",
                           textTransform: "capitalize",
                         }}
                       />
-                    </Button>
+                    </NavLink>
                   </Box>
                 </Box>
               </Fade>
             </Modal>
-            <NavLink to="/pedido" className="btnIrParaPagamento click">
-              Ir para Pagamento
-            </NavLink>
           </Box>
         </Box>
       </form>
