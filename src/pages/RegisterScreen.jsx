@@ -291,10 +291,7 @@ const RegisterScreen = () => {
                 <Box id="modalCadastro">
                   <Box id="modalContent">
                     <Box className="wrapper">
-                      <Typography variant="h6">
-                        Obrigado por sua compra
-                      </Typography>
-                      <Typography variant="h6">Pedido Realizado</Typography>
+                      <Typography variant="h6">Cadastro Realizado</Typography>
                       <svg
                         className="checkmark"
                         xmlns="http://www.w3.org/2000/svg"
