@@ -30,7 +30,7 @@ export default function ListCart() {
       const updatedItem = { ...item };
       updatedItem.quantidade -= 1;
       removeQuantityFromCart(updatedItem);
-      console.log(updatedItem), "removendo";
+    
     }
   };
 

@@ -34,12 +34,15 @@ const Order = () => {
   const [open, setOpen] = useState(false);
   const { cart, calculateSubtotal } = useCarrinho();
 
-  const [selectedValueDelivery, setSelectedValueDelivery] =
-    useState("delivery");
-  const [selectedValuePayment, setSelectedValuePayment] =
-    useState("creditCard");
+  const [selectedValueDelivery, setSelectedValueDelivery] = useState(
+    sessionStorage.getItem("selectedValueDelivery") || "Entrega"
+  );
 
-  const { register, handleSubmit } = useForm({
+  const [selectedValuePayment, setSelectedValuePayment] = useState(
+    sessionStorage.getItem("selectedValuePayment") || "Credito"
+  );
+  const [pedidoSemCadastro, setpedidoSemCadastro] = useState("");
+  const { handleSubmit } = useForm({
     resolver: yupResolver(SignupSchema),
   });
 
@@ -48,11 +51,108 @@ const Order = () => {
   };
 
   const handleChangeDelivery = (event) => {
-    setSelectedValueDelivery(event.target.value);
+    const { value } = event.target;
+    setSelectedValueDelivery(value);
+
+    const savedData =
+      JSON.parse(sessionStorage.getItem("pedido sem cadastro")) || {};
+
+    const updatedData = {
+      ...savedData,
+      formaDeEntrega: value,
+    };
+
+    sessionStorage.setItem("pedido sem cadastro", JSON.stringify(updatedData));
   };
 
   const handleChangePayment = (event) => {
-    setSelectedValuePayment(event.target.value);
+    const { value } = event.target;
+    setSelectedValuePayment(value);
+
+    const savedData =
+      JSON.parse(sessionStorage.getItem("pedido sem cadastro")) || {};
+
+    const updatedData = {
+      ...savedData,
+      formaDePagamento: value,
+    };
+
+    sessionStorage.setItem("pedido sem cadastro", JSON.stringify(updatedData));
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setpedidoSemCadastro({
+      ...pedidoSemCadastro,
+      [name]: value,
+    });
+
+    sessionStorage.setItem(
+      "pedido sem cadastro",
+      JSON.stringify({
+        ...pedidoSemCadastro,
+        [name]: value,
+      })
+    );
+  };
+
+  const createWhatsAppMessage = () => {
+    const sessionStorageData = JSON.parse(
+      sessionStorage.getItem("itensSelecionados")
+    );
+
+    if (sessionStorageData) {
+      const pedidoSemCadastro = JSON.parse(
+        sessionStorage.getItem("pedido sem cadastro")
+      );
+
+      if (!pedidoSemCadastro) {
+        console.error(
+          "Os dados do formulário não foram encontrados na sessionStorage."
+        );
+        return;
+      }
+
+      const { nome, Telefone } = pedidoSemCadastro;
+
+      let message = `Olá ${nome},\n\nTelefone: ${Telefone}\n\n---------------------------------------\nPedido:\n---------------------------------------\n`;
+
+      const items = sessionStorageData.map((item, index) => {
+        return `Item ${index + 1}:\nSabor: ${item.sabor}\nQuantidade: ${
+          item.quantidade
+        }\nPreço: R$ ${item.valor.toFixed(2)}\n`;
+      });
+
+      message += `CEP: ${pedidoSemCadastro.cep || ""}\n`;
+      message += `Casa/Apto: ${pedidoSemCadastro.Numero || ""}\n`;
+      message += `Rua: ${pedidoSemCadastro.rua || ""}\n`;
+      message += `Complemento: ${pedidoSemCadastro.Referencia || ""}\n`;
+      message += `Bairro: ${pedidoSemCadastro.Bairro || ""}\n`;
+      message += `Cidade: ${pedidoSemCadastro.Cidade || ""}\n`;
+      message += `Estado: ${pedidoSemCadastro.Estado || ""}\n`;
+
+      message += `---------------------------------------\n`;
+      message += `Forma de Pagamento: ${
+        pedidoSemCadastro.formaDePagamento || ""
+      }\n`;
+      message += `Forma de Entrega: ${
+        pedidoSemCadastro.formaDeEntrega || ""
+      }\n`;
+      message += `---------------------------------------\n`;
+
+      message += `${items.join("\n")}\n`;
+
+      const totalValue = calculateSubtotal(cart);
+      message += `Valor Total: R$ ${totalValue.toFixed(2)}`;
+
+      const formattedPhoneNumber = Telefone.replace(/\s+/g, "");
+
+      const whatsappLink = `https://api.whatsapp.com/send?phone=55${formattedPhoneNumber}&text=${encodeURIComponent(
+        message
+      )}`;
+
+      window.open(whatsappLink);
+    }
   };
 
   const handleOpen = () => setOpen(true);
@@ -95,6 +195,8 @@ const Order = () => {
                       fontWeight: "500",
                       marginLeft: ".5rem",
                     }}
+                    value={pedidoSemCadastro.nome}
+                    onChange={handleInputChange}
                   />
                 </Typography>
                 <Typography
@@ -105,7 +207,7 @@ const Order = () => {
                   <InputMask
                     mask="99 9 99999999"
                     maskChar={null}
-                    name="telefone"
+                    name="Telefone"
                     style={{
                       textTransform: "capitalize",
                       border: "1px #f16d2f solid",
@@ -115,6 +217,8 @@ const Order = () => {
                       fontWeight: "500",
                       marginLeft: ".5rem",
                     }}
+                    value={pedidoSemCadastro.Telefone}
+                    onChange={handleInputChange}
                   />
                 </Typography>
               </Box>
@@ -139,9 +243,9 @@ const Order = () => {
               <Box className="deliveryMethod">
                 <Box display={"flex"} width={"100%"} alignItems={"center"}>
                   <Radio
-                    checked={selectedValueDelivery === "delivery"}
+                    checked={selectedValueDelivery === "Entrega"}
                     onChange={handleChangeDelivery}
-                    value="delivery"
+                    value="Entrega"
                   />
                   <DeliveryDiningOutlinedIcon />
                   <Typography variant="h6" sx={{ pl: 2 }}>
@@ -150,9 +254,9 @@ const Order = () => {
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
                   <Radio
-                    checked={selectedValueDelivery === "pickUpDelivery"}
+                    checked={selectedValueDelivery === "Retirada"}
                     onChange={handleChangeDelivery}
-                    value="pickUpDelivery"
+                    value="Retirada"
                   />
                   <StorefrontOutlinedIcon />
                   <Typography variant="h6" sx={{ pl: 2 }}>
@@ -163,7 +267,7 @@ const Order = () => {
             </Box>
           </Box>
 
-          {selectedValueDelivery === "delivery" && (
+          {selectedValueDelivery === "Entrega" && (
             <Box className="cardDeliveryAddress">
               <Box className="contentDeliveryAddress">
                 <Box className="backgroundTitleAddress"></Box>
@@ -188,6 +292,9 @@ const Order = () => {
                       }}
                       mask="99999-999"
                       maskChar={null}
+                      name="cep"
+                      value={pedidoSemCadastro.cep}
+                      onChange={handleInputChange}
                     />
                   </Typography>
 
@@ -208,7 +315,8 @@ const Order = () => {
                         marginLeft: ".5rem",
                       }}
                       name="rua"
-                      {...register("rua")}
+                      value={pedidoSemCadastro.rua}
+                      onChange={handleInputChange}
                     />
                   </Typography>
                   <Typography
@@ -216,7 +324,7 @@ const Order = () => {
                     variant="h6"
                   >
                     {" "}
-                    <label>Casa/Apto :</label>
+                    <label>Numero:</label>
                     <input
                       style={{
                         textTransform: "capitalize",
@@ -228,7 +336,9 @@ const Order = () => {
                         marginLeft: ".5rem",
                       }}
                       spellCheck="false"
-                      name="casaApto"
+                      name="Numero"
+                      value={pedidoSemCadastro.numero}
+                      onChange={handleInputChange}
                     />
                   </Typography>
                   <Typography
@@ -236,7 +346,7 @@ const Order = () => {
                     variant="h6"
                   >
                     {" "}
-                    <label>Complemento :</label>
+                    <label>Ponto de Ref :</label>
                     <input
                       style={{
                         textTransform: "capitalize",
@@ -248,6 +358,9 @@ const Order = () => {
                         marginLeft: ".5rem",
                       }}
                       spellCheck="false"
+                      name="Referencia"
+                      value={pedidoSemCadastro.referencia}
+                      onChange={handleInputChange}
                     />
                   </Typography>
 
@@ -268,6 +381,9 @@ const Order = () => {
                         marginLeft: ".5rem",
                       }}
                       spellCheck="false"
+                      name="Bairro"
+                      value={pedidoSemCadastro.bairro}
+                      onChange={handleInputChange}
                     />
                   </Typography>
 
@@ -288,6 +404,9 @@ const Order = () => {
                         marginLeft: ".5rem",
                       }}
                       spellCheck="false"
+                      name="Cidade"
+                      value={pedidoSemCadastro.cidade}
+                      onChange={handleInputChange}
                     />
                   </Typography>
 
@@ -308,6 +427,9 @@ const Order = () => {
                         marginLeft: ".5rem",
                       }}
                       spellCheck="false"
+                      name="Estado"
+                      value={pedidoSemCadastro.estado}
+                      onChange={handleInputChange}
                     />
                   </Typography>
                 </Box>
@@ -315,7 +437,7 @@ const Order = () => {
             </Box>
           )}
 
-          {selectedValueDelivery === "pickUpDelivery" && (
+          {selectedValueDelivery === "Retirada" && (
             <Box className="cardDeliveryAddress">
               <Box className="contentDeliveryAddress">
                 <Box className="backgroundTitleAddressRetirada"></Box>
@@ -396,9 +518,9 @@ const Order = () => {
               <Box className="FormOfPayment">
                 <Box display={"flex"} alignItems={"center"} width={"100"}>
                   <Radio
-                    checked={selectedValuePayment === "creditCard"}
+                    checked={selectedValuePayment === "Credito"}
                     onChange={handleChangePayment}
-                    value="creditCard"
+                    value="Credito"
                   />
                   <CreditCardOutlinedIcon />
                   <Typography variant="h6" sx={{ pl: 2 }}>
@@ -407,9 +529,9 @@ const Order = () => {
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
                   <Radio
-                    checked={selectedValuePayment === "debitCard"}
+                    checked={selectedValuePayment === "Debito"}
                     onChange={handleChangePayment}
-                    value="debitCard"
+                    value="Debito"
                   />
                   <CreditCardOutlinedIcon />
                   <Typography variant="h6" sx={{ pl: 2 }}>
@@ -418,9 +540,9 @@ const Order = () => {
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
                   <Radio
-                    checked={selectedValuePayment === "pix"}
+                    checked={selectedValuePayment === "Pix"}
                     onChange={handleChangePayment}
-                    value="pix"
+                    value="Pix"
                   />
                   <PixOutlinedIcon />
                   <Typography variant="h6" sx={{ pl: 2 }}>
@@ -429,9 +551,9 @@ const Order = () => {
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
                   <Radio
-                    checked={selectedValuePayment === "money"}
+                    checked={selectedValuePayment === "Dinheiro"}
                     onChange={handleChangePayment}
-                    value="money"
+                    value="Dinheiro"
                   />
                   <AttachMoneyIcon />
                   <Typography variant="h6" sx={{ pl: 2 }}>
@@ -505,7 +627,7 @@ const Order = () => {
 
                 <NavLink to="/" style={{ color: "#f9e9df" }}>
                   <input
-                    onClick={handleClose}
+                    onClick={(handleClose, createWhatsAppMessage)}
                     className="btnCloseService click"
                     value="fechar"
                     style={{
