@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -61,41 +61,72 @@ export default function Menu() {
   const [refrigeranteDoCombo, setrefrigeranteDoCombo] = useState("");
   const [isSegundoModalOpen, setIsSegundoModalOpen] = useState(false);
   const [observacao, setObservacao] = useState("");
-
+  const [activeTab, setActiveTab] = useState("combos");
   const [bordaSelecionada, setbordaSelecionada] = useState("");
-  const [adicional, setAdicional] = useState(
-    Data.combos.map(() => ({
-      calabresa: 0,
-      queijo: 0,
-      cheddar: 0,
-    }))
-  );
+  const [adicional, setAdicional] = useState("");
+  
+  useEffect(() => {
+    let objGenerico = []
+    Data.adicionais[activeTab].forEach(adicional => objGenerico.push(adicional) );
+    setAdicional(objGenerico)
+
+    console.log(adicional);
+  },[])
+
+  useEffect(() => {
+    let objGenerico = []
+    Data.adicionais[activeTab].forEach(adicional => objGenerico.push(adicional) );
+    setAdicional(objGenerico)
+  },[activeTab])
+  
+  const finalizarModal = () => {
+    const adicionais = adicional.filter(item => (item.calabresa > 0 || item.queijo > 0))[0];
+    const adicionalCalabresa = adicional.reduce(
+     (total, combo) => total + 1.99 * combo.calabresa,
+     0
+   );
+
+   const adicionalQueijo = adicional.reduce(
+     (total, combo) => total + 1.99 * combo.queijo,
+     0
+   );
+
+   const valorTotalAdicionais =
+     adicionalCalabresa + adicionalQueijo;
+
+   const valorTotalDoProduto =
+     valorTotalAdicionais + itemToAdd.valor;
+   const itemToAddWithQuantity = {
+     ...itemToAdd,
+     refrigeranteDoCombo,
+     observacao,
+     bordaSelecionada,
+     adicionais,
+     valorTotalAdicionais,
+     valorTotalDoProduto,
+   };
+   addToCart(itemToAddWithQuantity);
+   setIsModalOpen(false);
+   setIsSegundoModalOpen(false);
+ }
 
   const handleIngredientIncrement = (ingredient) => {
-    const updatedIngredientQuantities = [...adicional];
-    updatedIngredientQuantities[value][ingredient] += 1;
-    setAdicional(updatedIngredientQuantities);
+    let copia = {...adicional};
+    copia[Object.values(ingredient)[0]]++;
+    setAdicional(copia);
   };
 
   const handleIngredientDecrement = (ingredient) => {
-    if (adicional[value][ingredient] > 0) {
-      const updatedIngredientQuantities = [...adicional];
-      updatedIngredientQuantities[value][ingredient] -= 1;
-      setAdicional(updatedIngredientQuantities);
+    if (adicional[Object.values(ingredient)[0]] > 0) {
+      let copia = {...adicional};
+      copia[Object.values(ingredient)[0]]--;
+      setAdicional(copia);;
     }
   };
 
   const openConfirmationModal = (item) => {
     setIsModalOpen(true);
     setItemToAdd(item);
-
-    setAdicional(
-      Data.combos.map(() => ({
-        calabresa: 0,
-        queijo: 0,
-        cheddar: 0,
-      }))
-    );
     setbordaSelecionada("");
     setObservacao("");
   };
@@ -106,7 +137,10 @@ export default function Menu() {
   };
 
   const handleChange = (event, newValue) => {
+    const tabClasses = [...event.target.classList];
+    const optionClass = tabClasses.filter(item => item.includes("opt"))[0].substring(3)
     setValue(newValue);
+    setActiveTab(optionClass);
   };
 
   const promotions = Data.combos;
@@ -153,28 +187,28 @@ export default function Menu() {
         }}
       >
         <Tab
-          className="tabs"
+          className="tabs optcombos"
           label="Combos"
           icon={<img src={Image1} alt="ImgCombo" />}
         />
         <Tab
           label="Pizza"
-          className="tabs"
+          className="tabs optpizza"
           icon={<img src={Image2} alt="ImgPizza" />}
         />
         <Tab
           label="Hamburguer"
-          className="tabs"
+          className="tabs opthamburguer"
           icon={<img src={Image3} alt="ImgHamburguer" />}
         />
         <Tab
           label="Pão Arabe"
-          className="tabs"
+          className="tabs optpaoArabe"
           icon={<img src={Image4} alt="ImgPaoArabe" />}
         />
         <Tab
           label="Bebida"
-          className="tabs"
+          className="tabs optbebidas"
           icon={<img src={Image5} alt="ImgBebidas" />}
         />
       </Tabs>
@@ -231,7 +265,7 @@ export default function Menu() {
                     <Typography>{item.ingredientes}</Typography>
                     <Box className="priceAndIcons">
                       <Typography variant="h6">
-                        {useFormat(item.valor)}
+                        {useFormat(item.valor)} 
                       </Typography>
                       <AddShoppingCartIcon
                         className="iconAddProduct click"
@@ -243,7 +277,161 @@ export default function Menu() {
               </Card>
             ))}
 
-          <Modal
+          
+        </CustomTabPanel>
+
+        <CustomTabPanel value={value} index={1} className="tabContents">
+          {pizza
+            .filter((item) =>
+              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((item) => (
+              <Card key={item.id} className="cardMenu">
+                <CardContent className="cardContent">
+                  <img src={item.imagem} alt="" />
+                  <Box className="descriptionCard">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        width: "100%",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography variant="h6" sx={{ width: "100%" }}>
+                        {item.sabor}
+                      </Typography>
+                    </Box>
+                    <Typography>{item.ingredientes}</Typography>
+                    <Box className="priceAndIcons">
+                      <Typography variant="h6">
+                        {useFormat(item.valor)}
+                      </Typography>
+                      <AddShoppingCartIcon
+                        className="iconAddProduct click"
+                        onClick={() => openConfirmationModal(item)}
+                      />
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+            ))}
+        </CustomTabPanel>
+
+        <CustomTabPanel value={value} index={2} className="tabContents">
+          {hamburger
+            .filter((item) =>
+              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((item) => (
+              <Card key={item.id} className="cardMenu">
+                <CardContent className="cardContent">
+                  <img src={item.imagem} alt="" />
+                  <Box className="descriptionCard">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        width: "100%",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography variant="h6" sx={{ width: "100%" }}>
+                        {item.sabor}
+                      </Typography>
+                    </Box>
+                    <Typography>{item.ingredientes}</Typography>
+                    <Box className="priceAndIcons">
+                      <Typography variant="h6">
+                        {useFormat(item.valor)}
+                      </Typography>
+                      <AddShoppingCartIcon
+                        className="iconAddProduct click"
+                        onClick={() => openConfirmationModal(item)}
+                      />
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+            ))}
+        </CustomTabPanel>
+
+        <CustomTabPanel value={value} index={3} className="tabContents">
+          {paoArabe
+            .filter((item) =>
+              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((item) => (
+              <Card key={item.id} className="cardMenu">
+                <CardContent className="cardContent">
+                  <img src={item.imagem} alt="" />
+                  <Box className="descriptionCard">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        width: "100%",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography variant="h6" sx={{ width: "100%" }}>
+                        {item.sabor}
+                      </Typography>
+                    </Box>
+                    <Typography>{item.ingredientes}</Typography>
+                    <Box className="priceAndIcons">
+                      <Typography variant="h6">
+                        {useFormat(item.valor)}
+                      </Typography>
+                      <AddShoppingCartIcon
+                        className="iconAddProduct click"
+                        onClick={() => openConfirmationModal(item)}
+                      />
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+            ))}
+        </CustomTabPanel>
+
+        <CustomTabPanel value={value} index={4} className="tabContents">
+          {drink
+            .filter((item) =>
+              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((item) => (
+              <Card key={item.id} className="cardMenu">
+                <CardContent className="cardContent">
+                  <img src={item.imagem} alt="" />
+                  <Box className="descriptionCard">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        width: "100%",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Typography variant="h6" sx={{ width: "100%" }}>
+                        {item.sabor}
+                      </Typography>
+                    </Box>
+                    <Typography>{item.ingredientes}</Typography>
+                    <Box className="priceAndIcons">
+                      <Typography variant="h6">
+                        {useFormat(item.valor)}
+                      </Typography>
+                      <AddShoppingCartIcon
+                        className="iconAddProduct click"
+                        onClick={() => openConfirmationModal(item)}
+                      />
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+            ))}
+        </CustomTabPanel>
+      </Box>
+      <Box id="footer">
+        <Cart />
+      </Box>
+      <Modal
             open={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             aria-labelledby="confirmation-modal-title"
@@ -398,6 +586,8 @@ export default function Menu() {
               >
                 Adicionar ingredientes:
               </Typography>
+              {
+               /* adicional.map(obj => (
               <Box
                 sx={{
                   display: "flex",
@@ -417,7 +607,7 @@ export default function Menu() {
                   }}
                 >
                   <Typography>
-                    Calabresa (100 gr) <Box>{useFormat(1.99)}</Box>
+                   {obj.name}  <Box>{useFormat(obj.value)}</Box>
                   </Typography>
                   <Box
                     sx={{
@@ -430,67 +620,23 @@ export default function Menu() {
                   >
                     <Button
                       sx={{ color: "black" }}
-                      onClick={() => handleIngredientDecrement("calabresa")}
+                      onClick={() => handleIngredientDecrement((obj.name))}
                     >
                       -
                     </Button>
-                    <Typography>{adicional[value].calabresa}</Typography>
+                    <Typography>{obj.value}</Typography>
                     <Button
                       sx={{ color: "black" }}
-                      onClick={() => handleIngredientIncrement("calabresa")}
+                      onClick={() => handleIngredientIncrement((obj.name))}
                     >
                       +
                     </Button>
                   </Box>
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  width: "100%",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography>
-                    Queijo (100gr) <Box>{useFormat(1.99)}</Box>
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      width: "40%",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Button
-                      sx={{ color: "black" }}
-                      onClick={() => handleIngredientDecrement("queijo")}
-                    >
-                      -
-                    </Button>
-                    <Typography>{adicional[value].queijo}</Typography>
-                    <Button
-                      sx={{ color: "black" }}
-                      onClick={() => handleIngredientIncrement("queijo")}
-                    >
-                      +
-                    </Button>
-                  </Box>
-                </Box>
-              </Box>
-
+              ))*/
+            }
+             
               <Typography
                 sx={{
                   fontSize: "18px",
@@ -617,194 +763,14 @@ export default function Menu() {
                     alignItems: "center",
                     justifyContent: "center",
                   }}
-                  onClick={() => {
-                    const adicionalCalabresa = adicional.reduce(
-                      (total, combo) => total + 1.99 * combo.calabresa,
-                      0
-                    );
-
-                    const adicionalQueijo = adicional.reduce(
-                      (total, combo) => total + 1.99 * combo.queijo,
-                      0
-                    );
-
-                    const valorTotalAdicionais =
-                      adicionalCalabresa + adicionalQueijo;
-
-                    const valorTotalDoProduto =
-                      valorTotalAdicionais + itemToAdd.valor;
-                    const itemToAddWithQuantity = {
-                      ...itemToAdd,
-                      refrigeranteDoCombo,
-                      observacao,
-                      bordaSelecionada,
-                      adicional,
-                      valorTotalAdicionais,
-                      valorTotalDoProduto,
-                    };
-                    addToCart(itemToAddWithQuantity);
-                    setIsModalOpen(false);
-                    setIsSegundoModalOpen(false);
-                  }}
+                  onClick={finalizarModal}
                 >
                   Adicionar ao carrinho
                 </Button>
               </Box>
             </Box>
           </Modal>
-        </CustomTabPanel>
-
-        <CustomTabPanel value={value} index={1} className="tabContents">
-          {pizza
-            .filter((item) =>
-              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card key={item.id} className="cardMenu">
-                <CardContent className="cardContent">
-                  <img src={item.imagem} alt="" />
-                  <Box className="descriptionCard">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ width: "100%" }}>
-                        {item.sabor}
-                      </Typography>
-                    </Box>
-                    <Typography>{item.ingredientes}</Typography>
-                    <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {useFormat(item.valor)}
-                      </Typography>
-                      <AddShoppingCartIcon
-                        className="iconAddProduct click"
-                        onClick={() => addToCart(item)}
-                      />
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
-        </CustomTabPanel>
-
-        <CustomTabPanel value={value} index={2} className="tabContents">
-          {hamburger
-            .filter((item) =>
-              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card key={item.id} className="cardMenu">
-                <CardContent className="cardContent">
-                  <img src={item.imagem} alt="" />
-                  <Box className="descriptionCard">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ width: "100%" }}>
-                        {item.sabor}
-                      </Typography>
-                    </Box>
-                    <Typography>{item.ingredientes}</Typography>
-                    <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {useFormat(item.valor)}
-                      </Typography>
-                      <AddShoppingCartIcon
-                        className="iconAddProduct click"
-                        onClick={() => addToCart(item)}
-                      />
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
-        </CustomTabPanel>
-
-        <CustomTabPanel value={value} index={3} className="tabContents">
-          {paoArabe
-            .filter((item) =>
-              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card key={item.id} className="cardMenu">
-                <CardContent className="cardContent">
-                  <img src={item.imagem} alt="" />
-                  <Box className="descriptionCard">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ width: "100%" }}>
-                        {item.sabor}
-                      </Typography>
-                    </Box>
-                    <Typography>{item.ingredientes}</Typography>
-                    <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {useFormat(item.valor)}
-                      </Typography>
-                      <AddShoppingCartIcon
-                        className="iconAddProduct click"
-                        onClick={() => addToCart(item)}
-                      />
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
-        </CustomTabPanel>
-
-        <CustomTabPanel value={value} index={4} className="tabContents">
-          {drink
-            .filter((item) =>
-              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card key={item.id} className="cardMenu">
-                <CardContent className="cardContent">
-                  <img src={item.imagem} alt="" />
-                  <Box className="descriptionCard">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ width: "100%" }}>
-                        {item.sabor}
-                      </Typography>
-                    </Box>
-                    <Typography>{item.ingredientes}</Typography>
-                    <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {useFormat(item.valor)}
-                      </Typography>
-                      <AddShoppingCartIcon
-                        className="iconAddProduct click"
-                        onClick={() => addToCart(item)}
-                      />
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
-        </CustomTabPanel>
-      </Box>
-      <Box id="footer">
-        <Cart />
-      </Box>
     </>
+    
   );
 }

@@ -229,5 +229,17 @@
       "ingredientes": "Bebida Gelada",
       "quantidade": 1
     }
-  ]
+  ],
+  "adicionais":{
+    "combos":[
+      { "name": "Calabresa (100gr)", "valor": 1.99 },
+      { "name": "Coalho (100gr)", "valor": 1.99 },
+      { "name": "Cheddar (100gr)", "valor": 1.99 }
+    ],
+    "pizza":[
+      { "name": "Carne do sol (100gr)", "valor": 1.99 },
+      { "name": "Mussarela (100gr)", "valor": 1.99 },
+      { "name": "Catupiry (100gr)", "valor": 1.99 }
+    ]
+  }
 }
