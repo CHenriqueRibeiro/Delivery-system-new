@@ -240,6 +240,17 @@
       { "name": "Carne do sol (100gr)", "value": 1.99, "qtde": 0 },
       { "name": "Mussarela (100gr)", "value": 1.99, "qtde": 0 },
       { "name": "Catupiry (100gr)", "value": 1.99, "qtde": 0 }
-    ]
+    ],
+    "hamburguer":[
+      { "name": "Smash (100gr)", "value": 1.99, "qtde": 0 },
+      { "name": "Molho da casa (100gr)", "value": 1.99, "qtde": 0 },
+      { "name": "Bacon (100gr)", "value": 1.99, "qtde": 0 }
+    ],
+    "paoArabe":[
+      { "name": "Carne Trinchada (100gr)", "value": 1.99, "qtde": 0 },
+      { "name": "Frango (100gr)", "value": 1.99, "qtde": 0 },
+      { "name": "Carne de Hamburguer (100gr)", "value": 1.99, "qtde": 0 }
+    ],
+    "bebidas":[]
   }
 }
