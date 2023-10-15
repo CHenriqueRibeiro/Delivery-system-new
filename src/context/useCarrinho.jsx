@@ -17,19 +17,28 @@ export function CarrinhoProvider({ children }) {
 
   const addToCart = (item) => {
     const existingItemIndex = cart.findIndex((c) => c.id === item.id);
+    let updatedCart = [];
 
     if (existingItemIndex !== -1) {
-      const updatedCart = [...cart];
-      updatedCart[existingItemIndex].quantidade += 1;
+      updatedCart = [...cart];
+
+      if(
+          updatedCart[existingItemIndex].adicionais.toString() !== item.adicionais.toString() ||
+          updatedCart[existingItemIndex].bordaSelecionada !== item.bordaSelecionada ||
+          updatedCart[existingItemIndex].refrigeranteDoCombo !== item.refrigeranteDoCombo
+        )
+          updatedCart.push(item);
+        else 
+          updatedCart[existingItemIndex].quantidade += 1;
+      
       calculateSubtotal(updatedCart);
-      setCart(updatedCart);
-      saveCartToSessionStorage(updatedCart);
     } else {
       const newItem = { ...item, quantidade: 1 };
-      const updatedCart = [...cart, newItem];
-      setCart(updatedCart);
-      saveCartToSessionStorage(updatedCart);
+      updatedCart = [...cart, newItem];
     }
+
+    setCart(updatedCart);
+    saveCartToSessionStorage(updatedCart);
   };
 
   const removeQuantityFromCart = (itemId) => {
@@ -45,8 +54,8 @@ export function CarrinhoProvider({ children }) {
     saveCartToSessionStorage(updatedCart);
   };
 
-  const deleteFromCart = (itemId) => {
-    const updatedCart = cart.filter((item) => item.id !== itemId);
+  const deleteFromCart = (item) => {
+    const updatedCart = cart.filter((itemCart) => JSON.stringify(itemCart) !== JSON.stringify(item));
     setCart(updatedCart);
     saveCartToSessionStorage(updatedCart);
   };

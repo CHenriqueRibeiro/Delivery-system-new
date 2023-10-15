@@ -9,28 +9,27 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
 export default function ListCart() {
-  // const { cart, sumValueItems, deleteFromCart } = useCarrinho();
+  
   const { cart, deleteFromCart, addToCart, removeQuantityFromCart } =
     useCarrinho();
 
-  const handleDelete = (itemId) => {
-    deleteFromCart(itemId);
+  const handleDelete = (item) => {
+    deleteFromCart(item);
   };
 
-  const handleIncrement = (itemId) => {
-    const item = cart.find((item) => item.id === itemId);
-    if (item) {
-      addToCart(item);
-    }
+  const handleIncrement = (item) => {
+    const date = new Date();
+    addToCart({ ...item, key: date.getMilliseconds() });
+   
   };
 
-  const handleDecrement = (itemId) => {
-    const item = cart.find((item) => item.id === itemId);
+  const handleDecrement = (item) => {
+    const date = new Date();
+    
     if (item && item.quantidade > 1) {
-      const updatedItem = { ...item };
+      const updatedItem = { ...item, key: date.getMilliseconds() };
       updatedItem.quantidade -= 1;
       removeQuantityFromCart(updatedItem);
-    
     }
   };
 
@@ -98,6 +97,7 @@ export default function ListCart() {
                   >
                     <Typography variant="h6">{item.sabor}</Typography>
                     <Typography>{item.ingredientes}</Typography>
+                    <Typography variant="body2" gutterBottom>{item.adicionais.map(item => item.name).join(", ")}</Typography>
                     <Box
                       sx={{
                         display: "flex",
@@ -107,7 +107,7 @@ export default function ListCart() {
                       }}
                     >
                       <Typography variant="h6">
-                        {useFormat(item.valor)}
+                        {useFormat(item.valorTotalDoProduto)}
                       </Typography>
                       <Box
                         sx={{
@@ -119,12 +119,12 @@ export default function ListCart() {
                       >
                         <DeleteIcon
                           className="click"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => handleDelete(item)}
                           style={{ cursor: "pointer" }}
                         />
                         <Button
                           sx={{ color: "#201e1d" }}
-                          onClick={() => handleDecrement(item.id)}
+                          onClick={() => handleDecrement(item)}
                           disabled={item.quantidade === 1}
                         >
                           <RemoveIcon />
@@ -134,7 +134,7 @@ export default function ListCart() {
                         </span>
                         <Button
                           sx={{ color: "#201e1d" }}
-                          onClick={() => handleIncrement(item.id)}
+                          onClick={() => handleIncrement(item)}
                         >
                           <AddIcon />
                         </Button>

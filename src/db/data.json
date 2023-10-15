@@ -232,14 +232,14 @@
   ],
   "adicionais":{
     "combos":[
-      { "name": "Calabresa (100gr)", "valor": 1.99 },
-      { "name": "Coalho (100gr)", "valor": 1.99 },
-      { "name": "Cheddar (100gr)", "valor": 1.99 }
+      { "name": "Calabresa (100gr)", "value": 2.50, "qtde": 0 },
+      { "name": "Coalho (100gr)", "value": 2.00, "qtde": 0 },
+      { "name": "Cheddar (100gr)", "value": 3.00, "qtde": 0 }
     ],
     "pizza":[
-      { "name": "Carne do sol (100gr)", "valor": 1.99 },
-      { "name": "Mussarela (100gr)", "valor": 1.99 },
-      { "name": "Catupiry (100gr)", "valor": 1.99 }
+      { "name": "Carne do sol (100gr)", "value": 1.99, "qtde": 0 },
+      { "name": "Mussarela (100gr)", "value": 1.99, "qtde": 0 },
+      { "name": "Catupiry (100gr)", "value": 1.99, "qtde": 0 }
     ]
   }
 }

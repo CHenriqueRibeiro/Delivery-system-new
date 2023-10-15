@@ -63,64 +63,56 @@ export default function Menu() {
   const [observacao, setObservacao] = useState("");
   const [activeTab, setActiveTab] = useState("combos");
   const [bordaSelecionada, setbordaSelecionada] = useState("");
-  const [adicional, setAdicional] = useState("");
+  const [adicional, setAdicional] = useState([]);
   
   useEffect(() => {
     let objGenerico = []
     Data.adicionais[activeTab].forEach(adicional => objGenerico.push(adicional) );
-    setAdicional(objGenerico)
-
-    console.log(adicional);
+    setAdicional(objGenerico);
   },[])
 
   useEffect(() => {
     let objGenerico = []
     Data.adicionais[activeTab].forEach(adicional => objGenerico.push(adicional) );
-    setAdicional(objGenerico)
+    setAdicional(objGenerico);
   },[activeTab])
   
   const finalizarModal = () => {
-    const adicionais = adicional.filter(item => (item.calabresa > 0 || item.queijo > 0))[0];
-    const adicionalCalabresa = adicional.reduce(
-     (total, combo) => total + 1.99 * combo.calabresa,
-     0
-   );
-
-   const adicionalQueijo = adicional.reduce(
-     (total, combo) => total + 1.99 * combo.queijo,
-     0
-   );
-
-   const valorTotalAdicionais =
-     adicionalCalabresa + adicionalQueijo;
-
-   const valorTotalDoProduto =
-     valorTotalAdicionais + itemToAdd.valor;
-   const itemToAddWithQuantity = {
+    const adicionais            = adicional.filter(item => (item.qtde > 0));
+    const totais                = adicionais.map(item => ({ ...item, total: item.value * item.qtde }));
+    const valorTotalAdicionais  = totais.map(item => item.total).reduce((acumulatter, currentValue) => acumulatter + currentValue);
+    const valorTotalDoProduto   = valorTotalAdicionais + itemToAdd.valor;
+    const itemToAddWithQuantity = {
      ...itemToAdd,
      refrigeranteDoCombo,
      observacao,
      bordaSelecionada,
-     adicionais,
+     adicionais: totais,     
      valorTotalAdicionais,
      valorTotalDoProduto,
    };
+   
    addToCart(itemToAddWithQuantity);
    setIsModalOpen(false);
    setIsSegundoModalOpen(false);
+
+   const cpy = [ ...adicional ];
+   cpy.forEach(item => item.qtde = 0);
+   setAdicional(cpy);
  }
 
   const handleIngredientIncrement = (ingredient) => {
-    let copia = {...adicional};
-    copia[Object.values(ingredient)[0]]++;
+    let copia = [...adicional];
+    copia.forEach(item => { if(item.name === ingredient) item.qtde += 1 });
     setAdicional(copia);
   };
 
   const handleIngredientDecrement = (ingredient) => {
-    if (adicional[Object.values(ingredient)[0]] > 0) {
-      let copia = {...adicional};
-      copia[Object.values(ingredient)[0]]--;
-      setAdicional(copia);;
+    const adicionalSelected = adicional.filter(item => item.name === ingredient)[0];
+    if (adicionalSelected.qtde > 0) {
+      let copia = [...adicional];
+      copia.forEach(item => { if(item.name === ingredient) item.qtde -= 1 });
+      setAdicional(copia);
     }
   };
 
@@ -587,54 +579,55 @@ export default function Menu() {
                 Adicionar ingredientes:
               </Typography>
               {
-               /* adicional.map(obj => (
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  width: "100%",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography>
-                   {obj.name}  <Box>{useFormat(obj.value)}</Box>
-                  </Typography>
+                adicional.map((obj, idx) => (
                   <Box
+                    key={idx}
                     sx={{
                       display: "flex",
                       flexDirection: "row",
-                      width: "40%",
-                      justifyContent: "center",
                       alignItems: "center",
+                      width: "100%",
+                      justifyContent: "space-evenly",
                     }}
                   >
-                    <Button
-                      sx={{ color: "black" }}
-                      onClick={() => handleIngredientDecrement((obj.name))}
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
                     >
-                      -
-                    </Button>
-                    <Typography>{obj.value}</Typography>
-                    <Button
-                      sx={{ color: "black" }}
-                      onClick={() => handleIngredientIncrement((obj.name))}
-                    >
-                      +
-                    </Button>
+                      <Typography>
+                      {obj.name}  <Box>{useFormat(obj.value)}</Box>
+                      </Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          width: "40%",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Button
+                          sx={{ color: "black" }}
+                          onClick={() => handleIngredientDecrement(obj.name)}
+                        >
+                          -
+                        </Button>
+                        <Typography>{obj.qtde}</Typography>
+                        <Button
+                          sx={{ color: "black" }}
+                          onClick={() => handleIngredientIncrement(obj.name)}
+                        >
+                          +
+                        </Button>
+                      </Box>
+                    </Box>
                   </Box>
-                </Box>
-              </Box>
-              ))*/
+                  ))
             }
              
               <Typography
