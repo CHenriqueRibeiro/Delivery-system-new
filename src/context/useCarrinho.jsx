@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from 'react';
 
 const CarrinhoContext = createContext();
 
@@ -12,25 +12,34 @@ export function CarrinhoProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   const saveCartToSessionStorage = (cart) => {
-    sessionStorage.setItem("itensSelecionados", JSON.stringify(cart));
+    sessionStorage.setItem(
+      'itensSelecionados',
+      JSON.stringify(cart)
+    );
   };
 
   const addToCart = (item) => {
-    const existingItemIndex = cart.findIndex((c) => c.id === item.id);
+    const existingItemIndex = cart.findIndex(
+      (c) => c.id === item.id
+    );
     let updatedCart = [];
 
     if (existingItemIndex !== -1) {
       updatedCart = [...cart];
 
-      if(
-          updatedCart[existingItemIndex].adicionais.toString() !== item.adicionais.toString() ||
-          updatedCart[existingItemIndex].bordaSelecionada !== item.bordaSelecionada ||
-          updatedCart[existingItemIndex].refrigeranteDoCombo !== item.refrigeranteDoCombo
-        )
-          updatedCart.push(item);
-        else 
-          updatedCart[existingItemIndex].quantidade += 1;
-      
+      if (
+        updatedCart[
+          existingItemIndex
+        ].adicionais.toString() !==
+          item.adicionais.toString() ||
+        updatedCart[existingItemIndex].bordaSelecionada !==
+          item.bordaSelecionada ||
+        updatedCart[existingItemIndex]
+          .refrigeranteDoCombo !== item.refrigeranteDoCombo
+      )
+        updatedCart.push(item);
+      else updatedCart[existingItemIndex].quantidade += 1;
+
       calculateSubtotal(updatedCart);
     } else {
       const newItem = { ...item, quantidade: 1 };
@@ -55,7 +64,10 @@ export function CarrinhoProvider({ children }) {
   };
 
   const deleteFromCart = (item) => {
-    const updatedCart = cart.filter((itemCart) => JSON.stringify(itemCart) !== JSON.stringify(item));
+    const updatedCart = cart.filter(
+      (itemCart) =>
+        JSON.stringify(itemCart) !== JSON.stringify(item)
+    );
     setCart(updatedCart);
     saveCartToSessionStorage(updatedCart);
   };
