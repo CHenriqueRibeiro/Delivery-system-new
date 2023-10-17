@@ -1,18 +1,17 @@
-import { Box, Radio, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Radio,
+  Typography,
+} from '@mui/material';
 import { useState } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
-import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
-import PixOutlinedIcon from '@mui/icons-material/PixOutlined';
 import { NavLink } from 'react-router-dom';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import InputMask from 'react-input-mask';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
 import { useCarrinho } from '../context/useCarrinho';
 import { useFormat } from '../utils/useFormat';
 import './Order.css';
@@ -68,7 +67,7 @@ const schema = yup
         Campo obrigatório
       </Typography>
     ),
-    formaDeEntrega: yup.string().required(),
+    // formaDeEntrega: yup.string().required(),
     telefone: yup
       .number()
       .required()
@@ -88,17 +87,27 @@ const schema = yup
         Campo obrigatório
       </Typography>
     ),
+    formaDePagamento: yup.string().required(
+      <Typography
+        variant="caption"
+        style={{ color: 'red', marginLeft: '5px' }}
+      >
+        Escolha um das formas de pagamento
+      </Typography>
+    ),
   })
   .required();
 
 const Order = () => {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const { cart, calculateSubtotal } = useCarrinho();
+  const [showAlert, setShowAlert] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -108,14 +117,6 @@ const Order = () => {
       sessionStorage.getItem('selectedValueDelivery') ||
         'Entrega'
     );
-
-  const [selectedValuePayment, setSelectedValuePayment] =
-    useState(
-      sessionStorage.getItem('selectedValuePayment') ||
-        'Credito'
-    );
-  const [pedidoSemCadastro, setpedidoSemCadastro] =
-    useState('');
 
   const handleChangeDelivery = (event) => {
     const { value } = event.target;
@@ -137,123 +138,55 @@ const Order = () => {
     );
   };
 
-  const handleChangePayment = (event) => {
-    const { value } = event.target;
-    setSelectedValuePayment(value);
-
-    const savedData =
-      JSON.parse(
-        sessionStorage.getItem('pedido sem cadastro')
-      ) || {};
-
-    const updatedData = {
-      ...savedData,
-      formaDePagamento: value,
-    };
-
-    sessionStorage.setItem(
-      'pedido sem cadastro',
-      JSON.stringify(updatedData)
-    );
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setpedidoSemCadastro({
-      ...pedidoSemCadastro,
-      [name]: value,
-    });
-
-    sessionStorage.setItem(
-      'pedido sem cadastro',
-      JSON.stringify({
-        ...pedidoSemCadastro,
-        [name]: value,
-      })
-    );
-  };
-
-  const createWhatsAppMessage = () => {
+  const createWhatsAppMessage = (data) => {
     const sessionStorageData = JSON.parse(
       sessionStorage.getItem('itensSelecionados')
     );
 
     if (sessionStorageData) {
-      const pedidoSemCadastro = JSON.parse(
-        sessionStorage.getItem('pedido sem cadastro')
-      );
+      let message = `Olá ${data.nome},\n\nTelefone: ${data.telefone}\n\n---------------------------------------\n`;
 
-      if (!pedidoSemCadastro) {
-        console.error(
-          'Os dados do formulário não foram encontrados na sessionStorage.'
+      const itemsPedido = sessionStorageData.map((item) => {
+        const sabor = [item.sabor];
+        const pedido = sabor.map(
+          (itemPedido) => ` ${itemPedido}`
         );
-        return;
-      }
+        return pedido;
+      });
+      message += `Pedido: ${itemsPedido}\n---------------------------------------\n`;
 
-      const { nome, Telefone } = pedidoSemCadastro;
+      message += `CEP: ${data.cep}\n`;
 
-      let message = `Olá ${nome},\n\nTelefone: ${Telefone}\n\n---------------------------------------\nPedido:\n---------------------------------------\n`;
+      message += `Casa/Apto: ${data.casaApto}\n`;
 
-      const items = sessionStorageData.map(
-        (item, index) => {
-          return `Item ${index + 1}:\nSabor: ${
-            item.sabor
-          }\nQuantidade: ${
-            item.quantidade
-          }\nPreço: R$ ${item.valor.toFixed(2)}\n`;
-        }
-      );
-
-      message += `CEP: ${pedidoSemCadastro.cep || ''}\n`;
-      message += `Casa/Apto: ${
-        pedidoSemCadastro.Numero || ''
-      }\n`;
-      message += `Rua: ${pedidoSemCadastro.rua || ''}\n`;
-      message += `Complemento: ${
-        pedidoSemCadastro.Referencia || ''
-      }\n`;
-      message += `Bairro: ${
-        pedidoSemCadastro.Bairro || ''
-      }\n`;
-      message += `Cidade: ${
-        pedidoSemCadastro.Cidade || ''
-      }\n`;
-      message += `Estado: ${
-        pedidoSemCadastro.Estado || ''
-      }\n`;
+      message += `Rua: ${data.logradouro}\n`;
+      message += `Complemento: ${data.complemento}\n`;
+      message += `Bairro: ${data.bairro}\n`;
+      message += `Cidade: ${data.cidade}\n`;
+      message += `Estado: ${data.estado}\n`;
 
       message += `---------------------------------------\n`;
-      message += `Forma de Pagamento: ${
-        pedidoSemCadastro.formaDePagamento || ''
-      }\n`;
-      message += `Forma de Entrega: ${
-        pedidoSemCadastro.formaDeEntrega || ''
-      }\n`;
-      message += `---------------------------------------\n`;
 
-      message += `${items.join('\n')}\n`;
+      message += `Forma de Pagamento: ${data.formaDePagamento}\n`;
 
       const totalValue = calculateSubtotal(cart);
       message += `Valor Total: R$ ${totalValue.toFixed(2)}`;
+      console.log(message);
 
-      const formattedPhoneNumber = Telefone?.replace(
-        /\s+/g,
-        ''
-      );
-
-      const whatsappLink = `https://api.whatsapp.com/send?phone=55${formattedPhoneNumber}&text=${encodeURIComponent(
-        message
-      )}`;
+      const whatsappLink = `https://api.whatsapp.com/send?phone=55${data.telefone}&text=${message}`;
 
       window.open(whatsappLink);
+    } else {
+      alert('Não existe itens no carrinho');
     }
   };
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const onSubmit = (data) => {
-    console.log(data);
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+      createWhatsAppMessage(data);
+    }, 2000);
   };
 
   return (
@@ -298,8 +231,8 @@ const Order = () => {
                       fontWeight: '500',
                       marginLeft: '.5rem',
                     }}
-                    value={pedidoSemCadastro.nome}
-                    onChange={handleInputChange}
+                    // value={pedidoSemCadastro.nome}
+                    // onChange={handleInputChange}
                     {...register('nome')}
                   />
                   <p>{errors.nome?.message}</p>
@@ -327,8 +260,8 @@ const Order = () => {
                       fontWeight: '500',
                       marginLeft: '.5rem',
                     }}
-                    value={pedidoSemCadastro.Telefone}
-                    onChange={handleInputChange}
+                    // value={pedidoSemCadastro.Telefone}
+                    // onChange={handleInputChange}
                     {...register('telefone')}
                   />
                   <p>{errors.telefone?.message}</p>
@@ -420,12 +353,12 @@ const Order = () => {
                     // mask="99999-999"
                     // maskChar={null}
                     name="cep"
-                    value={
-                      selectedValueDelivery === 'Entrega'
-                        ? pedidoSemCadastro.cep
-                        : '61658-000'
-                    }
-                    onChange={handleInputChange}
+                    // value={
+                    //   selectedValueDelivery === 'Entrega'
+                    //     ? pedidoSemCadastro.cep
+                    //     : '61658-000'
+                    // }
+                    // onChange={handleInputChange}
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
@@ -453,12 +386,12 @@ const Order = () => {
                       marginLeft: '.5rem',
                     }}
                     name="rua"
-                    value={
-                      selectedValueDelivery === 'Entrega'
-                        ? pedidoSemCadastro.rua
-                        : 'Alameda luiza'
-                    }
-                    onChange={handleInputChange}
+                    // value={
+                    //   selectedValueDelivery === 'Entrega'
+                    //     ? pedidoSemCadastro.rua
+                    //     : 'Alameda luiza'
+                    // }
+                    // onChange={handleInputChange}
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
@@ -486,12 +419,12 @@ const Order = () => {
                     }}
                     spellCheck="false"
                     name="Numero"
-                    value={
-                      selectedValueDelivery === 'Entrega'
-                        ? pedidoSemCadastro.numero
-                        : '300 B'
-                    }
-                    onChange={handleInputChange}
+                    // value={
+                    //   selectedValueDelivery === 'Entrega'
+                    //     ? pedidoSemCadastro.numero
+                    //     : '300 B'
+                    // }
+                    // onChange={handleInputChange}
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
@@ -506,7 +439,7 @@ const Order = () => {
                   }}
                   variant="h6"
                 >
-                  <label>Ponto de Ref :</label>
+                  <label>Complemento :</label>
                   <input
                     style={{
                       textTransform: 'capitalize',
@@ -517,14 +450,12 @@ const Order = () => {
                       fontWeight: '500',
                       marginLeft: '.5rem',
                     }}
-                    spellCheck="false"
-                    name="Referencia"
-                    value={
-                      selectedValueDelivery === 'Entrega'
-                        ? pedidoSemCadastro.referencia
-                        : 'Prox.a Lagoa'
-                    }
-                    onChange={handleInputChange}
+                    // value={
+                    //   selectedValueDelivery === 'Entrega'
+                    //     ? pedidoSemCadastro.referencia
+                    //     : 'Prox.a Lagoa'
+                    // }
+                    // onChange={handleInputChange}
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
@@ -553,12 +484,12 @@ const Order = () => {
                     }}
                     spellCheck="false"
                     name="Bairro"
-                    value={
-                      selectedValueDelivery === 'Entrega'
-                        ? pedidoSemCadastro.bairro
-                        : 'Lagoa Do Banana'
-                    }
-                    onChange={handleInputChange}
+                    // value={
+                    //   selectedValueDelivery === 'Entrega'
+                    //     ? pedidoSemCadastro.bairro
+                    //     : 'Lagoa Do Banana'
+                    // }
+                    // onChange={handleInputChange}
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
@@ -587,12 +518,12 @@ const Order = () => {
                     }}
                     spellCheck="false"
                     name="Cidade"
-                    value={
-                      selectedValueDelivery === 'Entrega'
-                        ? pedidoSemCadastro.cidade
-                        : 'Caucaia'
-                    }
-                    onChange={handleInputChange}
+                    // value={
+                    //   selectedValueDelivery === 'Entrega'
+                    //     ? pedidoSemCadastro.cidade
+                    //     : 'Caucaia'
+                    // }
+                    // onChange={handleInputChange}
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
@@ -621,12 +552,12 @@ const Order = () => {
                     }}
                     spellCheck="false"
                     name="Estado"
-                    value={
-                      selectedValueDelivery === 'Entrega'
-                        ? pedidoSemCadastro.estado
-                        : '61658-000'
-                    }
-                    onChange={handleInputChange}
+                    // value={
+                    //   selectedValueDelivery === 'Entrega'
+                    //     ? pedidoSemCadastro.estado
+                    //     : '61658-000'
+                    // }
+                    // onChange={handleInputChange}
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
@@ -648,7 +579,6 @@ const Order = () => {
                 width: '100%',
               }}
             >
-              {' '}
               <Box className="backgroundTitleFormPayment"></Box>
               <Typography
                 variant="h6"
@@ -657,64 +587,70 @@ const Order = () => {
                 Forma de Pagamento
               </Typography>
               <Box className="FormOfPayment">
-                <Box
-                  display={'flex'}
-                  alignItems={'center'}
-                  width={'100'}
-                >
-                  <Radio
-                    checked={
-                      selectedValuePayment === 'Credito'
-                    }
-                    onChange={handleChangePayment}
-                    value="Credito"
-                  />
-                  <CreditCardOutlinedIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Cartão de Credito
-                  </Typography>
-                </Box>
-                <Box display={'flex'} alignItems={'center'}>
-                  <Radio
-                    checked={
-                      selectedValuePayment === 'Debito'
-                    }
-                    onChange={handleChangePayment}
-                    value="Debito"
-                  />
-                  <CreditCardOutlinedIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Cartão de Debito
-                  </Typography>
-                </Box>
-                <Box display={'flex'} alignItems={'center'}>
-                  <Radio
-                    checked={selectedValuePayment === 'Pix'}
-                    onChange={handleChangePayment}
-                    value="Pix"
-                  />
-                  <PixOutlinedIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Pix
-                  </Typography>
-                </Box>
-                <Box display={'flex'} alignItems={'center'}>
-                  <Radio
-                    checked={
-                      selectedValuePayment === 'Dinheiro'
-                    }
-                    onChange={handleChangePayment}
-                    value="Dinheiro"
-                  />
-                  <AttachMoneyIcon />
-                  <Typography variant="h6" sx={{ pl: 2 }}>
-                    Dinheiro
-                  </Typography>
+                <Controller
+                  name="formaDePagamento"
+                  control={control}
+                  render={({ field }) => (
+                    <Box sx={{ padding: '10px 0 0 20px' }}>
+                      <Box>
+                        <label>
+                          <input
+                            type="radio"
+                            {...field}
+                            value="Credito"
+                          />
+                          Cartão de Crédito
+                        </label>
+                      </Box>
+                      <Box>
+                        <label>
+                          <input
+                            type="radio"
+                            {...field}
+                            value="Debito"
+                          />
+                          Cartão de Débito
+                        </label>
+                      </Box>
+                      <Box>
+                        <label>
+                          <input
+                            type="radio"
+                            {...field}
+                            value="Pix"
+                          />
+                          Pix
+                        </label>
+                      </Box>
+                      <Box>
+                        <label>
+                          <input
+                            type="radio"
+                            {...field}
+                            value="Dinheiro"
+                          />
+                          Dinheiro
+                        </label>
+                      </Box>
+                    </Box>
+                  )}
+                />
+                <Box>
+                  <p>{errors.formaDePagamento?.message}</p>
                 </Box>
               </Box>
             </Box>
           </Box>
-
+          <Box sx={{ mb: 2 }}>
+            {showAlert && (
+              <Alert severity="success">
+                <Typography>
+                  Pedido realizado com sucesso. <br />
+                  Muito obrigado!
+                </Typography>
+              </Alert>
+            )}
+          </Box>
           <Box className="totalPurchase">
             <Box
               sx={{
@@ -740,67 +676,11 @@ const Order = () => {
             <input
               className="btnSendRequest click"
               type="submit"
-              onClick={createWhatsAppMessage}
               value="Enviar"
             />
           </Box>
         </Box>
       </form>
-
-      {/* <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        closeAfterTransition
-      >
-        <Fade in={open}>
-          <Box id="modalCadastro">
-            <Box id="modalContent">
-              <Box className="wrapper">
-                <Typography variant="h6">
-                  Obrigado por sua compra
-                </Typography>
-                <Typography variant="h6">
-                  Pedido Realizado
-                </Typography>
-                <svg
-                  className="checkmark"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 52 52"
-                >
-                  {' '}
-                  <Box
-                    className="checkmark__circle"
-                    cx="26"
-                    cy="26"
-                    r="25"
-                  ></Box>{' '}
-                  <path
-                    className="checkmark__check"
-                    fill="none"
-                    d="M14.1 27.2l7.1 7.2 16.7-16.8"
-                  ></path>
-                </svg>
-              </Box>
-
-              <NavLink to="/" style={{ color: '#f9e9df' }}>
-                <input
-                  onClick={
-                    (handleClose, createWhatsAppMessage)
-                  }
-                  className="btnCloseService click"
-                  value="fechar"
-                  style={{
-                    textAlign: 'center',
-                    color: 'white',
-                    textTransform: 'capitalize',
-                  }}
-                />
-              </NavLink>
-            </Box>
-          </Box>
-        </Fade>
-      </Modal> */}
     </Box>
   );
 };
