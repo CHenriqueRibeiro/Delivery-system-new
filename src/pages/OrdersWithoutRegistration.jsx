@@ -17,22 +17,91 @@ import { useCarrinho } from '../context/useCarrinho';
 import { useFormat } from '../utils/useFormat';
 import './Order.css';
 
-const SignupSchema = yup.object().shape({
-  estado: yup.string(),
-  cidade: yup.string().required(),
-  bairro: yup.string().required(),
-  complemento: yup.string(),
-  casaApto: yup.string().required(),
-  rua: yup.string().required(),
-  cep: yup.string(),
-  formaDeEntrega: yup.string().required(),
-  telefone: yup.number().required(),
-  nome: yup.string().required(),
-});
+const schema = yup
+  .object({
+    estado: yup.string().required(
+      <Typography
+        variant="caption"
+        style={{ color: 'red', marginLeft: '5px' }}
+      >
+        Campo obrigatório
+      </Typography>
+    ),
+    cidade: yup.string().required(
+      <Typography
+        variant="caption"
+        style={{ color: 'red', marginLeft: '5px' }}
+      >
+        Campo obrigatório
+      </Typography>
+    ),
+    bairro: yup.string().required(
+      <Typography
+        variant="caption"
+        style={{ color: 'red', marginLeft: '5px' }}
+      >
+        Campo obrigatório
+      </Typography>
+    ),
+    complemento: yup.string(),
+    casaApto: yup.string().required(
+      <Typography
+        variant="caption"
+        style={{ color: 'red', marginLeft: '5px' }}
+      >
+        Campo obrigatório
+      </Typography>
+    ),
+    logradouro: yup.string().required(
+      <Typography
+        variant="caption"
+        style={{ color: 'red', marginLeft: '5px' }}
+      >
+        Campo obrigatório
+      </Typography>
+    ),
+    cep: yup.string().required(
+      <Typography
+        variant="caption"
+        style={{ color: 'red', marginLeft: '5px' }}
+      >
+        Campo obrigatório
+      </Typography>
+    ),
+    formaDeEntrega: yup.string().required(),
+    telefone: yup
+      .number()
+      .required()
+      .typeError(
+        <Typography
+          variant="caption"
+          style={{ color: 'red', marginLeft: '5px' }}
+        >
+          Campo obrigatório
+        </Typography>
+      ),
+    nome: yup.string().required(
+      <Typography
+        variant="caption"
+        style={{ color: 'red', marginLeft: '5px' }}
+      >
+        Campo obrigatório
+      </Typography>
+    ),
+  })
+  .required();
 
 const Order = () => {
   const [open, setOpen] = useState(false);
   const { cart, calculateSubtotal } = useCarrinho();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const [selectedValueDelivery, setSelectedValueDelivery] =
     useState(
@@ -47,13 +116,6 @@ const Order = () => {
     );
   const [pedidoSemCadastro, setpedidoSemCadastro] =
     useState('');
-  const { handleSubmit } = useForm({
-    resolver: yupResolver(SignupSchema),
-  });
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
 
   const handleChangeDelivery = (event) => {
     const { value } = event.target;
@@ -174,7 +236,7 @@ const Order = () => {
       const totalValue = calculateSubtotal(cart);
       message += `Valor Total: R$ ${totalValue.toFixed(2)}`;
 
-      const formattedPhoneNumber = Telefone.replace(
+      const formattedPhoneNumber = Telefone?.replace(
         /\s+/g,
         ''
       );
@@ -190,21 +252,24 @@ const Order = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <Box className="screenOrder">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Box className="headerOrder">
-          <Box className="iconAndText">
-            <NavLink to="/" style={{ color: '#f9e9df' }}>
-              <ArrowBackIcon />
-            </NavLink>
-            <Typography variant="h6">Checkout</Typography>
-          </Box>
+      <Box className="headerOrder">
+        <Box className="iconAndText">
+          <NavLink to="/" style={{ color: '#f9e9df' }}>
+            <ArrowBackIcon />
+          </NavLink>
+          <Typography variant="h6">Checkout</Typography>
         </Box>
+      </Box>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box className="contentOrder">
           <Box className="cardPersonalData">
             <Box className="contentPersonalData">
-              {' '}
               <Box className="backgroundTitle"></Box>
               <Typography
                 variant="h6"
@@ -235,7 +300,9 @@ const Order = () => {
                     }}
                     value={pedidoSemCadastro.nome}
                     onChange={handleInputChange}
+                    {...register('nome')}
                   />
+                  <p>{errors.nome?.message}</p>
                 </Typography>
                 <Typography
                   sx={{
@@ -245,9 +312,11 @@ const Order = () => {
                   variant="h6"
                 >
                   <label>Telefone:</label>
-                  <InputMask
-                    mask="99 9 99999999"
-                    maskChar={null}
+                  <input
+                    // mask="99 9 99999999"
+                    // maskChar={null}
+                    placeholder="(99) 99999-9999"
+                    type="number"
                     name="Telefone"
                     style={{
                       textTransform: 'capitalize',
@@ -260,7 +329,9 @@ const Order = () => {
                     }}
                     value={pedidoSemCadastro.Telefone}
                     onChange={handleInputChange}
+                    {...register('telefone')}
                   />
+                  <p>{errors.telefone?.message}</p>
                 </Typography>
               </Box>
             </Box>
@@ -276,7 +347,6 @@ const Order = () => {
                 width: '100%',
               }}
             >
-              {' '}
               <Box className="backgroundTitleDelivery"></Box>
               <Typography
                 variant="h6"
@@ -337,7 +407,7 @@ const Order = () => {
                   variant="h6"
                 >
                   <label>Cep:</label>
-                  <InputMask
+                  <input
                     style={{
                       textTransform: 'capitalize',
                       border: '1px #f16d2f solid',
@@ -347,8 +417,8 @@ const Order = () => {
                       fontWeight: '500',
                       marginLeft: '.5rem',
                     }}
-                    mask="99999-999"
-                    maskChar={null}
+                    // mask="99999-999"
+                    // maskChar={null}
                     name="cep"
                     value={
                       selectedValueDelivery === 'Entrega'
@@ -359,7 +429,9 @@ const Order = () => {
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
+                    {...register('cep')}
                   />
+                  <p>{errors.cep?.message}</p>
                 </Typography>
 
                 <Typography
@@ -369,7 +441,6 @@ const Order = () => {
                   }}
                   variant="h6"
                 >
-                  {' '}
                   <label>Rua/ Av :</label>
                   <input
                     style={{
@@ -391,7 +462,9 @@ const Order = () => {
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
+                    {...register('logradouro')}
                   />
+                  <p>{errors.logradouro?.message}</p>
                 </Typography>
                 <Typography
                   sx={{
@@ -400,7 +473,6 @@ const Order = () => {
                   }}
                   variant="h6"
                 >
-                  {' '}
                   <label>Numero:</label>
                   <input
                     style={{
@@ -423,7 +495,9 @@ const Order = () => {
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
+                    {...register('casaApto')}
                   />
+                  <p>{errors.casaApto?.message}</p>
                 </Typography>
                 <Typography
                   sx={{
@@ -432,7 +506,6 @@ const Order = () => {
                   }}
                   variant="h6"
                 >
-                  {' '}
                   <label>Ponto de Ref :</label>
                   <input
                     style={{
@@ -455,7 +528,9 @@ const Order = () => {
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
+                    {...register('complemento')}
                   />
+                  <p>{errors.complemento?.message}</p>
                 </Typography>
 
                 <Typography
@@ -465,7 +540,6 @@ const Order = () => {
                   }}
                   variant="h6"
                 >
-                  {' '}
                   <label> Bairro:</label>
                   <input
                     style={{
@@ -488,7 +562,9 @@ const Order = () => {
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
+                    {...register('bairro')}
                   />
+                  <p>{errors.bairro?.message}</p>
                 </Typography>
 
                 <Typography
@@ -498,7 +574,6 @@ const Order = () => {
                   }}
                   variant="h6"
                 >
-                  {' '}
                   <label>Cidade:</label>
                   <input
                     style={{
@@ -521,7 +596,9 @@ const Order = () => {
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
+                    {...register('cidade')}
                   />
+                  <p>{errors.cidade?.message}</p>
                 </Typography>
 
                 <Typography
@@ -531,7 +608,6 @@ const Order = () => {
                   }}
                   variant="h6"
                 >
-                  {' '}
                   <label>Estado:</label>
                   <input
                     style={{
@@ -554,7 +630,9 @@ const Order = () => {
                     disabled={
                       selectedValueDelivery === 'Retirada'
                     }
+                    {...register('estado')}
                   />
+                  <p>{errors.estado?.message}</p>
                 </Typography>
               </Box>
             </Box>
@@ -656,78 +734,73 @@ const Order = () => {
                 + Entrega: R$ 3,00
               </Typography>
               <Typography variant="h6">
-                {' '}
                 Total:{useFormat(calculateSubtotal(cart))}
               </Typography>
             </Box>
-            <button
+            <input
               className="btnSendRequest click"
               type="submit"
-              onClick={handleOpen}
-            >
-              Enviar
-            </button>
+              onClick={createWhatsAppMessage}
+              value="Enviar"
+            />
           </Box>
         </Box>
-
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={open}
-          closeAfterTransition
-        >
-          <Fade in={open}>
-            <Box id="modalCadastro">
-              <Box id="modalContent">
-                <Box className="wrapper">
-                  <Typography variant="h6">
-                    Obrigado por sua compra
-                  </Typography>
-                  <Typography variant="h6">
-                    Pedido Realizado
-                  </Typography>
-                  <svg
-                    className="checkmark"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 52 52"
-                  >
-                    {' '}
-                    <Box
-                      className="checkmark__circle"
-                      cx="26"
-                      cy="26"
-                      r="25"
-                    ></Box>{' '}
-                    <path
-                      className="checkmark__check"
-                      fill="none"
-                      d="M14.1 27.2l7.1 7.2 16.7-16.8"
-                    ></path>
-                  </svg>
-                </Box>
-
-                <NavLink
-                  to="/"
-                  style={{ color: '#f9e9df' }}
-                >
-                  <input
-                    onClick={
-                      (handleClose, createWhatsAppMessage)
-                    }
-                    className="btnCloseService click"
-                    value="fechar"
-                    style={{
-                      textAlign: 'center',
-                      color: 'white',
-                      textTransform: 'capitalize',
-                    }}
-                  />
-                </NavLink>
-              </Box>
-            </Box>
-          </Fade>
-        </Modal>
       </form>
+
+      {/* <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        closeAfterTransition
+      >
+        <Fade in={open}>
+          <Box id="modalCadastro">
+            <Box id="modalContent">
+              <Box className="wrapper">
+                <Typography variant="h6">
+                  Obrigado por sua compra
+                </Typography>
+                <Typography variant="h6">
+                  Pedido Realizado
+                </Typography>
+                <svg
+                  className="checkmark"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 52 52"
+                >
+                  {' '}
+                  <Box
+                    className="checkmark__circle"
+                    cx="26"
+                    cy="26"
+                    r="25"
+                  ></Box>{' '}
+                  <path
+                    className="checkmark__check"
+                    fill="none"
+                    d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                  ></path>
+                </svg>
+              </Box>
+
+              <NavLink to="/" style={{ color: '#f9e9df' }}>
+                <input
+                  onClick={
+                    (handleClose, createWhatsAppMessage)
+                  }
+                  className="btnCloseService click"
+                  value="fechar"
+                  style={{
+                    textAlign: 'center',
+                    color: 'white',
+                    textTransform: 'capitalize',
+                  }}
+                />
+              </NavLink>
+            </Box>
+          </Box>
+        </Fade>
+      </Modal> */}
     </Box>
   );
 };
