@@ -6,24 +6,7 @@
       "sabor": "Pizza Calabresa + Refrigerante",
       "valor": 24.99,
       "ingredientes": "Calabresa, Queijo, Mussarela, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 2,
@@ -31,24 +14,7 @@
       "sabor": "Pizza Pepperoni + Refrigerante",
       "valor": 24.99,
       "ingredientes": "Peperoni, Queijo, Mussarela, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 3,
@@ -56,24 +22,7 @@
       "sabor": "Pizza Mista + Refrigerante",
       "valor": 24.99,
       "ingredientes": "Queijo, Mussarela, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 4,
@@ -81,24 +30,7 @@
       "sabor": "Pizza 3 Queijos + Refrigerante",
       "valor": 29.99,
       "ingredientes": "Queijo Coalho, Mussarela, Brie, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 5,
@@ -106,24 +38,7 @@
       "sabor": "Pizza Carne do Sol + Refrigerante",
       "valor": 29.99,
       "ingredientes": "Carne do Sol, Queijo, Mussarela, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     }
   ],
 
@@ -134,24 +49,7 @@
       "sabor": "Calabresa",
       "valor": 19.99,
       "ingredientes": "Calabresa, Queijo, Mussarela, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 7,
@@ -159,24 +57,7 @@
       "sabor": "Pepperoni",
       "valor": 19.99,
       "ingredientes": "Peperoni, Queijo, Mussarela, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 8,
@@ -184,24 +65,7 @@
       "sabor": "Mista",
       "valor": 19.99,
       "ingredientes": "Queijo, Mussarela, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 9,
@@ -209,24 +73,7 @@
       "sabor": "Mussarela",
       "valor": 19.99,
       "ingredientes": "Mussarela, Tomate, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 10,
@@ -234,24 +81,7 @@
       "sabor": "Carne de Sol",
       "valor": 24.99,
       "ingredientes": "Carne do Sol, Queijo, Mussarela, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 11,
@@ -259,24 +89,7 @@
       "sabor": "3 Queijos",
       "valor": 24.99,
       "ingredientes": "Queijo Coalho, Mussarela, Brie, Orégano",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Calabresa (100gr)",
-          "value": 2.5,
-          "qtde": 0
-        },
-        {
-          "name": "Coalho (100gr)",
-          "value": 2.0,
-          "qtde": 0
-        },
-        {
-          "name": "Cheddar (100gr)",
-          "value": 3.0,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     }
   ],
 
@@ -287,24 +100,7 @@
       "sabor": "Smash Tradicional",
       "valor": 14.99,
       "ingredientes": "Carne de 100g smash, cheddar, molho especial no pao brioche",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Smash (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Molho da casa (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Bacon (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 13,
@@ -312,24 +108,7 @@
       "sabor": "Smash Bacon",
       "valor": 16.99,
       "ingredientes": "Carne de 100g smash, cheddar, bacon, molho especial no pao brioche",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Smash (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Molho da casa (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Bacon (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 14,
@@ -337,24 +116,7 @@
       "sabor": "Churrasco",
       "valor": 19.99,
       "ingredientes": "Carne de 100g smash Grelhada, cheddar, molho especial no pao brioche",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Smash (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Molho da casa (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Bacon (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 15,
@@ -362,24 +124,7 @@
       "sabor": "Duplo Smash Bacon",
       "valor": 22.99,
       "ingredientes": "2x Carne de 100g smash, cheddar, 2x Bacon, molho especial no pao brioche",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Smash (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Molho da casa (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Bacon (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 16,
@@ -387,24 +132,7 @@
       "sabor": "Mega Smash",
       "valor": 26.99,
       "ingredientes": "2x Carne de 120g smash, cheddar, 2x Bacon, molho especial no pao brioche",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Smash (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Molho da casa (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Bacon (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 17,
@@ -412,24 +140,7 @@
       "sabor": "Double Cheese",
       "valor": 29.99,
       "ingredientes": "2x Carne de 150g smash, cheddar, molho especial no pao brioche",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Smash (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Molho da casa (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Bacon (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     }
   ],
 
@@ -440,24 +151,7 @@
       "sabor": "Pão Árabe Frango",
       "valor": 14.99,
       "ingredientes": "Frango Especial, cheddar, molho",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Carne Trinchada (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Frango (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Carne de Hamburguer (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 19,
@@ -465,24 +159,7 @@
       "sabor": "Pão Árabe Super Frango",
       "valor": 19.99,
       "ingredientes": "Frango Especial, coalho, cheddar, molho",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Carne Trinchada (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Frango (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Carne de Hamburguer (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 20,
@@ -490,24 +167,7 @@
       "sabor": "Pão Árabe Nordestino",
       "valor": 24.99,
       "ingredientes": "Frango Especial, carne, coalho, cheddar, molho",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Carne Trinchada (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Frango (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Carne de Hamburguer (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     },
     {
       "id": 21,
@@ -515,24 +175,7 @@
       "sabor": "Pão Árabe Monstrão",
       "valor": 29.99,
       "ingredientes": "Frango Especial, 2x carne 150 gr, coalho, cheddar, molho",
-      "quantidade": 1,
-      "adicionais": [
-        {
-          "name": "Carne Trinchada (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Frango (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        },
-        {
-          "name": "Carne de Hamburguer (100gr)",
-          "value": 1.99,
-          "qtde": 0
-        }
-      ]
+      "quantidade": 1
     }
   ],
 
@@ -590,52 +233,52 @@
     "combos": [
       {
         "name": "Calabresa (100gr)",
-        "value": 2.5,
+        "valor": 2.5,
         "qtde": 0
       },
-      { "name": "Coalho (100gr)", "value": 2.0, "qtde": 0 },
-      { "name": "Cheddar (100gr)", "value": 3.0, "qtde": 0 }
+      { "name": "Coalho (100gr)", "valor": 2.0, "qtde": 0 },
+      { "name": "Cheddar (100gr)", "valor": 3.0, "qtde": 0 }
     ],
     "pizza": [
       {
         "name": "Carne do sol (100gr)",
-        "value": 1.99,
+        "valor": 1.99,
         "qtde": 0
       },
       {
         "name": "Mussarela (100gr)",
-        "value": 1.99,
+        "valor": 1.99,
         "qtde": 0
       },
       {
         "name": "Catupiry (100gr)",
-        "value": 1.99,
+        "valor": 1.99,
         "qtde": 0
       }
     ],
     "hamburguer": [
-      { "name": "Smash (100gr)", "value": 1.99, "qtde": 0 },
+      { "name": "Smash (100gr)", "valor": 1.99, "qtde": 0 },
       {
         "name": "Molho da casa (100gr)",
-        "value": 1.99,
+        "valor": 1.99,
         "qtde": 0
       },
-      { "name": "Bacon (100gr)", "value": 1.99, "qtde": 0 }
+      { "name": "Bacon (100gr)", "valor": 1.99, "qtde": 0 }
     ],
     "paoArabe": [
       {
         "name": "Carne Trinchada (100gr)",
-        "value": 1.99,
+        "valor": 1.99,
         "qtde": 0
       },
       {
         "name": "Frango (100gr)",
-        "value": 1.99,
+        "valor": 1.99,
         "qtde": 0
       },
       {
         "name": "Carne de Hamburguer (100gr)",
-        "value": 1.99,
+        "valor": 1.99,
         "qtde": 0
       }
     ],
