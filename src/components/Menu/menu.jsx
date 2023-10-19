@@ -71,14 +71,6 @@ export default function Menu() {
       objGenerico.push(adicional)
     );
     setAdicional(objGenerico);
-  }, []);
-
-  useEffect(() => {
-    let objGenerico = [];
-    Data.adicionais[activeTab].forEach((adicional) =>
-      objGenerico.push(adicional)
-    );
-    setAdicional(objGenerico);
   }, [activeTab]);
 
   const modalCheckout = () => {

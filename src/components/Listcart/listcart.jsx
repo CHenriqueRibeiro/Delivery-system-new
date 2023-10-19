@@ -9,7 +9,6 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
 export default function ListCart() {
-  
   const { cart, deleteFromCart, addToCart, removeQuantityFromCart } =
     useCarrinho();
 
@@ -20,12 +19,11 @@ export default function ListCart() {
   const handleIncrement = (item) => {
     const date = new Date();
     addToCart({ ...item, key: date.getMilliseconds() });
-   
   };
 
   const handleDecrement = (item) => {
     const date = new Date();
-    
+
     if (item && item.quantidade > 1) {
       const updatedItem = { ...item, key: date.getMilliseconds() };
       updatedItem.quantidade -= 1;
@@ -97,7 +95,35 @@ export default function ListCart() {
                   >
                     <Typography variant="h6">{item.sabor}</Typography>
                     <Typography>{item.ingredientes}</Typography>
-                    <Typography variant="body2" gutterBottom>{item.adicionais.map(item => item.name).join(", ")}</Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <Typography variant="body2" gutterBottom>
+                          {item.adicionais.map((item) => item.name).join(", ")}{" "}
+                          ({item.adicionais.map((item) => item.qtde).join(", ")}
+                          x)
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <Typography variant="body2" gutterBottom></Typography>
+                      </Box>
+                    </Box>
                     <Box
                       sx={{
                         display: "flex",

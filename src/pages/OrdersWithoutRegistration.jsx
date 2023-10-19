@@ -1,4 +1,4 @@
-import { Alert, Box, Typography } from "@mui/material";
+import { Alert, Box, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
@@ -64,11 +64,17 @@ const schema = yup
         Campo obrigatório
       </Typography>
     ),
-    formaDePagamento: yup.string().required(
-      <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
-        Escolha um das formas de pagamento
-      </Typography>
-    ),
+    formaDePagamento: yup
+      .string()
+      .required(
+        <Typography
+          variant="caption"
+          style={{ color: "red", marginLeft: "5px" }}
+        >
+          Escolha uma Opção
+        </Typography>
+      )
+      .oneOf(["Credito", "Debito", "Pix", "Dinheiro"], "Opção inválida"),
     formaDeEntrega: yup.string().required(
       <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
         Escolha uma Opção
@@ -80,6 +86,16 @@ const schema = yup
 const Order = () => {
   const { cart, calculateSubtotal } = useCarrinho();
   const [showAlert, setShowAlert] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isChangeNeeded, setIsChangeNeeded] = useState(false);
+  const [changeAmount, setChangeAmount] = useState("");
+  const handleConfirmChangeAmount = () => {
+   
+    const confirmedChangeAmount = changeAmount;
+    setIsModalOpen(false);
+    console.log(confirmedChangeAmount);
+  };
+
 
   const {
     register,
@@ -104,11 +120,20 @@ const Order = () => {
   }
 
   const createWhatsAppMessage = (data) => {
+    const formaDeEntregaEscolhida = data.formaDeEntrega;
     const sessionStorageData = JSON.parse(
       sessionStorage.getItem("itensSelecionados")
     );
+    const totalValue = calculateSubtotal(cart);
 
-    if (sessionStorageData) {
+    if (totalValue === 0) {
+      alert(
+        "Carrinho vazio. Adicione itens ao carrinho antes de enviar o pedido."
+      );
+      return;
+    }
+
+    if (sessionStorageData && formaDeEntregaEscolhida === "Entrega") {
       let message = ` Olá, ${saudacao} ${data.nome},\n\nTelefone: ${data.telefone}\n\n---------------------------------------\n`;
 
       const itemsPedido = sessionStorageData.map((item) => {
@@ -133,17 +158,45 @@ const Order = () => {
       message += `Forma de Pagamento: ${data.formaDePagamento}\n`;
       message += `Forma de Entrega: ${data.formaDeEntrega}\n`;
 
-      const totalValue = calculateSubtotal(cart);
-      message += `Valor Total: R$ ${totalValue.toFixed(2)}`;
+      if (isChangeNeeded === false) {
+        message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
+      } else {
+        message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
+        message += `Troco para : R$ ${changeAmount}`;
+      }
+
       console.log(message);
 
       const whatsappLink = `https://api.whatsapp.com/send?phone=5585988154685&text=${message}`;
 
       window.open(whatsappLink);
     } else {
-      alert("Não existe itens no carrinho");
+      let message = ` Olá, ${saudacao} ${data.nome},\n\nTelefone: ${data.telefone}\n\n---------------------------------------\n`;
+
+      const itemsPedido = sessionStorageData.map((item) => {
+        const sabor = [item.sabor];
+        const pedido = sabor.map((itemPedido) => ` ${itemPedido}`);
+        return pedido;
+      });
+      message += `Pedido: ${itemsPedido}\n---------------------------------------\n`;
+      message += `---------------------------------------\n`;
+
+      message += `Forma de Pagamento: ${data.formaDePagamento}\n`;
+      message += `Forma de Entrega: ${data.formaDeEntrega}\n`;
+
+      if (isChangeNeeded === false) {
+        message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
+      } else {
+        message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
+        message += `Troco para : R$ ${changeAmount}`;
+      }
+
+      const whatsappLink = `https://api.whatsapp.com/send?phone=5585988154685&text=${message}`;
+
+      window.open(whatsappLink);
     }
   };
+
   const checkCEP = (e) => {
     const cep = e.target.value.replace(/\D/g, "");
     if (cep === "") {
@@ -169,6 +222,15 @@ const Order = () => {
   };
 
   const onSubmit = (data) => {
+    const totalValue = calculateSubtotal(cart);
+
+    if (totalValue === 0) {
+      alert(
+        "Carrinho vazio. Adicione itens ao carrinho antes de enviar o pedido."
+      );
+      return;
+    }
+
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
@@ -727,6 +789,10 @@ const Order = () => {
                                 width: " 1.2rem",
                                 height: "1.2rem",
                               }}
+                              onChange={() => {
+                                field.onChange("Credito");
+                                setIsModalOpen(false);
+                              }}
                             />
                             <CreditCardOutlinedIcon />
                             Cartão de Crédito
@@ -750,6 +816,10 @@ const Order = () => {
                               style={{
                                 width: " 1.2rem",
                                 height: "1.2rem",
+                              }}
+                              onChange={() => {
+                                field.onChange("Debito");
+                                setIsModalOpen(false);
                               }}
                             />
                             <CreditCardOutlinedIcon />
@@ -775,6 +845,10 @@ const Order = () => {
                                 width: " 1.2rem",
                                 height: "1.2rem",
                               }}
+                              onChange={() => {
+                                field.onChange("Pix");
+                                setIsModalOpen(false);
+                              }}
                             />
                             <PixOutlinedIcon />
                             Pix
@@ -799,6 +873,10 @@ const Order = () => {
                                 width: " 1.2rem",
                                 height: "1.2rem",
                               }}
+                              onChange={() => {
+                                field.onChange("Dinheiro");
+                                setIsModalOpen(true); // Abre o modal
+                              }}
                             />
                             <AttachMoneyIcon />
                             Dinheiro
@@ -814,6 +892,145 @@ const Order = () => {
               </Box>
             </Box>
           </Box>
+
+          <Modal
+            open={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            aria-labelledby="confirmation-modal-title"
+            aria-describedby="confirmation-modal-description"
+          >
+            <Box
+              sx={{
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-evenly",
+                backgroundColor: "#fae9de",
+                position: " absolute",
+                top: " 50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: " 90%",
+                maxWidth: "600px",
+                height: "15rem",
+                minHeight: " 100px",
+                border: "6px solid #e5c7b3",
+                borderRadius: " 30px",
+                boxShadow: "5px 4px 5px 2px rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              <Typography variant="h6" id="confirmation-modal-title">
+                Sua compra deu: {useFormat(calculateSubtotal(cart))}
+              </Typography>
+              {isChangeNeeded ? (
+                <>
+                  <Typography
+                    sx={{
+                      height: "auto",
+                    }}
+                    variant="body2"
+                    gutterBottom
+                  >
+                    Troco para
+                  </Typography>
+                  <input
+                    className="box-shadow"
+                    style={{
+                      border: "1px #f46c26 solid",
+                      height: "2rem",
+                      borderRadius: "5px",
+                      paddingLeft: "1rem",
+                    }}
+                    label="Valor do Troco"
+                    value={changeAmount}
+                    onChange={(e) => setChangeAmount(e.target.value)}
+                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-evenly",
+                      flexDirection: "row-reverse",
+                      width: "100%",
+                    }}
+                  >
+                    <button
+                      className="click box-shadow"
+                      style={{
+                        textTransform: "uppercase",
+                        backgroundColor: "#f46c26",
+                        color: "white",
+                        border: "1px solid #f46c26",
+                        height: "2rem",
+                        borderRadius: "5px",
+                        fontFamily: "Roboto",
+                        fontSize: "16px",
+                        width: "10rem",
+                      }}
+                      onClick={() => handleConfirmChangeAmount()}
+                    >
+                      Confirmar troco
+                    </button>
+                    <button
+                      className="click box-shadow"
+                      style={{
+                        textTransform: "uppercase",
+                        backgroundColor: "#f46c26",
+                        color: "white",
+                        border: "1px solid #f46c26",
+                        height: "2rem",
+                        borderRadius: "5px",
+                        fontFamily: "Roboto",
+                        fontSize: "16px",
+                        width: "5rem",
+                      }}
+                      onClick={() => setIsChangeNeeded(false)}
+                    >
+                      Voltar
+                    </button>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="click box-shadow"
+                    style={{
+                      textTransform: "uppercase",
+                      backgroundColor: "#f46c26",
+                      color: "white",
+                      border: "1px solid #f46c26",
+                      height: "2rem",
+                      borderRadius: "5px",
+                      fontFamily: "Roboto",
+                      fontSize: "16px",
+                      width: "12rem",
+                    }}
+                    onClick={() => handleConfirmChangeAmount()}
+                  >
+                    Não preciso de troco
+                  </button>
+                  <button
+                    className="click box-shadow"
+                    style={{
+                      textTransform: "uppercase",
+                      backgroundColor: "#f46c26",
+                      color: "white",
+                      border: "1px solid #f46c26",
+                      height: "2rem",
+                      borderRadius: "5px",
+                      fontFamily: "Roboto",
+                      fontSize: "16px",
+                      width: "10rem",
+                    }}
+                    onClick={() => setIsChangeNeeded(true)}
+                  >
+                    Preciso de troco
+                  </button>
+                </>
+              )}
+            </Box>
+          </Modal>
+
           <Box sx={{ mb: 2 }}>
             {showAlert && (
               <Alert severity="success">
@@ -837,9 +1054,9 @@ const Order = () => {
                 color: "#f9e9df",
               }}
             >
-              <Typography style={{ fontSize: "12px", height: "auto" }}>
+              {/*  <Typography style={{ fontSize: "12px", height: "auto" }}>
                 + Entrega: R$ 3,00
-              </Typography>
+              </Typography>*/}
               <Typography variant="h6">
                 Total:{useFormat(calculateSubtotal(cart))}
               </Typography>
