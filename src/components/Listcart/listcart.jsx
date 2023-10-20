@@ -37,6 +37,7 @@ export default function ListCart() {
         sx={{
           marginTop: "-1.8rem",
           maxHeight: "60vh",
+          width: "98%",
           overflow: "auto",
         }}
       >
@@ -50,8 +51,8 @@ export default function ListCart() {
                   position: "relative",
                   display: "flex",
                   backgroundColor: "#fae9de",
-                  height: "10rem",
-                  maxHeight: "10rem",
+                  height: "auto",
+                  width: "100%",
                   justifyContent: "flex-start",
                   flexDirection: "row",
                   alignItems: "center",
@@ -74,12 +75,6 @@ export default function ListCart() {
                     padding: "0 !important",
                   }}
                 >
-                  <img
-                    src={item.imagem}
-                    alt="imagem do item escolhido"
-                    className="ImgCardListCard"
-                  />
-
                   <Box
                     sx={{
                       display: "flex",
@@ -93,8 +88,22 @@ export default function ListCart() {
                       paddingRight: "0.5rem;",
                     }}
                   >
-                    <Typography variant="h6">{item.sabor}</Typography>
-                    <Typography>{item.ingredientes}</Typography>
+                    <Typography
+                      sx={{
+                        width: "100%",
+                      }}
+                      variant="h6"
+                    >
+                      {item.sabor}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        width: "100%",
+                        borderBottom: "2px dotted",
+                      }}
+                    >
+                      {item.ingredientes}
+                    </Typography>
                     <Box
                       sx={{
                         display: "flex",
@@ -106,22 +115,83 @@ export default function ListCart() {
                       <Box
                         sx={{
                           display: "flex",
-                          flexDirection: "row",
+                          flexDirection: "column",
+                          width: "100%",
                         }}
                       >
-                        <Typography variant="body2" gutterBottom>
-                          {item.adicionais.map((item) => item.name).join(", ")}{" "}
-                          ({item.adicionais.map((item) => item.qtde).join(", ")}
-                          x)
+                        {" "}
+                        <Typography
+                          sx={{
+                            width: "100%",
+                          }}
+                          variant="body2"
+                          gutterBottom
+                        >
+                          <em>
+                            <b>Opicionais:</b>
+                          </em>{" "}
+                          {item.refrigeranteDoCombo}
                         </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                        }}
-                      >
-                        <Typography variant="body2" gutterBottom></Typography>
+                        <Typography
+                          sx={{
+                            width: "100%",
+                          }}
+                          variant="body2"
+                          gutterBottom
+                        >
+                          <em>
+                            <b>Opicionais:</b>
+                          </em>{" "}
+                          {item.opicionais}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            width: "100%",
+                          }}
+                          variant="body2"
+                          gutterBottom
+                        >
+                          <em>
+                            <b>Adicionais:</b>
+                          </em>
+                        </Typography>
+                        {item.adicionais.map((adicional) => (
+                          <Typography
+                            sx={{
+                              width: "100%",
+                            }}
+                            variant="body2"
+                            gutterBottom
+                            key={adicional.id}
+                          >
+                            ({adicional.qtde}x) {adicional.name} R${" "}
+                            {useFormat(adicional.valor)}
+                          </Typography>
+                        ))}
+                        <Typography
+                          sx={{
+                            width: "100%",
+                          }}
+                          variant="body2"
+                          gutterBottom
+                        >
+                          <em>
+                            <b>Valor Adicionais:</b>
+                          </em>{" "}
+                          {useFormat(item.valorTotalAdicionais)}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            width: "100%",
+                          }}
+                          variant="body2"
+                          gutterBottom
+                        >
+                          <em>
+                            <b>Observação:</b>
+                          </em>{" "}
+                          {item.observacao}
+                        </Typography>
                       </Box>
                     </Box>
                     <Box
@@ -129,7 +199,9 @@ export default function ListCart() {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        width: "90%",
+                        width: "100%",
+
+                        borderTop: "2px dotted",
                       }}
                     >
                       <Typography variant="h6">

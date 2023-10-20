@@ -71,12 +71,15 @@ export function CarrinhoProvider({ children }) {
 
     cart?.map((item) => {
       const qtd = item.quantidade;
-      let adic = item.adicionais.map((adic) => adic.valor);
-      let qtdAdic = item.adicionais.map((qtdAdic) => qtdAdic.qtde);
-      const valorAdicionais = adic * qtdAdic;
+      let valorAdicionais = 0;
+
+      if (item.adicionais && item.adicionais.length > 0) {
+        valorAdicionais = item.adicionais.reduce((total, adicional) => {
+          return total + adicional.valor * adicional.qtde;
+        }, 0);
+      }
 
       if (qtd > 0) {
-        // Adicione o valor dos adicionais ao cálculo do subtotal
         const valorTotalItem = (item.valor + valorAdicionais) * qtd;
         subtotal += valorTotalItem;
       }

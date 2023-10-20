@@ -283,5 +283,28 @@
       }
     ],
     "bebidas": []
+  },
+  "opcionais": {
+    "combos": [
+      { "opcao": "Sem Borda", "valor": 0 },
+      { "opcao": "Borda com Chocolate", "valor": 2.0 },
+      { "opcao": "Borda com Catupiry", "valor": 3.0 }
+    ],
+    "pizza": [
+      { "opcao": "Sem Borda", "valor": 0 },
+      { "opcao": "Borda com Chocolate", "valor": 2.0 },
+      { "opcao": "Borda com Catupiry", "valor": 3.0 }
+    ],
+    "hamburguer": [
+      { "opcao": "Pão Brioche", "valor": 0 },
+      { "opcao": "Pão Batata", "valor": 3.9 },
+      { "opcao": "Pão Australiano", "valor": 3.9 }
+    ],
+    "paoArabe": [
+      { "opcao": "Pão Arabe", "valor": 0 },
+      { "opcao": "Rap10 Intregral", "valor": 1.99 },
+      { "opcao": "Rap10 Multigrãos", "valor": 1.99 }
+    ],
+    "bebidas": []
   }
 }

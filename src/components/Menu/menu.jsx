@@ -62,8 +62,10 @@ export default function Menu() {
   const [isSegundoModalOpen, setIsSegundoModalOpen] = useState(false);
   const [observacao, setObservacao] = useState("");
   const [activeTab, setActiveTab] = useState("combos");
-  const [bordaSelecionada, setbordaSelecionada] = useState("");
+  const [opicionais, setOpicionais] = useState("");
   const [adicional, setAdicional] = useState([]);
+  const bordaOptions = Data.opcionais[activeTab];
+  console.log(bordaOptions);
 
   useEffect(() => {
     let objGenerico = [];
@@ -87,7 +89,7 @@ export default function Menu() {
       ...itemToAdd,
       refrigeranteDoCombo,
       observacao,
-      bordaSelecionada,
+      opicionais,
       adicionais: totais,
       valorTotalAdicionais,
       valorTotalDoProduto,
@@ -126,7 +128,7 @@ export default function Menu() {
   const openConfirmationModal = (item) => {
     setIsModalOpen(true);
     setItemToAdd(item);
-    setbordaSelecionada("");
+    setOpicionais("");
     setObservacao("");
   };
   const { addToCart } = useCarrinho();
@@ -643,7 +645,7 @@ export default function Menu() {
               fontWeight: "bold",
             }}
           >
-            Selecionar borda:
+            Selecionar Opicionais:
           </Typography>
 
           <RadioGroup
@@ -655,66 +657,35 @@ export default function Menu() {
             }}
             aria-label="borda"
             name="borda"
-            value={bordaSelecionada}
-            onChange={(e) => setbordaSelecionada(e.target.value)}
+            value={opicionais}
+            onChange={(e) => setOpicionais(e.target.value)}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                height: "1rem",
-              }}
-            >
-              <FormControlLabel
-                value="Sem borda"
-                control={<Radio />}
-                label="Sem borda"
-              />
-              <Typography sx={{ paddingRight: "5%" }}>
-                {useFormat(0.0)}
-              </Typography>
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                height: "1rem",
-              }}
-            >
-              <FormControlLabel
-                value="Borda com Catupiry"
-                control={<Radio />}
-                label="Borda com Catupiry"
-              />
-              <Typography sx={{ paddingRight: "5%" }}>
-                {useFormat(7.99)}
-              </Typography>
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                height: "1rem",
-              }}
-            >
-              <FormControlLabel
-                value="Borda de Chocolate"
-                control={<Radio />}
-                label="Borda de Chocolate"
-              />
-              <Typography sx={{ paddingRight: "5%" }}>
-                {useFormat(9.99)}
-              </Typography>
-            </Box>
+            {bordaOptions.map((bordaOption, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  height: "1rem",
+                }}
+              >
+                <FormControlLabel
+                  value={bordaOption.opcao}
+                  control={<Radio />}
+                  label={bordaOption.opcao}
+                />
+                <Typography sx={{ paddingRight: "5%" }}>
+                  {useFormat(bordaOption.valor)}
+                </Typography>
+              </Box>
+            ))}
           </RadioGroup>
+
+
+
+          
           <TextField
             sx={{
               width: "100%",
