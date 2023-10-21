@@ -128,7 +128,7 @@ export default function ListCart() {
                           gutterBottom
                         >
                           <em>
-                            <b>Opicionais:</b>
+                            <b>Opicional do combo:</b>
                           </em>{" "}
                           {item.refrigeranteDoCombo}
                         </Typography>
@@ -144,30 +144,35 @@ export default function ListCart() {
                           </em>{" "}
                           {item.opicionais}
                         </Typography>
-                        <Typography
-                          sx={{
-                            width: "100%",
-                          }}
-                          variant="body2"
-                          gutterBottom
-                        >
-                          <em>
-                            <b>Adicionais:</b>
-                          </em>
-                        </Typography>
-                        {item.adicionais.map((adicional) => (
-                          <Typography
-                            sx={{
-                              width: "100%",
-                            }}
-                            variant="body2"
-                            gutterBottom
-                            key={adicional.id}
-                          >
-                            ({adicional.qtde}x) {adicional.name} R${" "}
-                            {useFormat(adicional.valor)}
-                          </Typography>
-                        ))}
+                        {item.adicionais && item.adicionais.length > 0 && (
+                          <Box>
+                            <Typography
+                              sx={{
+                                width: "100%",
+                              }}
+                              variant="body2"
+                              gutterBottom
+                            >
+                              {" "}
+                              <em>
+                                <b>Adicionais:</b>
+                              </em>
+                            </Typography>
+                            {item.adicionais.map((adicional) => (
+                              <Typography
+                                sx={{
+                                  width: "100%",
+                                }}
+                                variant="body2"
+                                gutterBottom
+                                key={adicional.id}
+                              >
+                                ({adicional.qtde}x) {adicional.name} {""}
+                                {useFormat(adicional.valor)}
+                              </Typography>
+                            ))}
+                          </Box>
+                        )}
                         <Typography
                           sx={{
                             width: "100%",

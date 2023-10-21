@@ -13,6 +13,7 @@ import Image4 from "../../../public/comida-mexicana.png";
 import Image5 from "../../../public/refrigerantes.png";
 import SearchIcon from "@mui/icons-material/Search";
 import Data from "../../db/data.json";
+import * as Yup from "yup";
 import {
   Button,
   Card,
@@ -29,6 +30,12 @@ import "./menu.css";
 import { useCarrinho } from "../../context/useCarrinho";
 import { useFormat } from "./../../utils/useFormat";
 import Cart from "../Cart/cart";
+
+const schema = Yup.object().shape({
+  refrigeranteDoCombo: Yup.string()
+    .required("Escolha um refrigerante")
+    .oneOf(["Pepsi 1L", "Guarana Antartica 1L"], "Escolha uma opção"),
+});
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,8 +71,12 @@ export default function Menu() {
   const [activeTab, setActiveTab] = useState("combos");
   const [opicionais, setOpicionais] = useState("");
   const [adicional, setAdicional] = useState([]);
+  const [refrigeranteError, setRefrigeranteError] = useState("");
+
   const bordaOptions = Data.opcionais[activeTab];
+  const teste = bordaOptions.map((item) => item.opcao);
   console.log(bordaOptions);
+  console.log(teste);
 
   useEffect(() => {
     let objGenerico = [];
@@ -81,10 +92,14 @@ export default function Menu() {
       ...item,
       total: item.valor * item.qtde,
     }));
-    const valorTotalAdicionais = totais
-      .map((item) => item.total)
-      .reduce((acumulatter, currentValue) => acumulatter + currentValue);
+    const valorTotalAdicionais =
+      totais.length > 0
+        ? totais
+            .map((item) => item.total)
+            .reduce((accumulator, currentValue) => accumulator + currentValue)
+        : 0;
     const valorTotalDoProduto = valorTotalAdicionais + itemToAdd.valor;
+
     const itemToAddWithQuantity = {
       ...itemToAdd,
       refrigeranteDoCombo,
@@ -126,11 +141,49 @@ export default function Menu() {
   };
 
   const openConfirmationModal = (item) => {
-    setIsModalOpen(true);
     setItemToAdd(item);
+    setrefrigeranteDoCombo("");
     setOpicionais("");
     setObservacao("");
+
+    if (activeTab === "bebidas") {
+      const itemToAddWithQuantity = {
+        ...itemToAdd,
+        refrigeranteDoCombo,
+        observacao,
+        opicionais,
+        adicionais: [],
+        valorTotalAdicionais: 0,
+        valorTotalDoProduto: itemToAdd.valor,
+      };
+      addToCart(itemToAddWithQuantity);
+
+      setOpicionais("");
+      setObservacao("");
+    } else if (activeTab === "combos") {
+      if (adicional.length === 0) {
+        const itemToAddWithQuantity = {
+          ...itemToAdd,
+          refrigeranteDoCombo,
+          observacao,
+          opicionais,
+          adicionais: [],
+          valorTotalAdicionais: 0,
+          valorTotalDoProduto: itemToAdd.valor,
+        };
+
+        addToCart(itemToAddWithQuantity);
+      } else {
+        setIsModalOpen(true);
+      }
+
+      setOpicionais("");
+      setObservacao("");
+    } else {
+      setIsSegundoModalOpen(true);
+    }
   };
+
   const { addToCart } = useCarrinho();
 
   const handleSearchInputChange = (e) => {
@@ -437,7 +490,11 @@ export default function Menu() {
 
       <Modal
         open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setrefrigeranteDoCombo("");
+          setRefrigeranteError("");
+        }}
         aria-labelledby="confirmation-modal-title"
         aria-describedby="confirmation-modal-description"
       >
@@ -479,6 +536,7 @@ export default function Menu() {
                 value={refrigeranteDoCombo}
                 onChange={(e) => {
                   setrefrigeranteDoCombo(e.target.value);
+                  setRefrigeranteError("");
                 }}
               >
                 <FormControlLabel
@@ -504,6 +562,10 @@ export default function Menu() {
                   label="Guarana Antartica 1L"
                 />
               </RadioGroup>
+              <p style={{ color: "red", margin: "0.5rem 0" }}>
+                {refrigeranteError}
+              </p>
+
               <Box
                 sx={{
                   display: "flex",
@@ -526,10 +588,20 @@ export default function Menu() {
                 <Button
                   sx={{
                     width: "30%",
-                    backgroundColor: "#f76d26 ",
+                    backgroundColor: "#f76d26",
                     color: "#f7e9e1",
                   }}
-                  onClick={setIsSegundoModalOpen}
+                  onClick={() => {
+                    schema
+                      .validate({ refrigeranteDoCombo })
+                      .then(() => {
+                        setIsSegundoModalOpen(true);
+                        setRefrigeranteError(""); // Limpa qualquer mensagem de erro anterior
+                      })
+                      .catch((error) => {
+                        setRefrigeranteError(error.message); // Define a mensagem de erro
+                      });
+                  }}
                 >
                   Avançar
                 </Button>
@@ -658,7 +730,10 @@ export default function Menu() {
             aria-label="borda"
             name="borda"
             value={opicionais}
-            onChange={(e) => setOpicionais(e.target.value)}
+            onChange={(e) => {
+              setOpicionais(e.target.value);
+              setRefrigeranteError("");
+            }}
           >
             {bordaOptions.map((bordaOption, index) => (
               <Box
@@ -682,10 +757,9 @@ export default function Menu() {
               </Box>
             ))}
           </RadioGroup>
-
-
-
-          
+          <div style={{ color: "red", margin: "0.5rem 0" }}>
+            {refrigeranteError}
+          </div>
           <TextField
             sx={{
               width: "100%",
@@ -728,13 +802,20 @@ export default function Menu() {
               sx={{
                 height: "100%",
                 width: "50%",
-                backgroundColor: "#f76d26 ",
+                backgroundColor: "#f76d26",
                 color: "#f7e9e1",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
-              onClick={modalCheckout}
+              onClick={() => {
+                if (!opicionais) {
+                  setRefrigeranteError("Escolha um opicional");
+                } else {
+                  modalCheckout();
+                  setRefrigeranteError("");
+                }
+              }}
             >
               Adicionar ao carrinho
             </Button>

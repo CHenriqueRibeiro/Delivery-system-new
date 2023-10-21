@@ -15,35 +15,62 @@ export function CarrinhoProvider({ children }) {
     sessionStorage.setItem("itensSelecionados", JSON.stringify(cart));
   };
 
-  const addToCart = (item) => {
-    const existingItemIndex = cart.findIndex((c) => c.id === item.id);
-    let updatedCart = [];
+  const isSameCartItem = (item1, item2) => {
 
-    if (existingItemIndex !== -1) {
-      updatedCart = [...cart];
-
-      if (
-        updatedCart[existingItemIndex].adicionais.toString() !==
-          item.adicionais.toString() ||
-        updatedCart[existingItemIndex].bordaSelecionada !==
-          item.bordaSelecionada ||
-        updatedCart[existingItemIndex].refrigeranteDoCombo !==
-          item.refrigeranteDoCombo
-      ) {
-        updatedCart.push(item);
-      } else {
-        updatedCart[existingItemIndex].quantidade += 1;
-      }
-
-      calculateSubtotal(updatedCart);
-    } else {
-      const newItem = { ...item, quantidade: 1 };
-      updatedCart = [...cart, newItem];
+    return (
+      item1.id === item2.id &&
+      item1.opcionais === item2.opcionais && // Correção aqui
+      item1.refrigeranteDoCombo === item2.refrigeranteDoCombo &&
+      item1.observacao === item2.observacao &&
+      areAdditionalsSame(item1.adicionais, item2.adicionais)
+    );
+    };
+  
+  const areAdditionalsSame = (additionals1, additionals2) => {
+    if (additionals1.length !== additionals2.length) {
+      return false;
     }
-
+  
+    for (let i = 0; i < additionals1.length; i++) {
+      if (
+        additionals1[i].name !== additionals2[i].name ||
+        additionals1[i].qtde !== additionals2[i].qtde
+      ) {
+        return false;
+      }
+    }
+  
+    return true;
+  };
+  
+  const addToCart = (item) => {
+    let updatedCart = [...cart];
+    let itemExists = false;
+  
+    // Percorra o carrinho para verificar se um item semelhante já existe
+    updatedCart = updatedCart.map((cartItem) => {
+      if (isSameCartItem(cartItem, item)) {
+        itemExists = true;
+        return {
+          ...cartItem,
+          quantidade: cartItem.quantidade + 1,
+        };
+      }
+      return cartItem;
+    });
+  
+    // Se o item não existe, adicione-o ao carrinho com quantidade 1
+    if (!itemExists) {
+      updatedCart.push({
+        ...item,
+        quantidade: 1,
+      });
+    }
+  
     setCart(updatedCart);
     saveCartToSessionStorage(updatedCart);
   };
+  
 
   const removeQuantityFromCart = (itemId) => {
     const updatedCart = cart.map((item) => {
