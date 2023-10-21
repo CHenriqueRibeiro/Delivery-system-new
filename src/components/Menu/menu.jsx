@@ -64,7 +64,7 @@ export default function Menu() {
   const [searchValue, setSearchValue] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToAdd, setItemToAdd] = useState(null);
-
+  const { addToCart, cart } = useCarrinho();
   const [refrigeranteDoCombo, setrefrigeranteDoCombo] = useState("");
   const [isSegundoModalOpen, setIsSegundoModalOpen] = useState(false);
   const [observacao, setObservacao] = useState("");
@@ -74,9 +74,6 @@ export default function Menu() {
   const [refrigeranteError, setRefrigeranteError] = useState("");
 
   const bordaOptions = Data.opcionais[activeTab];
-  const teste = bordaOptions.map((item) => item.opcao);
-  console.log(bordaOptions);
-  console.log(teste);
 
   useEffect(() => {
     let objGenerico = [];
@@ -92,6 +89,7 @@ export default function Menu() {
       ...item,
       total: item.valor * item.qtde,
     }));
+
     const valorTotalAdicionais =
       totais.length > 0
         ? totais
@@ -110,13 +108,30 @@ export default function Menu() {
       valorTotalDoProduto,
     };
 
-    addToCart(itemToAddWithQuantity);
-    setIsModalOpen(false);
-    setIsSegundoModalOpen(false);
+    const itemExistsInCart = cart.find((item) => {
+      return (
+        item.sabor === itemToAddWithQuantity.sabor &&
+        item.refrigeranteDoCombo ===
+          itemToAddWithQuantity.refrigeranteDoCombo &&
+        item.opicionais === itemToAddWithQuantity.opicionais &&
+        JSON.stringify(item.adicionais) ===
+          JSON.stringify(itemToAddWithQuantity.adicionais)
+      );
+    });
 
-    const cpy = [...adicional];
-    cpy.forEach((item) => (item.qtde = 0));
-    setAdicional(cpy);
+    if (itemExistsInCart) {
+      addToCart(itemToAddWithQuantity);
+      setIsModalOpen(false);
+      setIsSegundoModalOpen(false);
+    } else {
+      addToCart(itemToAddWithQuantity);
+      setIsModalOpen(false);
+      setIsSegundoModalOpen(false);
+
+      const cpy = [...adicional];
+      cpy.forEach((item) => (item.qtde = 0));
+      setAdicional(cpy);
+    }
   };
 
   const handleIngredientIncrement = (ingredient) => {
@@ -183,8 +198,6 @@ export default function Menu() {
       setIsSegundoModalOpen(true);
     }
   };
-
-  const { addToCart } = useCarrinho();
 
   const handleSearchInputChange = (e) => {
     setSearchValue(e.target.value);
@@ -263,7 +276,7 @@ export default function Menu() {
           icon={<img src={Image4} alt="ImgPaoArabe" />}
         />
         <Tab
-          label="Bebida"
+          label="bebidas"
           className="tabs optbebidas"
           icon={<img src={Image5} alt="ImgBebidas" />}
         />
