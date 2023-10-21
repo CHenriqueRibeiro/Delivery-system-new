@@ -770,9 +770,7 @@ export default function Menu() {
               </Box>
             ))}
           </RadioGroup>
-          <div style={{ color: "red", margin: "0.5rem 0" }}>
-            {refrigeranteError}
-          </div>
+          <Box style={{ color: "red" }}>{refrigeranteError}</Box>
           <TextField
             sx={{
               width: "100%",

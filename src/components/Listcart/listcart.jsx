@@ -120,19 +120,24 @@ export default function ListCart() {
                         }}
                       >
                         {" "}
-                        <Typography
-                          sx={{
-                            width: "100%",
-                          }}
-                          variant="body2"
-                          gutterBottom
-                        >
-                          <em>
-                            <b>Opicional do combo:</b>
-                          </em>{" "}
-                          {item.refrigeranteDoCombo}
-                        </Typography>
-                        <Typography
+                        {item.refrigeranteDoCombo === "" || undefined ? (
+                          <Box></Box>
+                        ) : (
+                          <Typography
+                            sx={{
+                              width: "100%",
+                            }}
+                            variant="body2"
+                            gutterBottom
+                          >
+                            <em>
+                              <b>Opicional do combo:</b>
+                            </em>{" "}
+                            {item.refrigeranteDoCombo}
+                          </Typography>
+                        )}
+
+                        {item.opicionais  === "" || undefined ? (<Box></Box>) : (<Typography
                           sx={{
                             width: "100%",
                           }}
@@ -143,10 +148,14 @@ export default function ListCart() {
                             <b>Opicionais:</b>
                           </em>{" "}
                           {item.opicionais}
-                        </Typography>
+                        </Typography>)}
+                        
+
+
+
                         {item.adicionais && item.adicionais.length > 0 && (
                           <Box>
-                            <Typography
+                            {item.adicionais  === "" || undefined ? (<Box></Box>) :(<Typography
                               sx={{
                                 width: "100%",
                               }}
@@ -157,23 +166,30 @@ export default function ListCart() {
                               <em>
                                 <b>Adicionais:</b>
                               </em>
-                            </Typography>
-                            {item.adicionais.map((adicional) => (
+                            </Typography>)}
+                            
+
+
+
+                            {item.adicionais.map((item) => (
+                              
                               <Typography
                                 sx={{
                                   width: "100%",
                                 }}
                                 variant="body2"
                                 gutterBottom
-                                key={adicional.id}
+                                key={item.id}
                               >
-                                ({adicional.qtde}x) {adicional.name} {""}
-                                {useFormat(adicional.valor)}
+                                ({item.qtde}x) {item.name} {""}
+                                {useFormat(item.valor)}
                               </Typography>
                             ))}
                           </Box>
                         )}
-                        <Typography
+
+
+                        {item.valorTotalAdicionais === 0|| undefined ? (<Box></Box>) :(<Typography
                           sx={{
                             width: "100%",
                           }}
@@ -184,8 +200,12 @@ export default function ListCart() {
                             <b>Valor Adicionais:</b>
                           </em>{" "}
                           {useFormat(item.valorTotalAdicionais)}
-                        </Typography>
-                        <Typography
+                        </Typography>)}
+                        
+
+
+
+                        {item.observacao === "" || undefined ? (<Box></Box>) : ( <Typography
                           sx={{
                             width: "100%",
                           }}
@@ -196,7 +216,13 @@ export default function ListCart() {
                             <b>Observação:</b>
                           </em>{" "}
                           {item.observacao}
-                        </Typography>
+                        </Typography>)}
+                       
+
+
+
+
+
                       </Box>
                     </Box>
                     <Box
