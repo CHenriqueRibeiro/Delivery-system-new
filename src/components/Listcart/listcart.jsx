@@ -7,10 +7,36 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "../Listcart/listcart.css";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { useEffect } from "react";
 
 export default function ListCart() {
   const { cart, deleteFromCart, addToCart, removeQuantityFromCart } =
     useCarrinho();
+  useEffect(() => {
+    let itensSelecionados =
+      JSON.parse(sessionStorage.getItem("itensSelecionados")) || [];
+
+    if (cart.length > 0) {
+      const primeiroItemNoCarrinho = cart[0];
+      const novoValorTotalDoProduto =
+        (primeiroItemNoCarrinho.valor +
+          primeiroItemNoCarrinho.valorTotalAdicionais) *
+        primeiroItemNoCarrinho.quantidade;
+
+      const itemAtualizado = itensSelecionados.find(
+        (item) => item.id === primeiroItemNoCarrinho.id
+      );
+
+      if (itemAtualizado) {
+        itemAtualizado.valorTotalDoProduto = novoValorTotalDoProduto;
+
+        sessionStorage.setItem(
+          "itensSelecionados",
+          JSON.stringify(itensSelecionados)
+        );
+      }
+    }
+  }, [cart]);
 
   const handleDelete = (item) => {
     deleteFromCart(item);
@@ -18,19 +44,37 @@ export default function ListCart() {
 
   const handleIncrement = (item) => {
     const date = new Date();
-    addToCart({ ...item, key: date.getMilliseconds() });
+    const newQuantidade = item.quantidade + 1;
+
+    const newValorTotalDoProduto = newQuantidade * item.valor;
+
+    const updatedItem = {
+      ...item,
+      key: date.getMilliseconds(),
+      quantidade: newQuantidade,
+      valorTotalDoProduto: newValorTotalDoProduto,
+    };
+
+    addToCart(updatedItem);
   };
 
   const handleDecrement = (item) => {
-    const date = new Date();
+    if (item.quantidade > 1) {
+      const date = new Date();
+      const newQuantidade = item.quantidade - 1;
 
-    if (item && item.quantidade > 1) {
-      const updatedItem = { ...item, key: date.getMilliseconds() };
-      updatedItem.quantidade -= 1;
+      const newValorTotalDoProduto = newQuantidade * item.valor;
+
+      const updatedItem = {
+        ...item,
+        key: date.getMilliseconds(),
+        quantidade: newQuantidade,
+        valorTotalDoProduto: newValorTotalDoProduto,
+      };
+
       removeQuantityFromCart(updatedItem);
     }
   };
-
   return (
     <>
       <Box
@@ -136,43 +180,42 @@ export default function ListCart() {
                             {item.refrigeranteDoCombo}
                           </Typography>
                         )}
-
-                        {item.opicionais  === "" || undefined ? (<Box></Box>) : (<Typography
-                          sx={{
-                            width: "100%",
-                          }}
-                          variant="body2"
-                          gutterBottom
-                        >
-                          <em>
-                            <b>Opicionais:</b>
-                          </em>{" "}
-                          {item.opicionais}
-                        </Typography>)}
-                        
-
-
-
+                        {item.opicionais === "" || undefined ? (
+                          <Box></Box>
+                        ) : (
+                          <Typography
+                            sx={{
+                              width: "100%",
+                            }}
+                            variant="body2"
+                            gutterBottom
+                          >
+                            <em>
+                              <b>Opicionais:</b>
+                            </em>{" "}
+                            {item.opicionais}
+                          </Typography>
+                        )}
                         {item.adicionais && item.adicionais.length > 0 && (
                           <Box>
-                            {item.adicionais  === "" || undefined ? (<Box></Box>) :(<Typography
-                              sx={{
-                                width: "100%",
-                              }}
-                              variant="body2"
-                              gutterBottom
-                            >
-                              {" "}
-                              <em>
-                                <b>Adicionais:</b>
-                              </em>
-                            </Typography>)}
-                            
-
-
+                            {item.adicionais === "" || undefined ? (
+                              <Box></Box>
+                            ) : (
+                              <Typography
+                                sx={{
+                                  width: "100%",
+                                }}
+                                variant="body2"
+                                gutterBottom
+                              >
+                                {" "}
+                                <em>
+                                  <b>Adicionais:</b>
+                                </em>
+                              </Typography>
+                            )}
 
                             {item.adicionais.map((item) => (
-                              
                               <Typography
                                 sx={{
                                   width: "100%",
@@ -187,42 +230,38 @@ export default function ListCart() {
                             ))}
                           </Box>
                         )}
-
-
-                        {item.valorTotalAdicionais === 0|| undefined ? (<Box></Box>) :(<Typography
-                          sx={{
-                            width: "100%",
-                          }}
-                          variant="body2"
-                          gutterBottom
-                        >
-                          <em>
-                            <b>Valor Adicionais:</b>
-                          </em>{" "}
-                          {useFormat(item.valorTotalAdicionais)}
-                        </Typography>)}
-                        
-
-
-
-                        {item.observacao === "" || undefined ? (<Box></Box>) : ( <Typography
-                          sx={{
-                            width: "100%",
-                          }}
-                          variant="body2"
-                          gutterBottom
-                        >
-                          <em>
-                            <b>Observação:</b>
-                          </em>{" "}
-                          {item.observacao}
-                        </Typography>)}
-                       
-
-
-
-
-
+                        {item.valorTotalAdicionais === 0 || undefined ? (
+                          <Box></Box>
+                        ) : (
+                          <Typography
+                            sx={{
+                              width: "100%",
+                            }}
+                            variant="body2"
+                            gutterBottom
+                          >
+                            <em>
+                              <b>Valor Adicionais:</b>
+                            </em>{" "}
+                            {useFormat(item.valorTotalAdicionais)}
+                          </Typography>
+                        )}
+                        {item.observacao === "" || undefined ? (
+                          <Box></Box>
+                        ) : (
+                          <Typography
+                            sx={{
+                              width: "100%",
+                            }}
+                            variant="body2"
+                            gutterBottom
+                          >
+                            <em>
+                              <b>Observação:</b>
+                            </em>{" "}
+                            {item.observacao}
+                          </Typography>
+                        )}
                       </Box>
                     </Box>
                     <Box
@@ -236,7 +275,10 @@ export default function ListCart() {
                       }}
                     >
                       <Typography variant="h6">
-                        {useFormat(item.valorTotalDoProduto)}
+                        {useFormat(
+                          (item.valor + item.valorTotalAdicionais) *
+                            item.quantidade
+                        )}
                       </Typography>
                       <Box
                         sx={{

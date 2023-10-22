@@ -1,4 +1,4 @@
-import { Alert, Box, Modal, Typography } from "@mui/material";
+import { Alert, Box, Modal, Typography, capitalize } from "@mui/material";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
@@ -90,12 +90,10 @@ const Order = () => {
   const [isChangeNeeded, setIsChangeNeeded] = useState(false);
   const [changeAmount, setChangeAmount] = useState("");
   const handleConfirmChangeAmount = () => {
-   
     const confirmedChangeAmount = changeAmount;
     setIsModalOpen(false);
     console.log(confirmedChangeAmount);
   };
-
 
   const {
     register,
@@ -112,11 +110,11 @@ const Order = () => {
 
   let saudacao;
   if (horaAtual >= 5 && horaAtual < 12) {
-    saudacao = "Bom dia";
+    saudacao = "bom dia";
   } else if (horaAtual >= 12 && horaAtual < 18) {
-    saudacao = "Boa tarde";
+    saudacao = "boa tarde";
   } else {
-    saudacao = "Boa noite";
+    saudacao = "boa noite";
   }
 
   const createWhatsAppMessage = (data) => {
@@ -132,67 +130,167 @@ const Order = () => {
       );
       return;
     }
+    const pedidoNumero = Math.floor(Math.random() * 1000);
+    const pedidoTexto =
+      pedidoNumero <= 99
+        ? pedidoNumero.toString().padStart(2, "0")
+        : pedidoNumero.toString();
 
     if (sessionStorageData && formaDeEntregaEscolhida === "Entrega") {
-      let message = ` Olá, ${saudacao} ${data.nome},\n\nTelefone: ${data.telefone}\n\n---------------------------------------\n`;
+      let message = `Olá ${saudacao},\n\n`;
+      message += `Me chamo ${capitalize(data.nome)},\n`;
+      message += `meu telefone é: ${data.telefone}\n\n`;
+      message += "Esse é o meu pedido:\n";
+      message += "---------------------------------------\n";
+      message += `Pedido: ${pedidoTexto}\n`;
+      message += "---------------------------------------\n";
 
-      const itemsPedido = sessionStorageData.map((item) => {
-        const sabor = [item.sabor];
-        const pedido = sabor.map((itemPedido) => ` ${itemPedido}`);
-        return pedido;
+      sessionStorageData.forEach((item, index) => {
+        message += `Item: ${item.sabor}\n`;
+        message += `Valor: R$ ${item.valor}0\n`;
+        message += `Quantidade: ${item.quantidade}\n`;
+
+        if (item.refrigeranteDoCombo) {
+          message += `Refrigerante do Combo: ${item.refrigeranteDoCombo}\n`;
+        }
+        if (item.opicionais) {
+          message += `Opcionais: ${item.opicionais}\n`;
+        }
+        if (item.adicionais && item.adicionais.length > 0) {
+          message += "Adicionais:\n";
+
+          item.adicionais.forEach((adicional, i) => {
+            message += `(${adicional.qtde}x) ${adicional.name}`;
+
+            if (i < item.adicionais.length - 1) {
+              message += "\n";
+            }
+          });
+        }
+
+        if (item.valorTotalAdicionais) {
+          message += `\nValor dos adicionais: R$ ${item.valorTotalAdicionais.toFixed(
+            2
+          )}\n`;
+        }
+        message += `Valor total do item: R$ ${item.valorTotalDoProduto.toFixed(
+          2
+        )}\n`;
+
+        if (item.observacao) {
+          message += `Observação: ${item.observacao}\n`;
+        }
+        if (index < sessionStorageData.length - 1) {
+          message += "---------------------------------------\n";
+        }
       });
-      message += `Pedido: ${itemsPedido}\n---------------------------------------\n`;
 
+      message += "---------------------------------------\n";
+      message += `Endereço :\n`;
       message += `CEP: ${data.cep}\n`;
-
-      message += `Numero: ${data.casaApto}\n`;
-
       message += `Rua: ${data.rua}\n`;
-      message += `Complemento: ${data.complemento}\n`;
+      message += `Numero: ${data.casaApto}\n`;
+      if (data.complemento === "") {
+        console.log("nao tem complemento");
+      } else {
+        message += `Ponto de Referencia: ${data.complemento}\n`;
+      }
       message += `Bairro: ${data.bairro}\n`;
       message += `Cidade: ${data.cidade}\n`;
       message += `Estado: ${data.estado}\n`;
 
-      message += `---------------------------------------\n`;
-
+      message += "---------------------------------------\n";
       message += `Forma de Pagamento: ${data.formaDePagamento}\n`;
-      message += `Forma de Entrega: ${data.formaDeEntrega}\n`;
+      message += `Entrega ou Retirada: ${data.formaDeEntrega}\n`;
 
       if (isChangeNeeded === false) {
-        message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
+        message += "---------------------------------------\n";
+        message += `Valor Total: R$ ${totalValue.toFixed(2)}\n\n`;
       } else {
+        message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para : R$ ${changeAmount}`;
+        message += `Troco para: R$ ${changeAmount},00\n\n`;
       }
 
       console.log(message);
 
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585988154685&text=${message}`;
-
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappLink = `https://api.whatsapp.com/send?phone=5585988154685&text=${encodedMessage}`;
       window.open(whatsappLink);
     } else {
-      let message = ` Olá, ${saudacao} ${data.nome},\n\nTelefone: ${data.telefone}\n\n---------------------------------------\n`;
+      let message = `Olá ${saudacao},\n\n`;
+      message += `Me chamo ${capitalize(data.nome)},\n`;
+      message += `meu telefone é: ${data.telefone}\n\n`;
+      message += "Esse é o meu pedido:\n";
+      message += "---------------------------------------\n";
+      message += `Pedido: ${pedidoTexto}\n`;
+      message += "---------------------------------------\n";
 
-      const itemsPedido = sessionStorageData.map((item) => {
-        const sabor = [item.sabor];
-        const pedido = sabor.map((itemPedido) => ` ${itemPedido}`);
-        return pedido;
+      sessionStorageData.forEach((item, index) => {
+        message += `Item: ${item.sabor}\n`;
+        message += `Valor: R$ ${item.valor}0\n`;
+        message += `Quantidade: ${item.quantidade}\n`;
+
+        if (item.refrigeranteDoCombo) {
+          message += `Refrigerante do Combo: ${item.refrigeranteDoCombo}\n`;
+        }
+        if (item.opicionais) {
+          message += `Opcionais: ${item.opicionais}\n`;
+        }
+        if (item.adicionais && item.adicionais.length > 0) {
+          message += "Adicionais:\n";
+
+          item.adicionais.forEach((adicional, i) => {
+            message += `(${adicional.qtde}x) ${adicional.name}`;
+
+            if (i < item.adicionais.length - 1) {
+              message += "\n";
+            }
+          });
+        }
+
+        if (item.valorTotalAdicionais) {
+          message += `\nValor dos adicionais: R$ ${item.valorTotalAdicionais.toFixed(
+            2
+          )}\n`;
+        }
+        message += `Valor total do item: R$ ${item.valorTotalDoProduto.toFixed(
+          2
+        )}\n`;
+
+        if (item.observacao) {
+          message += `Observação: ${item.observacao}\n`;
+        }
+        if (index < sessionStorageData.length - 1) {
+          message += "---------------------------------------\n";
+        }
       });
-      message += `Pedido: ${itemsPedido}\n---------------------------------------\n`;
-      message += `---------------------------------------\n`;
 
+      message += "---------------------------------------\n";
       message += `Forma de Pagamento: ${data.formaDePagamento}\n`;
-      message += `Forma de Entrega: ${data.formaDeEntrega}\n`;
+      message += `Entrega ou Retirada: ${data.formaDeEntrega}\n`;
 
       if (isChangeNeeded === false) {
-        message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
+        message += "---------------------------------------\n";
+        message += `Valor Total: R$ ${totalValue.toFixed(2)}\n\n`;
       } else {
+        message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para : R$ ${changeAmount}`;
+        message += `Troco para: R$ ${changeAmount},00\n\n`;
       }
 
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585988154685&text=${message}`;
+      message += "---------------------------------------\n";
+      message +=
+        "Ahh escolhi a opção de retirada , então ja sei que o endereco é:\n";
+      message +=
+        "Rua: Rua das maravilhas\nNúmero: 194\nPonto de referência: próximo ao campo da luz\nCidade: Caucaia\n\n";
+      message +=
+        "Qualquer duvida eu acessor por essa localização pelo Google Maps:\nhttps://maps.app.goo.gl/6hMUzge2SxM1zGks9";
 
+      console.log(message);
+
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappLink = `https://api.whatsapp.com/send?phone=5585988154685&text=${encodedMessage}`;
       window.open(whatsappLink);
     }
   };
@@ -875,7 +973,7 @@ const Order = () => {
                               }}
                               onChange={() => {
                                 field.onChange("Dinheiro");
-                                setIsModalOpen(true); // Abre o modal
+                                setIsModalOpen(true);
                               }}
                             />
                             <AttachMoneyIcon />

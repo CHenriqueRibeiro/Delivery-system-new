@@ -609,10 +609,10 @@ export default function Menu() {
                       .validate({ refrigeranteDoCombo })
                       .then(() => {
                         setIsSegundoModalOpen(true);
-                        setRefrigeranteError(""); // Limpa qualquer mensagem de erro anterior
+                        setRefrigeranteError("");
                       })
                       .catch((error) => {
-                        setRefrigeranteError(error.message); // Define a mensagem de erro
+                        setRefrigeranteError(error.message);
                       });
                   }}
                 >
