@@ -195,7 +195,7 @@ const Order = () => {
       console.log(message);
 
       const encodedMessage = encodeURIComponent(message);
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585988154685&text=${encodedMessage}`;
+      const whatsappLink = `https://api.whatsapp.com/send?phone=5585982168756&text=${encodedMessage}`;
       window.open(whatsappLink);
     } else {
       let message = `Olá ${saudacao},\n\n`;
@@ -270,7 +270,7 @@ const Order = () => {
       console.log(message);
 
       const encodedMessage = encodeURIComponent(message);
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585988154685&text=${encodedMessage}`;
+      const whatsappLink = `https://api.whatsapp.com/send?phone=5585982168756&text=${encodedMessage}`;
       window.open(whatsappLink);
     }
   };
