@@ -123,6 +123,7 @@ export function CarrinhoProvider({ children }) {
     <CarrinhoContext.Provider
       value={{
         cart,
+        setCart,
         addToCart,
         deleteFromCart,
         removeQuantityFromCart,

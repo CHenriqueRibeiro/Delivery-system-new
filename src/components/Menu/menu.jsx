@@ -81,6 +81,7 @@ export default function Menu() {
       objGenerico.push(adicional)
     );
     setAdicional(objGenerico);
+    setItemToAdd(null);
   }, [activeTab]);
 
   const modalCheckout = () => {

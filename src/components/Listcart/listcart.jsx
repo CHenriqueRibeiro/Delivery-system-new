@@ -10,7 +10,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { useEffect } from "react";
 
 export default function ListCart() {
-  const { cart, deleteFromCart, addToCart, removeQuantityFromCart } =
+  const { cart, deleteFromCart, isSameCartItem,setCart,saveCartToSessionStorage } =
     useCarrinho();
   useEffect(() => {
     let itensSelecionados =
@@ -45,36 +45,58 @@ export default function ListCart() {
   const handleIncrement = (item) => {
     const date = new Date();
     const newQuantidade = item.quantidade + 1;
-
-    const newValorTotalDoProduto = newQuantidade * item.valor;
-
+  
+    const newValorTotalDoProduto =
+      (item.valor + item.valorTotalAdicionais) * newQuantidade;
+  
     const updatedItem = {
       ...item,
       key: date.getMilliseconds(),
       quantidade: newQuantidade,
       valorTotalDoProduto: newValorTotalDoProduto,
     };
-
-    addToCart(updatedItem);
+  
+    const updatedCart = cart.map((cartItem) => {
+      if (isSameCartItem(cartItem, updatedItem)) {
+        return updatedItem;
+      }
+      return cartItem;
+    });
+  
+    setCart(updatedCart);
+    saveCartToSessionStorage(updatedCart);
   };
-
+  
   const handleDecrement = (item) => {
     if (item.quantidade > 1) {
       const date = new Date();
       const newQuantidade = item.quantidade - 1;
-
-      const newValorTotalDoProduto = newQuantidade * item.valor;
-
+  
+      const newValorTotalDoProduto =
+        (item.valor + item.valorTotalAdicionais) * newQuantidade;
+  
       const updatedItem = {
         ...item,
         key: date.getMilliseconds(),
         quantidade: newQuantidade,
         valorTotalDoProduto: newValorTotalDoProduto,
       };
-
-      removeQuantityFromCart(updatedItem);
+  
+      const updatedCart = cart.map((cartItem) => {
+        if (isSameCartItem(cartItem, updatedItem)) {
+          return updatedItem;
+        }
+        return cartItem;
+      });
+  
+      setCart(updatedCart);
+      saveCartToSessionStorage(updatedCart);
     }
   };
+  
+  
+  
+  
   return (
     <>
       <Box
