@@ -16,21 +16,28 @@ export function CarrinhoProvider({ children }) {
   };
 
   const isSameCartItem = (item1, item2) => {
-
+    if (!item1 || !item2) {
+      return false;
+    }
     return (
       item1.id === item2.id &&
-      item1.opcionais === item2.opcionais && // Correção aqui
+      item1.opicionais === item2.opicionais &&
       item1.refrigeranteDoCombo === item2.refrigeranteDoCombo &&
       item1.observacao === item2.observacao &&
+      item1.valor === item2.valor &&
       areAdditionalsSame(item1.adicionais, item2.adicionais)
     );
-    };
-  
+  };
+
   const areAdditionalsSame = (additionals1, additionals2) => {
+    if (!additionals1 || !additionals2) {
+      return false;
+    }
+
     if (additionals1.length !== additionals2.length) {
       return false;
     }
-  
+
     for (let i = 0; i < additionals1.length; i++) {
       if (
         additionals1[i].name !== additionals2[i].name ||
@@ -39,15 +46,14 @@ export function CarrinhoProvider({ children }) {
         return false;
       }
     }
-  
+
     return true;
   };
-  
+
   const addToCart = (item) => {
     let updatedCart = [...cart];
     let itemExists = false;
-  
-    // Percorra o carrinho para verificar se um item semelhante já existe
+
     updatedCart = updatedCart.map((cartItem) => {
       if (isSameCartItem(cartItem, item)) {
         itemExists = true;
@@ -58,19 +64,17 @@ export function CarrinhoProvider({ children }) {
       }
       return cartItem;
     });
-  
-    // Se o item não existe, adicione-o ao carrinho com quantidade 1
+
     if (!itemExists) {
       updatedCart.push({
         ...item,
         quantidade: 1,
       });
     }
-  
+
     setCart(updatedCart);
     saveCartToSessionStorage(updatedCart);
   };
-  
 
   const removeQuantityFromCart = (itemId) => {
     const updatedCart = cart.map((item) => {
@@ -119,10 +123,12 @@ export function CarrinhoProvider({ children }) {
     <CarrinhoContext.Provider
       value={{
         cart,
+        setCart,
         addToCart,
         deleteFromCart,
         removeQuantityFromCart,
         calculateSubtotal,
+        isSameCartItem,
         saveCartToSessionStorage,
       }}
     >

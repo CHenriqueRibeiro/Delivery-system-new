@@ -110,8 +110,8 @@ const Order = () => {
       setBairroLocalStorage(parsedData.bairro);
       setCidadeLocalStorage(parsedData.cidade);
       setEstadoLocalStorage(parsedData.estado);
-      setSelectedValueDelivery(parsedData.formaDeEntrega || "delivery"); // Defina a forma de entrega
-      setSelectedValuePayment(parsedData.formaDePagamento || "cartaoDeCredito"); // Defina a forma de pagamento
+      setSelectedValueDelivery(parsedData.formaDeEntrega || "delivery");
+      setSelectedValuePayment(parsedData.formaDePagamento || "cartaoDeCredito");
     }
   }, []);
 
