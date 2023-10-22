@@ -15,73 +15,53 @@ import PixOutlinedIcon from "@mui/icons-material/PixOutlined";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import "./Order.css";
 
+const campoObrigatorio = (
+  <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
+    Campo obrigatório
+  </Typography>
+);
+const opcaoObrigatoria = (
+  <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
+    Escolha uma opção
+  </Typography>
+);
+
 const schema = yup
-  .object({
-    estado: yup.string().required(
-      <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
-        Campo obrigatório
-      </Typography>
-    ),
-    cidade: yup.string().required(
-      <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
-        Campo obrigatório
-      </Typography>
-    ),
-    bairro: yup.string().required(
-      <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
-        Campo obrigatório
-      </Typography>
-    ),
+  .object()
+  .shape({
+    estado: yup.string(),
+    cidade: yup.string(),
+    bairro: yup.string(),
     complemento: yup.string(),
-    casaApto: yup.string().required(
-      <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
-        Campo obrigatório
-      </Typography>
-    ),
-    rua: yup.string().required(
-      <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
-        Campo obrigatório
-      </Typography>
-    ),
-    cep: yup.string().required(
-      <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
-        Campo obrigatório
-      </Typography>
-    ),
-    telefone: yup
-      .number()
-      .required()
-      .typeError(
-        <Typography
-          variant="caption"
-          style={{ color: "red", marginLeft: "5px" }}
-        >
-          Campo obrigatório
-        </Typography>
-      ),
-    nome: yup.string().required(
-      <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
-        Campo obrigatório
-      </Typography>
-    ),
+    casaApto: yup.string(),
+    rua: yup.string(),
+    cep: yup.string(),
+    telefone: yup.string().required(campoObrigatorio),
+    nome: yup.string().required(campoObrigatorio),
     formaDePagamento: yup
       .string()
-      .required(
-        <Typography
-          variant="caption"
-          style={{ color: "red", marginLeft: "5px" }}
-        >
-          Escolha uma Opção
-        </Typography>
-      )
+      .required(opcaoObrigatoria)
       .oneOf(["Credito", "Debito", "Pix", "Dinheiro"], "Opção inválida"),
-    formaDeEntrega: yup.string().required(
-      <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
-        Escolha uma Opção
-      </Typography>
-    ),
+    formaDeEntrega: yup.string().required(opcaoObrigatoria),
   })
-  .required();
+  .test("condicional", null, function (obj) {
+    if (obj.formaDeEntrega === "Entrega") {
+      return yup
+        .object({
+          estado: yup.string().required(campoObrigatorio),
+          cidade: yup.string().required(campoObrigatorio),
+          bairro: yup.string().required(campoObrigatorio),
+          casaApto: yup.string().required(campoObrigatorio),
+          rua: yup.string().required(campoObrigatorio),
+          cep: yup.string().required(campoObrigatorio),
+          telefone: yup.string().required(campoObrigatorio),
+          nome: yup.string().required(campoObrigatorio),
+        })
+        .validate(obj);
+    } else if (obj.formaDeEntrega === "Retirada") {
+      return yup.object().validate(obj);
+    }
+  });
 
 const Order = () => {
   const { cart, calculateSubtotal } = useCarrinho();

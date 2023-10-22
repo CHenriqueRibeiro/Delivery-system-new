@@ -82,6 +82,9 @@ export default function Menu() {
     );
     setAdicional(objGenerico);
     setItemToAdd(null);
+    setrefrigeranteDoCombo("");
+  setOpicionais("");
+  setObservacao("");
   }, [activeTab]);
 
   const modalCheckout = () => {
@@ -161,44 +164,40 @@ export default function Menu() {
     setrefrigeranteDoCombo("");
     setOpicionais("");
     setObservacao("");
-
+  
     if (activeTab === "bebidas") {
-      const itemToAddWithQuantity = {
-        ...itemToAdd,
-        refrigeranteDoCombo,
-        observacao,
-        opicionais,
-        adicionais: [],
-        valorTotalAdicionais: 0,
-        valorTotalDoProduto: itemToAdd.valor,
-      };
-      addToCart(itemToAddWithQuantity);
-
-      setOpicionais("");
-      setObservacao("");
-    } else if (activeTab === "combos") {
-      if (adicional.length === 0) {
+      if (item) {
         const itemToAddWithQuantity = {
-          ...itemToAdd,
+          ...item,
           refrigeranteDoCombo,
           observacao,
           opicionais,
           adicionais: [],
           valorTotalAdicionais: 0,
-          valorTotalDoProduto: itemToAdd.valor,
+          valorTotalDoProduto: item.valor,
         };
-
+        addToCart(itemToAddWithQuantity);
+      }
+    } else if (activeTab === "combos") {
+      if (item && adicional.length === 0) {
+        const itemToAddWithQuantity = {
+          ...item,
+          refrigeranteDoCombo,
+          observacao,
+          opicionais,
+          adicionais: [],
+          valorTotalAdicionais: 0,
+          valorTotalDoProduto: item.valor,
+        };
         addToCart(itemToAddWithQuantity);
       } else {
         setIsModalOpen(true);
       }
-
-      setOpicionais("");
-      setObservacao("");
     } else {
       setIsSegundoModalOpen(true);
     }
   };
+  
 
   const handleSearchInputChange = (e) => {
     setSearchValue(e.target.value);
