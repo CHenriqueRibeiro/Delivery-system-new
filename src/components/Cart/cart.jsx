@@ -25,7 +25,7 @@ export default function Cart() {
   const [telefone, setTelefone] = useState("");
   const [usuarioValidado, setUsuarioValidado] = useState(false);
   const [loginMessage, setLoginMessage] = useState("");
-  const { cart, calculateSubtotal } = useCarrinho();
+  const { cart, calculateSubtotal, clearCart } = useCarrinho();
   const [showValidationModal, setShowValidationModal] = useState(false);
 
   const openListItems = () => {
@@ -102,28 +102,42 @@ export default function Cart() {
       <Box id="displayItems">
         <Box
           sx={{
+            backgroundColor: "#f76d26",
             overflow: "hidden",
             width: "100%",
-            height: "9%",
+            height: "4rem",
+            minHeight: "3rem",
             display: "flex",
             alignContent: "center",
+            alignItems: "center",
             justifyContent: "center",
             flexDirection: "row",
             zIndex: "3",
           }}
         >
-          <BottomNavigationAction
-            id="btnCartIconCarrinho"
-            label="Carrinho"
-            icon={<ShoppingCartOutlinedIcon id="cartIconCarrinho" />}
-            onClick={openListItems}
-          />
+          <Button
+            className="click box-shadow"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#fb6c1a",
+              border: "1px #fae9de solid",
+              borderRadius: "8px",
+              color: "#fae9de",
+              height: "75%",
+            }}
+            onClick={clearCart}
+          >
+            {" "}
+            Limpar carrinho
+          </Button>
         </Box>
         <ListCart />
         <Box
           sx={{
             display: "flex",
-            width: "80%",
+            width: "95%",
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
@@ -205,8 +219,17 @@ export default function Cart() {
                     >
                       Entre com seus dados
                     </Typography>
-                    <Typography id="transition-modal-description">
-                      <Box id="InputModal">
+                    <Typography
+                      sx={{
+                        height: " 100%",
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: " space-evenly",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box id="InputModal" sx={{}}>
                         <InputMask
                           placeholder="Nº telefone"
                           mask="99 9 99999999"
