@@ -192,6 +192,14 @@ export default function Cart() {
                 Ir para Pagamento
               </Button>
             </NavLink>
+          ) : cart.length === 0 ? (
+            <Button
+              className="btncheckout click"
+              variant="contained"
+              onClick={handleOpenModalCarrinho}
+            >
+              Finalizar Pagamento
+            </Button>
           ) : (
             <Button
               className="btncheckout click"
