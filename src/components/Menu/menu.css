@@ -1,12 +1,11 @@
 .tabContents {
-  background-color: #fb6c1a;
   height: 100%;
   min-height: 340px;
   width: 100%;
   min-width: 320px;
   overflow: auto;
   z-index: 2;
-  padding: 85px 13px 24px 13px;
+  padding: 60px 13px 24px 13px;
 }
 
 .inputbox {
@@ -50,9 +49,9 @@
 }
 #sectionsmenu .tabs {
   width: 25%;
-  color: #fafafa !important;
+  color: #29292c !important;
   border-radius: 25px !important;
-  background-color: #fb6c1a;
+  border: 1px #f76d26 solid;
   margin-right: 5px;
   margin-left: 5px;
   box-shadow: 5px 4px 5px 2px rgba(0, 0, 0, 0.2),
@@ -146,7 +145,7 @@
   width: 94%;
 }
 .priceAndIcons .iconAddProduct {
-  width: 50px;
+  width: 35%;
   height: 35px;
   border-radius: 10px;
   padding: 2px;
@@ -167,7 +166,7 @@
   background: #f9e9df;
   position: absolute;
   z-index: 3;
-  top: 32%;
+  top: 29%;
   border-radius: 15px;
 }
 .boxInputMenu input {
@@ -176,16 +175,16 @@
 }
 fieldset {
   border-radius: 15px !important;
-  box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 5px 9px 0px rgba(0, 0, 0, 0.75);
   border-color: #f46c26 !important;
 }
 .fundoInputFiltro {
   position: absolute;
   top: 28%;
-  background-color: #f46c26 !important;
+  background-color: #f9e9df !important;
   width: 100%;
   max-width: 600px;
-  height: 4.5rem;
+  height: 3rem;
   border-radius: 35px 35px 0 0;
   z-index: 2;
 }

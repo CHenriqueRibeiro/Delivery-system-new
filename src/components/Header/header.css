@@ -9,13 +9,12 @@
   min-width: 270px;
   max-width: 540px;
   min-height: 78px;
-  color: #fafafa !important;
   border-radius: 25px !important;
   margin-right: 5px;
   margin-left: 5px;
   box-shadow: 2px 0px 10px 1px rgba(0, 0, 0, 0.2),
     4px 6px 10px 2px rgba(0, 0, 0, 0.14), 6px 6px 8px 3px rgba(0, 0, 0, 0.12) !important;
-  background-color: #ff6b01 !important;
+  border: 1px #f76d26 solid;
   justify-content: flex-start;
   align-items: center;
 }
@@ -58,11 +57,13 @@
   left: 7%;
   width: 4rem !important;
   height: 4rem !important;
+  box-shadow: 2px 0px 10px 1px rgba(0, 0, 0, 0.2),
+    4px 6px 10px 2px rgba(0, 0, 0, 0.14), 6px 6px 8px 3px rgba(0, 0, 0, 0.12) !important;
 }
 .row {
   display: flex;
   flex-direction: column;
-  color: #fbe9dd !important;
+  color: #29292c !important;
 }
 .row p {
   display: flex;
