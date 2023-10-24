@@ -675,20 +675,28 @@ export default function Menu() {
                 }}
               >
                 <Button
+                className="click box-shadow"
                   sx={{
                     width: "30%",
                     backgroundColor: "#f76d26 ",
                     color: "#f7e9e1",
+                    "&:hover": {
+                      backgroundColor: "#f76d26",
+                    },
                   }}
                   onClick={() => setIsModalOpen(false)}
                 >
                   Voltar
                 </Button>
                 <Button
+                className="click box-shadow"
                   sx={{
                     width: "30%",
                     backgroundColor: "#f76d26",
                     color: "#f7e9e1",
+                    "&:hover": {
+                  backgroundColor: "#f76d26",
+                },
                   }}
                   onClick={() => {
                     schema
@@ -768,7 +776,6 @@ export default function Menu() {
                 flexDirection: "row",
                 alignItems: "center",
                 width: "100%",
-                
               }}
             >
               <Box
@@ -889,6 +896,7 @@ export default function Menu() {
             }}
           >
             <Button
+            className="click box-shadow"
               sx={{
                 height: "100%",
                 width: "30%",
@@ -897,12 +905,16 @@ export default function Menu() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                "&:hover": {
+                  backgroundColor: "#f76d26",
+                },
               }}
               onClick={() => setIsSegundoModalOpen(false)}
             >
               Voltar
             </Button>
             <Button
+             className="click box-shadow"
               sx={{
                 height: "100%",
                 width: "50%",
@@ -911,6 +923,9 @@ export default function Menu() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                "&:hover": {
+                  backgroundColor: "#f76d26",
+                },
               }}
               onClick={() => {
                 if (!opicionais) {

@@ -196,7 +196,7 @@ export default function ListCart() {
                           width: "100%",
                         }}
                       >
-                        {" "}
+                        
                         {item.refrigeranteDoCombo === "" || undefined ? (
                           <Box></Box>
                         ) : (
@@ -209,7 +209,7 @@ export default function ListCart() {
                           >
                             <em>
                               <b>Opicional do combo:</b>
-                            </em>{" "}
+                            </em>
                             {item.refrigeranteDoCombo}
                           </Typography>
                         )}
@@ -225,7 +225,7 @@ export default function ListCart() {
                           >
                             <em>
                               <b>Opicionais:</b>
-                            </em>{" "}
+                            </em>
                             {item.opicionais}
                           </Typography>
                         )}
@@ -241,7 +241,7 @@ export default function ListCart() {
                                 variant="body2"
                                 gutterBottom
                               >
-                                {" "}
+                                
                                 <em>
                                   <b>Adicionais:</b>
                                 </em>
@@ -275,7 +275,7 @@ export default function ListCart() {
                           >
                             <em>
                               <b>Valor Adicionais:</b>
-                            </em>{" "}
+                            </em>
                             {useFormat(item.valorTotalAdicionais)}
                           </Typography>
                         )}
@@ -291,7 +291,7 @@ export default function ListCart() {
                           >
                             <em>
                               <b>Observação:</b>
-                            </em>{" "}
+                            </em>
                             {item.observacao}
                           </Typography>
                         )}

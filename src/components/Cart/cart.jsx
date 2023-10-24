@@ -129,7 +129,6 @@ export default function Cart() {
             }}
             onClick={clearCart}
           >
-            {" "}
             Limpar carrinho
           </Button>
         </Box>
@@ -280,7 +279,7 @@ export default function Cart() {
                       </Button>
                       <Box>
                         <Typography>
-                          Não tem cadastro?{" "}
+                          Não tem cadastro?
                           <span>
                             <NavLink className="btncheckout " to="/cadastro">
                               Realizar Cadastro
@@ -326,7 +325,6 @@ export default function Cart() {
                   display: "flex",
                 }}
               >
-                {" "}
                 {cart.length === 0 ? (
                   <>
                     <ShoppingCartOutlinedIcon
@@ -432,13 +430,12 @@ export default function Cart() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 52 52"
                 >
-                  {" "}
                   <Box
                     className="checkmark__circle"
                     cx="26"
                     cy="26"
                     r="25"
-                  ></Box>{" "}
+                  ></Box>
                   <path
                     className="checkmark__check"
                     fill="none"

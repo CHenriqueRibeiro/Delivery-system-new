@@ -220,7 +220,7 @@ const Order = () => {
         <Box className="contentOrder">
           <Box className="cardPersonalData">
             <Box className="contentPersonalData">
-              {" "}
+              
               <Box className="backgroundTitle"></Box>
               <Typography variant="h6" className="editInformation">
                 Quem pediu
@@ -304,7 +304,7 @@ const Order = () => {
                       </span>
                       <span>
                         <Typography variant="h6">
-                          {" "}
+                         
                           Telefone: {telefoneLocalStorage}
                         </Typography>
                       </span>
@@ -396,7 +396,7 @@ const Order = () => {
                         </Box>
                       </>
                     }
-                  />{" "}
+                  />
                 </Box>
               </RadioGroup>
             </Box>
@@ -448,7 +448,7 @@ const Order = () => {
                         sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
-                        {" "}
+                       
                         <label>Rua / Av :</label>
                         <input
                           style={{
@@ -472,7 +472,7 @@ const Order = () => {
                         sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
-                        {" "}
+                        
                         <label>Casa/Apto :</label>
                         <input
                           style={{
@@ -496,7 +496,7 @@ const Order = () => {
                         sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
-                        {" "}
+                       
                         <label>Ponto de Ref :</label>
                         <input
                           style={{
@@ -521,7 +521,7 @@ const Order = () => {
                         sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
-                        {" "}
+                        
                         <label> Bairro:</label>
                         <input
                           style={{
@@ -546,7 +546,7 @@ const Order = () => {
                         sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
-                        {" "}
+                        
                         <label>Cidade:</label>
                         <input
                           style={{
@@ -571,7 +571,7 @@ const Order = () => {
                         sx={{ display: "flex", flexDirection: "row" }}
                         variant="h6"
                       >
-                        {" "}
+                        
                         <label>Estado:</label>
                         <input
                           style={{
@@ -599,7 +599,7 @@ const Order = () => {
                         variant="h6"
                       >
                         <span className="inputCheckout">
-                          {" "}
+                          
                           Cep: {cepLocalStorage}
                         </span>
                       </Typography>
@@ -608,7 +608,7 @@ const Order = () => {
                         variant="h6"
                       >
                         <span className="inputCheckout">
-                          {" "}
+                          
                           Rua / AV: {ruaLocalStorage}
                         </span>
                       </Typography>
@@ -617,7 +617,7 @@ const Order = () => {
                         variant="h6"
                       >
                         <span className="inputCheckout">
-                          {" "}
+                          
                           Casa/Apto:{casaLocalStorage}
                         </span>
                       </Typography>
@@ -679,7 +679,7 @@ const Order = () => {
                     variant="h6"
                   >
                     <span className="inputCheckout">
-                      {" "}
+                      
                       Rua / AV: Alameda luiza
                     </span>
                   </Typography>
@@ -732,7 +732,7 @@ const Order = () => {
                 width: "100%",
               }}
             >
-              {" "}
+              
               <Box className="backgroundTitleFormPayment"></Box>
               <Typography variant="h6" className="editInformation">
                 Forma de Pagamento
@@ -890,13 +890,13 @@ const Order = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 52 52"
                   >
-                    {" "}
+                    
                     <Box
                       className="checkmark__circle"
                       cx="26"
                       cy="26"
                       r="25"
-                    ></Box>{" "}
+                    ></Box>
                     <path
                       className="checkmark__check"
                       fill="none"
