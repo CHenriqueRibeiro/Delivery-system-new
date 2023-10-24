@@ -1,12 +1,4 @@
-.tabContents {
-  height: 100%;
-  min-height: 340px;
-  width: 100%;
-  min-width: 320px;
-  overflow: auto;
-  z-index: 2;
-  padding: 60px 13px 24px 13px;
-}
+
 
 .inputbox {
   height: 50px;
@@ -98,6 +90,7 @@
   display: flex;
   background-color: #fae9de !important;
   height: 11rem;
+  max-width: 580px;
   justify-content: flex-start;
   flex-direction: row;
   align-items: center;
@@ -160,15 +153,7 @@
 .priceAndIcons .iconFavoriteMenu:hover {
   color: #f76d26;
 }
-.boxInputMenu {
-  width: 94% !important;
-  max-width: 574px;
-  background: #f9e9df;
-  position: absolute;
-  z-index: 3;
-  top: 29%;
-  border-radius: 15px;
-}
+
 .boxInputMenu input {
   padding: 10.5px 14px !important;
   padding-left: 2.8rem !important;
@@ -178,16 +163,7 @@ fieldset {
   box-shadow: 4px 5px 9px 0px rgba(0, 0, 0, 0.75);
   border-color: #f46c26 !important;
 }
-.fundoInputFiltro {
-  position: absolute;
-  top: 28%;
-  background-color: #f9e9df !important;
-  width: 100%;
-  max-width: 600px;
-  height: 3rem;
-  border-radius: 35px 35px 0 0;
-  z-index: 2;
-}
+
 .iconSearchFilterMenu {
   position: absolute;
   left: 0.8rem !important;

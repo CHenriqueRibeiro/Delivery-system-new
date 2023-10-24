@@ -265,7 +265,7 @@ const Order = () => {
       message +=
         "Rua: Rua das maravilhas\nNúmero: 194\nPonto de referência: próximo ao campo da luz\nCidade: Caucaia\n\n";
       message +=
-        "Qualquer duvida eu acessor por essa localização pelo Google Maps:\nhttps://maps.app.goo.gl/6hMUzge2SxM1zGks9";
+        "Qualquer duvida eu acesso por essa localização pelo Google Maps:\nhttps://maps.app.goo.gl/6hMUzge2SxM1zGks9";
 
       console.log(message);
 

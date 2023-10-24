@@ -119,12 +119,19 @@ export function CarrinhoProvider({ children }) {
     return subtotal;
   };
 
+  const clearCart = () => {
+    setCart([]);
+
+    sessionStorage.removeItem("itensSelecionados");
+  };
+
   return (
     <CarrinhoContext.Provider
       value={{
         cart,
         setCart,
         addToCart,
+        clearCart,
         deleteFromCart,
         removeQuantityFromCart,
         calculateSubtotal,

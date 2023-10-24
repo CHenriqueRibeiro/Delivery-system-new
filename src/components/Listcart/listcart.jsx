@@ -10,8 +10,13 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { useEffect } from "react";
 
 export default function ListCart() {
-  const { cart, deleteFromCart, isSameCartItem,setCart,saveCartToSessionStorage } =
-    useCarrinho();
+  const {
+    cart,
+    deleteFromCart,
+    isSameCartItem,
+    setCart,
+    saveCartToSessionStorage,
+  } = useCarrinho();
   useEffect(() => {
     let itensSelecionados =
       JSON.parse(sessionStorage.getItem("itensSelecionados")) || [];
@@ -45,70 +50,76 @@ export default function ListCart() {
   const handleIncrement = (item) => {
     const date = new Date();
     const newQuantidade = item.quantidade + 1;
-  
+
     const newValorTotalDoProduto =
       (item.valor + item.valorTotalAdicionais) * newQuantidade;
-  
+
     const updatedItem = {
       ...item,
       key: date.getMilliseconds(),
       quantidade: newQuantidade,
       valorTotalDoProduto: newValorTotalDoProduto,
     };
-  
+
     const updatedCart = cart.map((cartItem) => {
       if (isSameCartItem(cartItem, updatedItem)) {
         return updatedItem;
       }
       return cartItem;
     });
-  
+
     setCart(updatedCart);
     saveCartToSessionStorage(updatedCart);
   };
-  
+
   const handleDecrement = (item) => {
     if (item.quantidade > 1) {
       const date = new Date();
       const newQuantidade = item.quantidade - 1;
-  
+
       const newValorTotalDoProduto =
         (item.valor + item.valorTotalAdicionais) * newQuantidade;
-  
+
       const updatedItem = {
         ...item,
         key: date.getMilliseconds(),
         quantidade: newQuantidade,
         valorTotalDoProduto: newValorTotalDoProduto,
       };
-  
+
       const updatedCart = cart.map((cartItem) => {
         if (isSameCartItem(cartItem, updatedItem)) {
           return updatedItem;
         }
         return cartItem;
       });
-  
+
       setCart(updatedCart);
       saveCartToSessionStorage(updatedCart);
     }
   };
-  
-  
-  
-  
+
   return (
     <>
       <Box
         sx={{
-          marginTop: "-1.8rem",
-          maxHeight: "60vh",
+          position: "relative",
+          top: "-13rem",
+          marginTop: "-1.2rem",
           width: "98%",
           overflow: "auto",
+          paddingTop: "14rem",
         }}
       >
         <Box>
-          <Box sx={{ height: "45rem" }}>
+          <Box
+            sx={{
+              height: "auto",
+              paddingLeft: "0.5rem",
+              paddingRight: "0.5rem",
+              paddingBottom: "2rem",
+            }}
+          >
             {cart.map((item) => (
               <Card
                 id="itemCard"
