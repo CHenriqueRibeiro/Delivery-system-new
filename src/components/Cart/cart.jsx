@@ -392,7 +392,7 @@ export default function Cart() {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      backgroundColor: "#fb6c1a",
+                      backgroundColor: "red",
                       width: "17px",
                       height: "17px",
                       color: "#fff",

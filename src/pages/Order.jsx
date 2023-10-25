@@ -78,12 +78,18 @@ const Order = () => {
       await SignupSchema.validate(data, { abortEarly: false });
 
       localStorage.getItem("formData", JSON.stringify(data));
-
-      setShowAlert(true); // Mostra o alerta
+      const totalValue = calculateSubtotal(cart);
+      setShowAlert(true);
+      if (totalValue === 0) {
+        alert(
+          "Carrinho vazio. Adicione itens ao carrinho antes de enviar o pedido."
+        );
+        return;
+      }
 
       setTimeout(() => {
-        setShowAlert(false); // Esconde o alerta após 2 segundos
-        createWhatsAppMessage(data); // Chama a função createWhatsAppMessage com os dados
+        setShowAlert(false);
+        createWhatsAppMessage(data);
       }, 2000);
     } catch (error) {
       console.error("Erro de validação:", error);
@@ -289,11 +295,11 @@ const Order = () => {
       } else {
         message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para: R$ ${changeAmount}\n\n`;
+        message += `Troco para:  ${changeAmount}\n\n`;
       }
 
       const encodedMessage = encodeURIComponent(message);
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585982168756&text=${encodedMessage}`;
+      const whatsappLink = `https://wa.me/5585982168756?text=${encodedMessage}`;
       window.open(whatsappLink);
     } else {
       let message = `Olá ${saudacao},\n\n`;
@@ -364,7 +370,7 @@ const Order = () => {
       } else {
         message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para: R$ ${changeAmount}\n\n`;
+        message += `Troco para:  ${changeAmount}\n\n`;
       }
 
       message += "---------------------------------------\n";
@@ -376,7 +382,7 @@ const Order = () => {
         "Qualquer duvida eu acesso por essa localização pelo Google Maps:\nhttps://maps.app.goo.gl/6hMUzge2SxM1zGks9";
 
       const encodedMessage = encodeURIComponent(message);
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585982168756&text=${encodedMessage}`;
+      const whatsappLink = `https://wa.me/5585982168756?text=${encodedMessage}`;
       window.open(whatsappLink);
     }
   };
@@ -412,7 +418,20 @@ const Order = () => {
                   borderRadius: "0 30px 0px 0px",
                 }}
               ></Box>
-              <Typography variant="h6" className="editInformation">
+              <Typography
+                variant="h6"
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingLeft: "5%",
+                  paddingRight: "5%",
+                  alignItems: "center",
+                  width: "100%",
+                  color: " #f9e9df",
+                  borderBottom: "1px #070707 solid",
+                  zIndex: "1",
+                }}
+              >
                 Quem pediu
                 <Button
                   onClick={changeCondition}
@@ -524,7 +543,20 @@ const Order = () => {
                   borderRadius: "0 30px 0px 0px",
                 }}
               ></Box>
-              <Typography variant="h6" className="editInformation">
+              <Typography
+                variant="h6"
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingLeft: "5%",
+                  paddingRight: "5%",
+                  alignItems: "center",
+                  width: "100%",
+                  color: " #f9e9df",
+                  borderBottom: "1px #070707 solid",
+                  zIndex: "1",
+                }}
+              >
                 Forma de Entrega
               </Typography>
 
@@ -868,8 +900,31 @@ const Order = () => {
                 width: "100%",
               }}
             >
-              <Box className="backgroundTitleFormPayment"></Box>
-              <Typography variant="h6" className="editInformation">
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "0.7rem",
+                  width: "15rem",
+                  height: "2.19rem",
+                  background: "rgba(0, 0, 0, 0.87)",
+                  borderRadius: "0 30px 0px 0px",
+                  zIndex: "1",
+                }}
+              ></Box>
+              <Typography
+                variant="h6"
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  paddingLeft: "5%",
+                  paddingRight: "5%",
+                  alignItems: "center",
+                  width: "100%",
+                  color: " #f9e9df",
+                  borderBottom: "1px #070707 solid",
+                  zIndex: "1",
+                }}
+              >
                 Forma de Pagamento
               </Typography>
               <Box className="FormOfPayment">
@@ -984,11 +1039,16 @@ const Order = () => {
             </Box>
           </Box>
 
-          <Box sx={{ mb: 2, width: "90%" }}>
+          <Box sx={{ width: "90%", height: "5rem", marginBottom: "0.8rem" }}>
             {showAlert && (
               <Alert
                 severity="success"
-                sx={{ width: "100%", alignItems: "center" }}
+                sx={{
+                  width: "100%",
+                  alignItems: "center",
+                  padding: 0,
+                  height: "100%",
+                }}
               >
                 <Typography>
                   Pedido realizado com sucesso. <br />

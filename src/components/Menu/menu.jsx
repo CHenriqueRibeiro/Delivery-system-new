@@ -776,7 +776,7 @@ export default function Menu() {
             sx={{
               fontSize: "18px",
               fontWeight: "bold",
-              paddingLeft: "0.3rem",
+              paddingLeft: "0.8rem",
             }}
           >
             Adicionar ingredientes:
@@ -835,7 +835,7 @@ export default function Menu() {
             sx={{
               fontSize: "18px",
               fontWeight: "bold",
-              paddingLeft: "0.3rem",
+              paddingLeft: "0.8rem",
             }}
           >
             Selecionar Opcionais:

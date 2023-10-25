@@ -86,15 +86,7 @@
   border-radius: 0 30px 0px 0px;
   z-index: 2;
 }
-.backgroundTitleFormPayment {
-  position: absolute;
-  top: 0.7rem;
-  width: 15rem;
-  height: 2.4rem;
-  background: rgba(0, 0, 0, 0.87);
-  border-radius: 0 30px 0px 0px;
-  z-index: 1;
-}
+
 .cardPersonalData {
   position: relative;
   width: 100%;

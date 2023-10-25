@@ -70,11 +70,9 @@ const Order = () => {
   const [isChangeNeeded, setIsChangeNeeded] = useState(false);
   const [changeAmount, setChangeAmount] = useState("");
   const handleConfirmChangeAmount = () => {
-    if (changeAmount) {
-      const confirmedChangeAmount = changeAmount;
-      setIsModalOpen(false);
-      console.log(confirmedChangeAmount);
-    }
+    const confirmedChangeAmount = changeAmount;
+    setIsModalOpen(false);
+    console.log(confirmedChangeAmount);
   };
 
   const {
@@ -202,13 +200,13 @@ const Order = () => {
       } else {
         message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para: R$ ${changeAmount}\n\n`;
+        message += `Troco para: ${changeAmount}\n\n`;
       }
 
       console.log(message);
 
       const encodedMessage = encodeURIComponent(message);
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585982168756&text=${encodedMessage}`;
+      const whatsappLink = `https://wa.me/5585982168756?text=${encodedMessage}`;
       window.open(whatsappLink);
     } else {
       let message = `Olá ${saudacao},\n\n`;
@@ -279,7 +277,7 @@ const Order = () => {
       } else {
         message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para: R$ ${changeAmount}\n\n`;
+        message += `Troco para: ${changeAmount}\n\n`;
       }
 
       message += "---------------------------------------\n";
@@ -293,7 +291,7 @@ const Order = () => {
       console.log(message);
 
       const encodedMessage = encodeURIComponent(message);
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585982168756&text=${encodedMessage}`;
+      const whatsappLink = `https://wa.me/5585982168756?text=${encodedMessage}`;
       window.open(whatsappLink);
     }
   };
@@ -608,7 +606,7 @@ const Order = () => {
                   position: " absolute",
                   top: "0",
                   width: "14rem",
-                  height: "2.7rem",
+                  height: "2.28rem",
                   background: "rgba(0, 0, 0, 0.87)",
                   borderRadius: " 0 30px 0px 0px",
                 }}
@@ -1095,23 +1093,23 @@ const Order = () => {
                 </>
               ) : (
                 <>
-                  <button
-                    className="click box-shadow"
-                    style={{
-                      textTransform: "uppercase",
-                      backgroundColor: "#f46c26",
-                      color: "white",
-                      border: "1px solid #f46c26",
-                      height: "2rem",
-                      borderRadius: "5px",
-                      fontFamily: "Roboto",
-                      fontSize: "16px",
-                      width: "12rem",
-                    }}
-                    onClick={() => handleConfirmChangeAmount()}
-                  >
-                    Não preciso de troco
-                  </button>
+                   <button
+                  className="click box-shadow"
+                  style={{
+                    textTransform: "uppercase",
+                    backgroundColor: "#f46c26",
+                    color: "white",
+                    border: "1px solid #f46c26",
+                    height: "2rem",
+                    borderRadius: "5px",
+                    fontFamily: "Roboto",
+                    fontSize: "16px",
+                    width: "12rem",
+                  }}
+                  onClick={() => handleConfirmChangeAmount()}
+                >
+                  Não preciso de troco
+                </button>
                   <button
                     className="click box-shadow"
                     style={{
@@ -1134,11 +1132,16 @@ const Order = () => {
             </Box>
           </Modal>
 
-          <Box sx={{ mb: 2, width: "90%" }}>
+          <Box sx={{ width: "90%", height: "5rem", marginBottom: "0.8rem" }}>
             {showAlert && (
               <Alert
                 severity="success"
-                sx={{ width: "100%", alignItems: "center" }}
+                sx={{
+                  width: "100%",
+                  alignItems: "center",
+                  padding: 0,
+                  height: "100%",
+                }}
               >
                 <Typography>
                   Pedido realizado com sucesso. <br />
