@@ -272,27 +272,34 @@ export default function Cart() {
                       <Button
                         variant="outlined"
                         className="btnIrParaPagamento click"
-                        sx={{ height: "2rem" }}
+                        sx={{ height: "2rem", width: "60%" }}
                         onClick={() => consultarDadosLocalStorage(true)}
                       >
                         Entrar
                       </Button>
-                      <Box>
-                        <Typography>
+                      <Box sx={{width:"100%"}}>
+                        <Typography sx={{display:"flex", textAlign:"center", justifyContent:"center", flexWrap:"wrap",}}>
                           Não tem cadastro?
                           <span>
-                            <NavLink className="btncheckout " to="/cadastro">
+                            <NavLink
+                              className="btncheckout "
+                              to="/cadastro"
+                              style={{ textDecoration: "none" }}
+                            >
                               Realizar Cadastro
                             </NavLink>
                           </span>
                         </Typography>
                       </Box>
                       ou
-                      <NavLink to="/pedidosemcadastro">
+                      <NavLink
+                        to="/pedidosemcadastro"
+                        style={{ textDecoration: "none" }}
+                      >
                         <Button
                           variant="outlined"
                           className="btnIrParaPagamento click"
-                          sx={{ height: "2rem" }}
+                         sx={{ height: "2rem", width: "100%" }}
                         >
                           Continuar sem cadastro
                         </Button>
