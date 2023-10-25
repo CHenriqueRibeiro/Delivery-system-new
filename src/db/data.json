@@ -34,7 +34,7 @@
     },
     {
       "id": 5,
-      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1610659077411blob",
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1643916347513blob.webp",
       "sabor": "Pizza Carne do Sol + Refrigerante",
       "valor": 29.9,
       "ingredientes": "Carne do Sol, Queijo, Mussarela, Orégano",
@@ -77,7 +77,7 @@
     },
     {
       "id": 10,
-      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1610659077411blob",
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1643916347513blob.webp",
       "sabor": "Carne de Sol",
       "valor": 24.9,
       "ingredientes": "Carne do Sol, Queijo, Mussarela, Orégano",
@@ -147,7 +147,7 @@
   "paoArabe": [
     {
       "id": 18,
-      "imagem": "https://www.fbgcdn.com/pictures/790d15db-dd45-459e-9435-40af70d2a0c8.jpg",
+      "imagem": "https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60994a_d3.jpg",
       "sabor": "Pão Árabe Frango",
       "valor": 14.9,
       "ingredientes": "Frango Especial, cheddar, molho",
@@ -155,7 +155,7 @@
     },
     {
       "id": 19,
-      "imagem": "https://www.fbgcdn.com/pictures/81072610-a150-4f05-8420-1545af60904a_d3.jpg",
+      "imagem": "https://www.fbgcdn.com/pictures/799d15db-dd45-459e-9435-40af70d2a0c8.jpg",
       "sabor": "Pão Árabe Super Frango",
       "valor": 19.9,
       "ingredientes": "Frango Especial, coalho, cheddar, molho",
@@ -171,7 +171,7 @@
     },
     {
       "id": 21,
-      "imagem": "https://www.fbgcdn.com/pictures/f83fb90a-64aa-4848-b746-b6dbb9a08030_d3.jpg",
+      "imagem": "https://www.fbgcdn.com/pictures/f83fb99a-64aa-4848-b746-b6dbb9a08030_d3.jpg",
       "sabor": "Pão Árabe Monstrão",
       "valor": 29.9,
       "ingredientes": "Frango Especial, 2x carne 150 gr, coalho, cheddar, molho",
@@ -206,7 +206,7 @@
     },
     {
       "id": 25,
-      "imagem": "https://client-assets.anota.ai/produtos/1688936873587blob",
+      "imagem": "https://s3-us-west-2.amazonaws.com/anotaai/produtos/1660517528944blob.webp",
       "sabor": "Coca-cola 1L",
       "valor": 8.9,
       "ingredientes": "Bebida Gelada",
@@ -286,24 +286,24 @@
   },
   "opcionais": {
     "combos": [
-      { "opcao": "Sem Borda", "valor": 0 },
-      { "opcao": "Borda com Chocolate", "valor": 2.0 },
-      { "opcao": "Borda com Catupiry", "valor": 3.0 }
+      { "opcao": "Sem Borda", "valorAdc": 0 },
+      { "opcao": "Borda com Chocolate", "valorAdc": 2 },
+      { "opcao": "Borda com Catupiry", "valorAdc": 3 }
     ],
     "pizza": [
-      { "opcao": "Sem Borda", "valor": 0 },
-      { "opcao": "Borda com Chocolate", "valor": 2.0 },
-      { "opcao": "Borda com Catupiry", "valor": 3.0 }
+      { "opcao": "Sem Borda", "valorAdc": 0 },
+      { "opcao": "Borda com Chocolate", "valorAdc": 2 },
+      { "opcao": "Borda com Catupiry", "valorAdc": 3 }
     ],
     "hamburguer": [
-      { "opcao": "Pão Brioche", "valor": 0 },
-      { "opcao": "Pão Batata", "valor": 3.9 },
-      { "opcao": "Pão Australiano", "valor": 3.9 }
+      { "opcao": "Pão Brioche", "valorAdc": 0 },
+      { "opcao": "Pão Batata", "valorAdc": 3.9 },
+      { "opcao": "Pão Australiano", "valorAdc": 3.9 }
     ],
     "paoArabe": [
-      { "opcao": "Pão Arabe", "valor": 0 },
-      { "opcao": "Rap10 Intregral", "valor": 1.9 },
-      { "opcao": "Rap10 Multigrãos", "valor": 1.9 }
+      { "opcao": "Pão Arabe", "valorAdc": 0 },
+      { "opcao": "Rap10 Intregral", "valorAdc": 1.9 },
+      { "opcao": "Rap10 Multigrãos", "valorAdc": 1.9 }
     ],
     "bebidas": [
       

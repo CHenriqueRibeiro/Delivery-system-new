@@ -25,7 +25,7 @@ export default function ListCart() {
       const primeiroItemNoCarrinho = cart[0];
       const novoValorTotalDoProduto =
         (primeiroItemNoCarrinho.valor +
-          primeiroItemNoCarrinho.valorTotalAdicionais) *
+          primeiroItemNoCarrinho.valorTotalAdicionais + primeiroItemNoCarrinho.valorSelecionado) *
         primeiroItemNoCarrinho.quantidade;
 
       const itemAtualizado = itensSelecionados.find(
@@ -196,39 +196,72 @@ export default function ListCart() {
                           width: "100%",
                         }}
                       >
-                        {" "}
                         {item.refrigeranteDoCombo === "" || undefined ? (
                           <Box></Box>
                         ) : (
                           <Typography
                             sx={{
                               width: "100%",
+                              display: "flex",
+                              flexDirection: "row",
                             }}
                             variant="body2"
                             gutterBottom
                           >
                             <em>
-                              <b>Opicional do combo:</b>
-                            </em>{" "}
-                            {item.refrigeranteDoCombo}
+                              <b>Opcional do combo:</b>
+                            </em>
+                            <p style={{ paddingLeft: "5px" }}>
+                              {item.refrigeranteDoCombo}
+                            </p>
                           </Typography>
                         )}
                         {item.opicionais === "" || undefined ? (
                           <Box></Box>
                         ) : (
-                          <Typography
-                            sx={{
-                              width: "100%",
-                            }}
-                            variant="body2"
-                            gutterBottom
-                          >
-                            <em>
-                              <b>Opicionais:</b>
-                            </em>{" "}
-                            {item.opicionais}
-                          </Typography>
+                          <>
+                            <Typography
+                              sx={{
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "row",
+                              }}
+                              variant="body2"
+                              gutterBottom
+                            >
+                              <em>
+                                <b>Opcional:</b>
+                              </em>
+                              <p style={{ paddingLeft: "5px" }}>
+                                {item.opicionais}
+                              </p>
+                            </Typography>
+                            <Typography
+                              sx={{
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "row",
+                              }}
+                              variant="body2"
+                              gutterBottom
+                            >
+                              <em>
+                                <b>Valor do opcional: </b>
+                              </em>
+                              {item.valorSelecionado === 0 || undefined ? (
+                                <p style={{ paddingLeft: "5px" }}>Grátis</p>
+                              ) : (
+                                <p style={{ paddingLeft: "5px" }}>
+                                  {item.valorSelecionado.toLocaleString(
+                                    "pt-BR",
+                                    { style: "currency", currency: "BRL" }
+                                  )}
+                                </p>
+                              )}
+                            </Typography>
+                          </>
                         )}
+
                         {item.adicionais && item.adicionais.length > 0 && (
                           <Box>
                             {item.adicionais === "" || undefined ? (
@@ -241,7 +274,6 @@ export default function ListCart() {
                                 variant="body2"
                                 gutterBottom
                               >
-                                {" "}
                                 <em>
                                   <b>Adicionais:</b>
                                 </em>
@@ -252,6 +284,8 @@ export default function ListCart() {
                               <Typography
                                 sx={{
                                   width: "100%",
+                                  display: "flex",
+                                  flexDirection: "row",
                                 }}
                                 variant="body2"
                                 gutterBottom
@@ -269,14 +303,18 @@ export default function ListCart() {
                           <Typography
                             sx={{
                               width: "100%",
+                              display: "flex",
+                              flexDirection: "row",
                             }}
                             variant="body2"
                             gutterBottom
                           >
                             <em>
                               <b>Valor Adicionais:</b>
-                            </em>{" "}
-                            {useFormat(item.valorTotalAdicionais)}
+                            </em>
+                            <p style={{ paddingLeft: "5px" }}>
+                              {useFormat(item.valorTotalAdicionais)}
+                            </p>
                           </Typography>
                         )}
                         {item.observacao === "" || undefined ? (
@@ -285,14 +323,18 @@ export default function ListCart() {
                           <Typography
                             sx={{
                               width: "100%",
+                              display: "flex",
+                              flexDirection: "row",
                             }}
                             variant="body2"
                             gutterBottom
                           >
                             <em>
                               <b>Observação:</b>
-                            </em>{" "}
-                            {item.observacao}
+                            </em>
+                            <p style={{ paddingLeft: "5px" }}>
+                              {item.observacao}
+                            </p>
                           </Typography>
                         )}
                       </Box>
@@ -309,7 +351,7 @@ export default function ListCart() {
                     >
                       <Typography variant="h6">
                         {useFormat(
-                          (item.valor + item.valorTotalAdicionais) *
+                          (item.valor + item.valorTotalAdicionais + item.valorSelecionado) *
                             item.quantidade
                         )}
                       </Typography>

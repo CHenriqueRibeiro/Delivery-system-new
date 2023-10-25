@@ -165,8 +165,26 @@ const RegisterScreen = () => {
               minHeight: "32rem",
               justifyContent: "space-between",
               borderRadius: "25px 25px 0 0",
+              zIndex: "2",
             }}
           >
+            <Box
+              sx={{
+                backgroundColor: "#f9e9df ",
+                display: "flex",
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                flexDirection: "column",
+                height: "10%",
+                width: "100%",
+                position: "absolute",
+                left: "0",
+                bottom: "83%",
+                justifyContent: "space-between",
+                borderRadius: "25px 25px 0 0",
+                zIndex: "-1",
+              }}
+            ></Box>
             <Typography variant="h6">Endereço</Typography>
             <Box id="inputAndBtnSerach">
               <Box
@@ -399,13 +417,12 @@ const RegisterScreen = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 52 52"
                       >
-                        {" "}
                         <Box
                           className="checkmark__circle"
                           cx="26"
                           cy="26"
                           r="25"
-                        ></Box>{" "}
+                        ></Box>
                         <path
                           className="checkmark__check"
                           fill="none"

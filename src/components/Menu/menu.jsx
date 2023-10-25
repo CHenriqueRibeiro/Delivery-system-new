@@ -69,17 +69,22 @@ export default function Menu() {
   const [isSegundoModalOpen, setIsSegundoModalOpen] = useState(false);
   const [observacao, setObservacao] = useState("");
   const [activeTab, setActiveTab] = useState("combos");
-  const [opicionais, setOpicionais] = useState("");
+  const [opicionais, setOpicionais] = useState([]);
   const [adicional, setAdicional] = useState([]);
   const [refrigeranteError, setRefrigeranteError] = useState("");
 
   const bordaOptions = Data.opcionais[activeTab];
 
+  const valorSelecionado =
+    opicionais &&
+    bordaOptions.find((option) => option.opcao === opicionais)?.valorAdc;
+ 
   useEffect(() => {
     let objGenerico = [];
     Data.adicionais[activeTab].forEach((adicional) =>
       objGenerico.push(adicional)
     );
+
     setAdicional(objGenerico);
     setItemToAdd(null);
     setrefrigeranteDoCombo("");
@@ -100,13 +105,19 @@ export default function Menu() {
             .map((item) => item.total)
             .reduce((accumulator, currentValue) => accumulator + currentValue)
         : 0;
-    const valorTotalDoProduto = valorTotalAdicionais + itemToAdd.valor;
+    const valorTotalDoProduto =
+      valorTotalAdicionais + itemToAdd.valor + valorSelecionado;
 
+    console.log("valor do produto :", itemToAdd.valor);
+    console.log("valor do opcional", valorSelecionado);
+    console.log("valor do adicional :", valorTotalAdicionais);
+    console.log("valor total :", valorTotalDoProduto);
     const itemToAddWithQuantity = {
       ...itemToAdd,
       refrigeranteDoCombo,
       observacao,
       opicionais,
+      valorSelecionado,
       adicionais: totais,
       valorTotalAdicionais,
       valorTotalDoProduto,
@@ -172,6 +183,7 @@ export default function Menu() {
           refrigeranteDoCombo,
           observacao,
           opicionais,
+          valorSelecionado,
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
@@ -185,6 +197,7 @@ export default function Menu() {
           refrigeranteDoCombo,
           observacao,
           opicionais,
+          valorSelecionado,
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
@@ -675,20 +688,28 @@ export default function Menu() {
                 }}
               >
                 <Button
+                  className="click box-shadow"
                   sx={{
                     width: "30%",
                     backgroundColor: "#f76d26 ",
                     color: "#f7e9e1",
+                    "&:hover": {
+                      backgroundColor: "#f76d26",
+                    },
                   }}
                   onClick={() => setIsModalOpen(false)}
                 >
                   Voltar
                 </Button>
                 <Button
+                  className="click box-shadow"
                   sx={{
                     width: "30%",
                     backgroundColor: "#f76d26",
                     color: "#f7e9e1",
+                    "&:hover": {
+                      backgroundColor: "#f76d26",
+                    },
                   }}
                   onClick={() => {
                     schema
@@ -768,7 +789,6 @@ export default function Menu() {
                 flexDirection: "row",
                 alignItems: "center",
                 width: "100%",
-                
               }}
             >
               <Box
@@ -818,7 +838,7 @@ export default function Menu() {
               paddingLeft: "0.3rem",
             }}
           >
-            Selecionar Opicionais:
+            Selecionar Opcionais:
           </Typography>
 
           <RadioGroup
@@ -854,11 +874,12 @@ export default function Menu() {
                   label={bordaOption.opcao}
                 />
                 <Typography sx={{ paddingRight: "5%" }}>
-                  {useFormat(bordaOption.valor)}
+                  {useFormat(bordaOption.valorAdc)}
                 </Typography>
               </Box>
             ))}
           </RadioGroup>
+
           <Box style={{ color: "red" }}>{refrigeranteError}</Box>
           <TextField
             sx={{
@@ -889,6 +910,7 @@ export default function Menu() {
             }}
           >
             <Button
+              className="click box-shadow"
               sx={{
                 height: "100%",
                 width: "30%",
@@ -897,12 +919,16 @@ export default function Menu() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                "&:hover": {
+                  backgroundColor: "#f76d26",
+                },
               }}
               onClick={() => setIsSegundoModalOpen(false)}
             >
               Voltar
             </Button>
             <Button
+              className="click box-shadow"
               sx={{
                 height: "100%",
                 width: "50%",
@@ -911,10 +937,13 @@ export default function Menu() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                "&:hover": {
+                  backgroundColor: "#f76d26",
+                },
               }}
               onClick={() => {
                 if (!opicionais) {
-                  setRefrigeranteError("Escolha um opicional");
+                  setRefrigeranteError("Escolha um opcional");
                 } else {
                   modalCheckout();
                   setRefrigeranteError("");

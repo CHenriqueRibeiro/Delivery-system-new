@@ -111,7 +111,7 @@ export function CarrinhoProvider({ children }) {
       }
 
       if (qtd > 0) {
-        const valorTotalItem = (item.valor + valorAdicionais) * qtd;
+        const valorTotalItem = (item.valor + valorAdicionais +item.valorSelecionado ) * qtd;
         subtotal += valorTotalItem;
       }
     });

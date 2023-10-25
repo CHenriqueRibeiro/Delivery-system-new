@@ -70,9 +70,11 @@ const Order = () => {
   const [isChangeNeeded, setIsChangeNeeded] = useState(false);
   const [changeAmount, setChangeAmount] = useState("");
   const handleConfirmChangeAmount = () => {
-    const confirmedChangeAmount = changeAmount;
-    setIsModalOpen(false);
-    console.log(confirmedChangeAmount);
+    if (changeAmount) {
+      const confirmedChangeAmount = changeAmount;
+      setIsModalOpen(false);
+      console.log(confirmedChangeAmount);
+    }
   };
 
   const {
@@ -127,7 +129,7 @@ const Order = () => {
 
       sessionStorageData.forEach((item, index) => {
         message += `Item: ${item.sabor}\n`;
-        message += `Valor: R$ ${item.valor}0\n`;
+        message += `Valor: R$ ${item.valor}\n`;
         message += `Quantidade: ${item.quantidade}\n`;
 
         if (item.refrigeranteDoCombo) {
@@ -136,6 +138,17 @@ const Order = () => {
         if (item.opicionais) {
           message += `Opcionais: ${item.opicionais}\n`;
         }
+        if (
+          item.valorSelecionado === undefined ||
+          item.valorSelecionado === "" ||
+          item.valorSelecionado === 0
+        ) {
+          message += `Valor do opcional: Grátis\n`;
+          console.log(item.valorSelecionado);
+        } else {
+          message += `Valor do opcional: R$ ${item.valorSelecionado}\n`;
+        }
+
         if (item.adicionais && item.adicionais.length > 0) {
           message += "Adicionais:\n";
 
@@ -189,7 +202,7 @@ const Order = () => {
       } else {
         message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para: R$ ${changeAmount},00\n\n`;
+        message += `Troco para: R$ ${changeAmount}\n\n`;
       }
 
       console.log(message);
@@ -208,7 +221,7 @@ const Order = () => {
 
       sessionStorageData.forEach((item, index) => {
         message += `Item: ${item.sabor}\n`;
-        message += `Valor: R$ ${item.valor}0\n`;
+        message += `Valor: R$ ${item.valor}\n`;
         message += `Quantidade: ${item.quantidade}\n`;
 
         if (item.refrigeranteDoCombo) {
@@ -216,6 +229,16 @@ const Order = () => {
         }
         if (item.opicionais) {
           message += `Opcionais: ${item.opicionais}\n`;
+        }
+        if (
+          item.valorSelecionado === undefined ||
+          item.valorSelecionado === "" ||
+          item.valorSelecionado === 0
+        ) {
+          message += `Valor do opcional: Grátis\n`;
+          console.log(item.valorSelecionado);
+        } else {
+          message += `Valor do opcional: R$ ${item.valorSelecionado}\n`;
         }
         if (item.adicionais && item.adicionais.length > 0) {
           message += "Adicionais:\n";
@@ -256,7 +279,7 @@ const Order = () => {
       } else {
         message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para: R$ ${changeAmount},00\n\n`;
+        message += `Troco para: R$ ${changeAmount}\n\n`;
       }
 
       message += "---------------------------------------\n";
@@ -1012,8 +1035,10 @@ const Order = () => {
                   >
                     Troco para
                   </Typography>
-                  <input
+                  <InputMask
                     className="box-shadow"
+                    mask="R$ 999"
+                    maskChar={null}
                     style={{
                       border: "1px #f46c26 solid",
                       height: "2rem",
@@ -1109,9 +1134,12 @@ const Order = () => {
             </Box>
           </Modal>
 
-          <Box sx={{ mb: 2 }}>
+          <Box sx={{ mb: 2, width: "90%" }}>
             {showAlert && (
-              <Alert severity="success">
+              <Alert
+                severity="success"
+                sx={{ width: "100%", alignItems: "center" }}
+              >
                 <Typography>
                   Pedido realizado com sucesso. <br />
                   Muito obrigado!
@@ -1132,9 +1160,6 @@ const Order = () => {
                 color: "#f9e9df",
               }}
             >
-              {/*  <Typography style={{ fontSize: "12px", height: "auto" }}>
-                + Entrega: R$ 3,00
-              </Typography>*/}
               <Typography variant="h6">
                 Total:{useFormat(calculateSubtotal(cart))}
               </Typography>
