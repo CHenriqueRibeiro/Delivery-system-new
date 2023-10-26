@@ -452,7 +452,7 @@ export default function Cart() {
                 <Typography variant="h6">
                   Login Realizado com sucesso!
                 </Typography>
-                <NavLink to="/pedido">
+                <NavLink to="/pedido" style={{textDecoration:"none"}}>
                   <Button
                     sx={{
                       marginTop: "1.2rem",

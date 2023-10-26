@@ -1,5 +1,4 @@
 import {
-  Alert,
   Box,
   FormControlLabel,
   Modal,
@@ -58,7 +57,7 @@ const Order = () => {
   const { cart, calculateSubtotal } = useCarrinho();
   const [isChangeNeeded, setIsChangeNeeded] = useState(false);
   const [changeAmount, setChangeAmount] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
+
   const handleConfirmChangeAmount = () => {
     const confirmedChangeAmount = changeAmount;
     setIsModalOpen(false);
@@ -79,18 +78,13 @@ const Order = () => {
 
       localStorage.getItem("formData", JSON.stringify(data));
       const totalValue = calculateSubtotal(cart);
-      setShowAlert(true);
+
       if (totalValue === 0) {
         alert(
           "Carrinho vazio. Adicione itens ao carrinho antes de enviar o pedido."
         );
         return;
-      }
-
-      setTimeout(() => {
-        setShowAlert(false);
-        createWhatsAppMessage(data);
-      }, 2000);
+      }else  createWhatsAppMessage();
     } catch (error) {
       console.error("Erro de validação:", error);
     }
@@ -413,7 +407,7 @@ const Order = () => {
                   position: "absolute",
                   top: "0",
                   width: "13rem",
-                  height: "2.2rem",
+                  height: "2rem",
                   background: "rgba(0, 0, 0, 0.87)",
                   borderRadius: "0 30px 0px 0px",
                 }}
@@ -895,7 +889,7 @@ const Order = () => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-evenly",
+                justifyContent: "space-between",
                 height: "100%",
                 width: "100%",
               }}
@@ -903,9 +897,9 @@ const Order = () => {
               <Box
                 sx={{
                   position: "absolute",
-                  top: "0.7rem",
+                  top: "0rem",
                   width: "15rem",
-                  height: "2.19rem",
+                  minHeight: "2rem",
                   background: "rgba(0, 0, 0, 0.87)",
                   borderRadius: "0 30px 0px 0px",
                   zIndex: "1",
@@ -1027,7 +1021,7 @@ const Order = () => {
                         </Box>
                       </>
                     }
-                    onChange={() => setIsModalOpen(true)} // Abre o modal quando o rádio é selecionado
+                    onChange={() => setIsModalOpen(true)}
                   />
                 </RadioGroup>
                 {errors.formaDePagamento && (
@@ -1037,25 +1031,6 @@ const Order = () => {
                 )}
               </Box>
             </Box>
-          </Box>
-
-          <Box sx={{ width: "90%", height: "5rem", marginBottom: "0.8rem" }}>
-            {showAlert && (
-              <Alert
-                severity="success"
-                sx={{
-                  width: "100%",
-                  alignItems: "center",
-                  padding: 0,
-                  height: "100%",
-                }}
-              >
-                <Typography>
-                  Pedido realizado com sucesso. <br />
-                  Muito obrigado!
-                </Typography>
-              </Alert>
-            )}
           </Box>
 
           <Box className="totalPurchase">
@@ -1075,7 +1050,15 @@ const Order = () => {
                   Total:{useFormat(calculateSubtotal(cart))}
                 </Typography>
               </Box>
-              <input className="btnSendRequest click" type="submit" />
+              <input
+              className="btnSendRequest click"
+              type="submit"
+              value="Enviar"
+              onClick={() => {
+                
+                onSubmit(); 
+              }}
+            />
             </Box>
           </Box>
         </Box>

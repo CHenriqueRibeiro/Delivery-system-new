@@ -99,7 +99,7 @@
   height: 100%;
   align-content: stretch;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .nameAndTelephone {
