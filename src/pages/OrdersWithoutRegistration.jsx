@@ -597,7 +597,7 @@ const Order = () => {
                   display: "flex",
                   alignItems: "center",
                   position: " absolute",
-                  top: "0",
+                  top: "0.6rem",
                   width: "14rem",
                   height: "2.28rem",
                   background: "rgba(0, 0, 0, 0.87)",
