@@ -78,7 +78,7 @@ export default function Menu() {
   const valorSelecionado =
     opicionais &&
     bordaOptions.find((option) => option.opcao === opicionais)?.valorAdc;
- 
+
   useEffect(() => {
     let objGenerico = [];
     Data.adicionais[activeTab].forEach((adicional) =>
@@ -108,10 +108,7 @@ export default function Menu() {
     const valorTotalDoProduto =
       valorTotalAdicionais + itemToAdd.valor + valorSelecionado;
 
-    console.log("valor do produto :", itemToAdd.valor);
-    console.log("valor do opcional", valorSelecionado);
-    console.log("valor do adicional :", valorTotalAdicionais);
-    console.log("valor total :", valorTotalDoProduto);
+
     const itemToAddWithQuantity = {
       ...itemToAdd,
       refrigeranteDoCombo,

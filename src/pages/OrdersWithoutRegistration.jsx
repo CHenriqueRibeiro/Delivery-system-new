@@ -1,4 +1,4 @@
-import { Alert, Box, Modal, Typography, capitalize } from "@mui/material";
+import { Box, Modal, Typography, capitalize } from "@mui/material";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
@@ -65,7 +65,7 @@ const schema = yup
 
 const Order = () => {
   const { cart, calculateSubtotal } = useCarrinho();
-  const [showAlert, setShowAlert] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChangeNeeded, setIsChangeNeeded] = useState(false);
   const [changeAmount, setChangeAmount] = useState("");
@@ -327,14 +327,7 @@ const Order = () => {
       alert(
         "Carrinho vazio. Adicione itens ao carrinho antes de enviar o pedido."
       );
-      return;
-    }
-
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-      createWhatsAppMessage(data);
-    }, 2000);
+    }else createWhatsAppMessage(data);
   };
 
   return (
@@ -604,7 +597,7 @@ const Order = () => {
                   display: "flex",
                   alignItems: "center",
                   position: " absolute",
-                  top: "0",
+                  top: "0.6rem",
                   width: "14rem",
                   height: "2.28rem",
                   background: "rgba(0, 0, 0, 0.87)",
@@ -1093,23 +1086,23 @@ const Order = () => {
                 </>
               ) : (
                 <>
-                   <button
-                  className="click box-shadow"
-                  style={{
-                    textTransform: "uppercase",
-                    backgroundColor: "#f46c26",
-                    color: "white",
-                    border: "1px solid #f46c26",
-                    height: "2rem",
-                    borderRadius: "5px",
-                    fontFamily: "Roboto",
-                    fontSize: "16px",
-                    width: "12rem",
-                  }}
-                  onClick={() => handleConfirmChangeAmount()}
-                >
-                  Não preciso de troco
-                </button>
+                  <button
+                    className="click box-shadow"
+                    style={{
+                      textTransform: "uppercase",
+                      backgroundColor: "#f46c26",
+                      color: "white",
+                      border: "1px solid #f46c26",
+                      height: "2rem",
+                      borderRadius: "5px",
+                      fontFamily: "Roboto",
+                      fontSize: "16px",
+                      width: "12rem",
+                    }}
+                    onClick={() => handleConfirmChangeAmount()}
+                  >
+                    Não preciso de troco
+                  </button>
                   <button
                     className="click box-shadow"
                     style={{
@@ -1132,24 +1125,6 @@ const Order = () => {
             </Box>
           </Modal>
 
-          <Box sx={{ width: "90%", height: "5rem", marginBottom: "0.8rem" }}>
-            {showAlert && (
-              <Alert
-                severity="success"
-                sx={{
-                  width: "100%",
-                  alignItems: "center",
-                  padding: 0,
-                  height: "100%",
-                }}
-              >
-                <Typography>
-                  Pedido realizado com sucesso. <br />
-                  Muito obrigado!
-                </Typography>
-              </Alert>
-            )}
-          </Box>
           <Box className="totalPurchase">
             <Box
               sx={{
@@ -1171,6 +1146,10 @@ const Order = () => {
               className="btnSendRequest click"
               type="submit"
               value="Enviar"
+              onClick={() => {
+                 
+                onSubmit(); 
+              }}
             />
           </Box>
         </Box>
