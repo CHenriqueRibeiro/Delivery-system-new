@@ -1,5 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 const CarrinhoContext = createContext();
 
@@ -13,7 +18,10 @@ export function CarrinhoProvider({ children }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const saveCartToSessionStorage = (cart) => {
-    sessionStorage.setItem("itensSelecionados", JSON.stringify(cart));
+    sessionStorage.setItem(
+      'itensSelecionados',
+      JSON.stringify(cart)
+    );
   };
 
   const isSameCartItem = (item1, item2) => {
@@ -23,14 +31,18 @@ export function CarrinhoProvider({ children }) {
     return (
       item1.id === item2.id &&
       item1.opicionais === item2.opicionais &&
-      item1.refrigeranteDoCombo === item2.refrigeranteDoCombo &&
+      item1.refrigeranteDoCombo ===
+        item2.refrigeranteDoCombo &&
       item1.observacao === item2.observacao &&
       item1.valor === item2.valor &&
       areAdditionalsSame(item1.adicionais, item2.adicionais)
     );
   };
 
-  const areAdditionalsSame = (additionals1, additionals2) => {
+  const areAdditionalsSame = (
+    additionals1,
+    additionals2
+  ) => {
     if (!additionals1 || !additionals2) {
       return false;
     }
@@ -76,10 +88,6 @@ export function CarrinhoProvider({ children }) {
 
       setCart(updatedCart);
       saveCartToSessionStorage(updatedCart);
-    } else {
-      console.log(
-        "Não é possível adicionar itens ao carrinho, o estabelecimento está fechado."
-      );
     }
   };
 
@@ -98,7 +106,8 @@ export function CarrinhoProvider({ children }) {
 
   const deleteFromCart = (item) => {
     const updatedCart = cart.filter(
-      (itemCart) => JSON.stringify(itemCart) !== JSON.stringify(item)
+      (itemCart) =>
+        JSON.stringify(itemCart) !== JSON.stringify(item)
     );
     setCart(updatedCart);
     saveCartToSessionStorage(updatedCart);
@@ -112,14 +121,20 @@ export function CarrinhoProvider({ children }) {
       let valorAdicionais = 0;
 
       if (item.adicionais && item.adicionais.length > 0) {
-        valorAdicionais = item.adicionais.reduce((total, adicional) => {
-          return total + adicional.valor * adicional.qtde;
-        }, 0);
+        valorAdicionais = item.adicionais.reduce(
+          (total, adicional) => {
+            return total + adicional.valor * adicional.qtde;
+          },
+          0
+        );
       }
 
       if (qtd > 0) {
         const valorTotalItem =
-          (item.valor + valorAdicionais + item.valorSelecionado) * qtd;
+          (item.valor +
+            valorAdicionais +
+            item.valorSelecionado) *
+          qtd;
         subtotal += valorTotalItem;
       }
     });
@@ -130,7 +145,7 @@ export function CarrinhoProvider({ children }) {
   const clearCart = () => {
     setCart([]);
 
-    sessionStorage.removeItem("itensSelecionados");
+    sessionStorage.removeItem('itensSelecionados');
   };
 
   const openingHours = () => {
@@ -142,15 +157,15 @@ export function CarrinhoProvider({ children }) {
 
     if (
       (currentHour > openingTime ||
-        (currentHour === openingTime && currentMinute >= 0)) &&
+        (currentHour === openingTime &&
+          currentMinute >= 0)) &&
       (currentHour < closingTime ||
-        (currentHour === closingTime && currentMinute <= 59))
+        (currentHour === closingTime &&
+          currentMinute <= 59))
     ) {
       setIsAlertOpen(true);
-      
     } else {
       setIsAlertOpen(false);
-      
     }
   };
 

@@ -1,16 +1,24 @@
-import { Box } from "@mui/system";
-import { useForm } from "react-hook-form";
-import { Button, Fade, Modal, Typography } from "@mui/material";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import InputMask from "react-input-mask";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import "./RegisterScreen.css";
+import { Box } from '@mui/system';
+import { useForm } from 'react-hook-form';
+import {
+  Button,
+  Fade,
+  Modal,
+  Typography,
+} from '@mui/material';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import InputMask from 'react-input-mask';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import './RegisterScreen.css';
 const campoObrigatorio = (
-  <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
+  <Typography
+    variant="caption"
+    style={{ color: 'red', marginLeft: '5px' }}
+  >
     Campo obrigatório
   </Typography>
 );
@@ -23,17 +31,22 @@ const schema = yup
     complemento: yup.string(),
     bairro: yup.string().required(campoObrigatorio),
     cidade: yup.string().required(campoObrigatorio),
-    estado: yup.string().required(campoObrigatorio).length(2, campoObrigatorio),
+    estado: yup
+      .string()
+      .required(campoObrigatorio)
+      .length(2, campoObrigatorio),
     nome: yup.string().required(campoObrigatorio),
-    telefone: yup.string().test("telefone", campoObrigatorio, (value) => {
-      if (!value) {
-        return false;
-      }
+    telefone: yup
+      .string()
+      .test('telefone', campoObrigatorio, (value) => {
+        if (!value) {
+          return false;
+        }
 
-      const numericValue = value.replace(/\D/g, "");
+        const numericValue = value.replace(/\D/g, '');
 
-      return numericValue.length === 11;
-    }),
+        return numericValue.length === 11;
+      }),
   })
   .required();
 
@@ -48,63 +61,61 @@ const RegisterScreen = () => {
     resolver: yupResolver(schema),
   });
 
-  const [numberPhone, setNumberPhone] = useState("");
+  const [numberPhone, setNumberPhone] = useState('');
 
   const [open, setOpen] = useState(false);
 
   const handleFormSubmit = (data) => {
     if (Object.keys(errors).length === 0) {
-      console.log("Form submitted without errors");
       handleOpen();
       Object.entries(data).forEach(([key, value]) => {
         saveToLocalStorage(key, value);
       });
-    } else {
-      console.log("Form has errors:", errors);
     }
   };
 
   const handleOpen = () => {
     if (isValid) {
-      console.log("Opening modal");
       setOpen(true);
-    } else {
-      console.log("Form is not valid");
     }
-    console.log(isValid);
   };
 
   const saveToLocalStorage = (key, value) => {
     const val = value
-      .split(" ")
-      .map((name) => name.charAt(0).toUpperCase() + name.slice(1))
-      .join(" ");
-    const formData = JSON.parse(localStorage.getItem("formData")) || {};
+      .split(' ')
+      .map(
+        (name) =>
+          name.charAt(0).toUpperCase() + name.slice(1)
+      )
+      .join(' ');
+    const formData =
+      JSON.parse(localStorage.getItem('formData')) || {};
     formData[key] = val;
-    localStorage.setItem("formData", JSON.stringify(formData));
-    console.log("Saved to Local Storage: ", key, val);
+    localStorage.setItem(
+      'formData',
+      JSON.stringify(formData)
+    );
   };
 
   const checkCEP = (e) => {
-    const cep = e.target.value.replace(/\D/g, "");
-    if (cep === "") {
-      setValue("address");
-      setValue("casaApto");
-      setValue("addresscomplement");
-      setValue("neighborhood");
-      setValue("city");
-      setValue("uf");
-      console.log(e);
+    const cep = e.target.value.replace(/\D/g, '');
+    if (cep === '') {
+      setValue('address');
+      setValue('casaApto');
+      setValue('addresscomplement');
+      setValue('neighborhood');
+      setValue('city');
+      setValue('uf');
     } else {
       fetch(`https://viacep.com.br/ws/${cep}/json/`)
         .then((res) => res.json())
         .then((data) => {
-          setValue("cep", data.cep);
-          setValue("rua", data.logradouro);
-          setValue("bairro", data.bairro);
-          setValue("cidade", data.localidade);
-          setValue("estado", data.uf);
-          setFocus("casaApto");
+          setValue('cep', data.cep);
+          setValue('rua', data.logradouro);
+          setValue('bairro', data.bairro);
+          setValue('cidade', data.localidade);
+          setValue('estado', data.uf);
+          setFocus('casaApto');
         });
     }
   };
@@ -120,90 +131,100 @@ const RegisterScreen = () => {
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <Box
           sx={{
-            overflow: "auto",
-            height: "100dvh",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-evenly",
+            overflow: 'auto',
+            height: '100dvh',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-evenly',
           }}
         >
           <Box
             sx={{
-              background: "#f46c26",
-              width: "100vw",
-              height: "10%",
-              display: "flex",
-              alignItems: "center",
+              background: '#f46c26',
+              width: '100vw',
+              height: '10%',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
             <Box
               sx={{
-                height: "4rem",
-                width: "100%",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
+                height: '4rem',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
             >
               <Box className="iconAndText">
-                <NavLink to="/" style={{ color: "#f9e9df" }}>
+                <NavLink
+                  to="/"
+                  style={{ color: '#f9e9df' }}
+                >
                   <ArrowBackIcon />
                 </NavLink>
-                <Typography variant="h6">Cadastro</Typography>
+                <Typography variant="h6">
+                  Cadastro
+                </Typography>
               </Box>
             </Box>
           </Box>
           <Box
             sx={{
-              backgroundColor: "#f9e9df ",
-              display: "flex",
-              paddingLeft: "1rem",
-              paddingRight: "1rem",
-              flexDirection: "column",
-              height: "100%",
-              minHeight: "32rem",
-              justifyContent: "space-between",
-              borderRadius: "25px 25px 0 0",
-              zIndex: "2",
+              backgroundColor: '#f9e9df ',
+              display: 'flex',
+              paddingLeft: '1rem',
+              paddingRight: '1rem',
+              flexDirection: 'column',
+              height: '100%',
+              minHeight: '32rem',
+              justifyContent: 'space-between',
+              borderRadius: '25px 25px 0 0',
+              zIndex: '2',
             }}
           >
             <Box
               sx={{
-                backgroundColor: "#f9e9df ",
-                display: "flex",
-                paddingLeft: "1rem",
-                paddingRight: "1rem",
-                flexDirection: "column",
-                height: "10%",
-                width: "100%",
-                position: "absolute",
-                left: "0",
-                bottom: "83%",
-                justifyContent: "space-between",
-                borderRadius: "25px 25px 0 0",
-                zIndex: "-1",
+                backgroundColor: '#f9e9df ',
+                display: 'flex',
+                paddingLeft: '1rem',
+                paddingRight: '1rem',
+                flexDirection: 'column',
+                height: '10%',
+                width: '100%',
+                position: 'absolute',
+                left: '0',
+                bottom: '83%',
+                justifyContent: 'space-between',
+                borderRadius: '25px 25px 0 0',
+                zIndex: '-1',
               }}
             ></Box>
             <Typography variant="h6">Endereço</Typography>
             <Box id="inputAndBtnSerach">
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                <label className="labelFormEndereco">CEP </label>
+                <label className="labelFormEndereco">
+                  CEP{' '}
+                </label>
                 <InputMask
                   name="cep"
                   mask="99999-999"
                   maskChar={null}
                   className="inputFormEndereco cep"
-                  {...register("cep")}
+                  {...register('cep')}
                   onChange={(e) => {
-                    saveToLocalStorage("cep", e.target.value);
+                    saveToLocalStorage(
+                      'cep',
+                      e.target.value
+                    );
                   }}
-                  onInput={() => removeError("cep")}
+                  onInput={() => removeError('cep')}
                   onBlur={checkCEP}
                 />
               </Box>
@@ -211,19 +232,19 @@ const RegisterScreen = () => {
               <Button
                 className="btnsearch click"
                 sx={{
-                  color: "#f46c26",
-                  background: "#f9e9df",
-                  marginLeft: "10px",
-                  height: "2rem",
-                  minWidth: "2.3rem",
-                  padding: "0 ",
-                  position: "relative",
-                  top: "0.6rem",
-                  left: "0",
-                  border: "1px solid #f16d2f",
-                  borderRadius: "8px",
+                  color: '#f46c26',
+                  background: '#f9e9df',
+                  marginLeft: '10px',
+                  height: '2rem',
+                  minWidth: '2.3rem',
+                  padding: '0 ',
+                  position: 'relative',
+                  top: '0.6rem',
+                  left: '0',
+                  border: '1px solid #f16d2f',
+                  borderRadius: '8px',
                   boxShadow:
-                    " 5px 4px 5px 2px rgba(0, 0, 0, 0.2), 5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12) !important;",
+                    ' 5px 4px 5px 2px rgba(0, 0, 0, 0.2), 5px 4px 5px 2px rgba(0, 0, 0, 0.14), 5px 4px 5px 2px rgba(0, 0, 0, 0.12) !important;',
                 }}
               >
                 <SearchRoundedIcon />
@@ -232,38 +253,45 @@ const RegisterScreen = () => {
             <p>{errors.cep?.message}</p>
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              <label className="labelFormEndereco">Rua </label>
+              <label className="labelFormEndereco">
+                Rua{' '}
+              </label>
               <input
                 type="text"
                 name="rua"
                 className="inputFormEndereco"
-                {...register("rua")}
+                {...register('rua')}
                 onChange={(e) => {
-                  saveToLocalStorage("rua", e.target.value);
+                  saveToLocalStorage('rua', e.target.value);
                 }}
-                onInput={() => removeError("rua")}
+                onInput={() => removeError('rua')}
               />
               <p>{errors.rua?.message}</p>
             </Box>
 
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              <label className="labelFormEndereco">Numero</label>
+              <label className="labelFormEndereco">
+                Numero
+              </label>
               <input
                 type="text"
                 name="casaApto"
                 className="inputFormEndereco"
-                {...register("casaApto")}
+                {...register('casaApto')}
                 onChange={(e) => {
-                  saveToLocalStorage("casaApto", e.target.value);
+                  saveToLocalStorage(
+                    'casaApto',
+                    e.target.value
+                  );
                 }}
               />
               <p>{errors.casaApto?.message}</p>
@@ -271,8 +299,8 @@ const RegisterScreen = () => {
 
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
               <label className="labelFormEndereco">
@@ -281,26 +309,34 @@ const RegisterScreen = () => {
               <input
                 type="text"
                 className="inputFormEndereco"
-                {...register("complemento")}
+                {...register('complemento')}
                 onChange={(e) => {
-                  saveToLocalStorage("complemento", e.target.value);
+                  saveToLocalStorage(
+                    'complemento',
+                    e.target.value
+                  );
                 }}
               />
               <p>{errors.complemento?.message}</p>
             </Box>
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              <label className="labelFormEndereco">Bairro</label>
+              <label className="labelFormEndereco">
+                Bairro
+              </label>
               <input
                 type="text"
                 className="inputFormEndereco"
-                {...register("bairro")}
+                {...register('bairro')}
                 onChange={(e) => {
-                  saveToLocalStorage("bairro", e.target.value);
+                  saveToLocalStorage(
+                    'bairro',
+                    e.target.value
+                  );
                 }}
               />
               <p>{errors.bairro?.message}</p>
@@ -308,91 +344,113 @@ const RegisterScreen = () => {
             <Box id="inputCidadeEEstado">
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                <label className="labelFormEndereco onlyLetters">Cidade</label>
+                <label className="labelFormEndereco onlyLetters">
+                  Cidade
+                </label>
                 <input
                   type="text"
                   className="inputFormEndereco"
-                  {...register("cidade")}
+                  {...register('cidade')}
                   onChange={(e) => {
-                    saveToLocalStorage("cidade", e.target.value);
+                    saveToLocalStorage(
+                      'cidade',
+                      e.target.value
+                    );
                   }}
                 />
                 <p>{errors.cidade?.message}</p>
               </Box>
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                <label className="labelFormEndereco onlyLetters">Estado</label>
+                <label className="labelFormEndereco onlyLetters">
+                  Estado
+                </label>
                 <input
                   type="text"
                   className="inputFormEndereco w4rem"
-                  {...register("estado")}
-                  onBlur={(e) => saveToLocalStorage("estado", e.target.value)}
+                  {...register('estado')}
+                  onBlur={(e) =>
+                    saveToLocalStorage(
+                      'estado',
+                      e.target.value
+                    )
+                  }
                 />
                 <p>{errors.estado?.message}</p>
               </Box>
             </Box>
-            <Typography variant="h6">Dados Pessoais</Typography>
+            <Typography variant="h6">
+              Dados Pessoais
+            </Typography>
 
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              <label className="labelFormEndereco">Nome</label>
+              <label className="labelFormEndereco">
+                Nome
+              </label>
               <input
-                style={{ textTransform: "captalize" }}
+                style={{ textTransform: 'captalize' }}
                 type="text"
                 className="inputFormEndereco "
-                {...register("nome")}
-                onBlur={(e) => saveToLocalStorage("nome", e.target.value)}
+                {...register('nome')}
+                onBlur={(e) =>
+                  saveToLocalStorage('nome', e.target.value)
+                }
               />
               <p>{errors.nome?.message}</p>
             </Box>
             <Box id="inputTelEWhats">
               <Box id="inputTelefone">
-                <label className="labelFormEndereco">Nº Telefone</label>
+                <label className="labelFormEndereco">
+                  Nº Telefone
+                </label>
 
                 <InputMask
                   mask="99 9 99999999"
                   maskChar={null}
                   className="inputFormEndereco w9rem"
                   value={numberPhone}
-                  {...register("telefone")}
+                  {...register('telefone')}
                   onChange={(e) => {
-                    console.log("Telefone alterado:", e.target.value);
                     setNumberPhone(e.target.value);
-                    saveToLocalStorage("telefone", e.target.value);
+                    saveToLocalStorage(
+                      'telefone',
+                      e.target.value
+                    );
                   }}
                 />
                 <p>{errors.telefone?.message}</p>
                 <Box
                   sx={{
-                    width: "100%",
-                    margin: " 5px 0",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
+                    width: '100%',
+                    margin: ' 5px 0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
                   }}
                 >
                   <input type="checkbox" id="" />
 
                   <span
                     style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      color: "#f46c26",
-                      fontFamily: "Roboto",
-                      width: "100%",
-                      paddingLeft: "0.6rem",
+                      display: 'flex',
+                      flexDirection: 'row',
+                      color: '#f46c26',
+                      fontFamily: 'Roboto',
+                      width: '100%',
+                      paddingLeft: '0.6rem',
                     }}
                   >
                     Whatsapp
@@ -411,7 +469,9 @@ const RegisterScreen = () => {
                 <Box id="modalCadastro">
                   <Box id="modalContent">
                     <Box className="wrapper">
-                      <Typography variant="h6">Cadastro Realizado</Typography>
+                      <Typography variant="h6">
+                        Cadastro Realizado
+                      </Typography>
                       <svg
                         className="checkmark"
                         xmlns="http://www.w3.org/2000/svg"
@@ -431,15 +491,18 @@ const RegisterScreen = () => {
                       </svg>
                     </Box>
                   </Box>
-                  <NavLink to="/pedido" style={{ color: "#f9e9df" }}>
+                  <NavLink
+                    to="/pedido"
+                    style={{ color: '#f9e9df' }}
+                  >
                     <input
                       className="btnCloseService click"
                       value="Ir para Pagamento"
                       style={{
-                        width: "100%",
-                        textAlign: "center",
-                        color: "white",
-                        textTransform: "capitalize",
+                        width: '100%',
+                        textAlign: 'center',
+                        color: 'white',
+                        textTransform: 'capitalize',
                       }}
                     />
                   </NavLink>
@@ -448,25 +511,25 @@ const RegisterScreen = () => {
             </Modal>
             <input
               style={{
-                background: "#f16d2f",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontFamily: "Roboto",
-                height: "3rem",
-                minHeight: "3rem",
-                border: "1px solid #f46c26",
-                borderRadius: "10px",
-                color: "#f9e9df",
-                minWidth: "226px",
-                textDecoration: "none",
-                transition: "background-color 0.3s",
-                fontSize: "16px",
-                marginBottom: "1rem",
+                background: '#f16d2f',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontFamily: 'Roboto',
+                height: '3rem',
+                minHeight: '3rem',
+                border: '1px solid #f46c26',
+                borderRadius: '10px',
+                color: '#f9e9df',
+                minWidth: '226px',
+                textDecoration: 'none',
+                transition: 'background-color 0.3s',
+                fontSize: '16px',
+                marginBottom: '1rem',
               }}
               className="click box-shadow"
               type="submit"
-              value={"Finalizar Cadastro"}
+              value={'Finalizar Cadastro'}
               onClick={handleOpen}
             />
           </Box>
