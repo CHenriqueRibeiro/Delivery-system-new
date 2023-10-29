@@ -69,22 +69,27 @@ export default function Menu() {
   const [isSegundoModalOpen, setIsSegundoModalOpen] = useState(false);
   const [observacao, setObservacao] = useState("");
   const [activeTab, setActiveTab] = useState("combos");
-  const [opicionais, setOpicionais] = useState("");
+  const [opicionais, setOpicionais] = useState([]);
   const [adicional, setAdicional] = useState([]);
   const [refrigeranteError, setRefrigeranteError] = useState("");
 
   const bordaOptions = Data.opcionais[activeTab];
+
+  const valorSelecionado =
+    opicionais &&
+    bordaOptions.find((option) => option.opcao === opicionais)?.valorAdc;
 
   useEffect(() => {
     let objGenerico = [];
     Data.adicionais[activeTab].forEach((adicional) =>
       objGenerico.push(adicional)
     );
+
     setAdicional(objGenerico);
     setItemToAdd(null);
     setrefrigeranteDoCombo("");
-  setOpicionais("");
-  setObservacao("");
+    setOpicionais("");
+    setObservacao("");
   }, [activeTab]);
 
   const modalCheckout = () => {
@@ -100,13 +105,16 @@ export default function Menu() {
             .map((item) => item.total)
             .reduce((accumulator, currentValue) => accumulator + currentValue)
         : 0;
-    const valorTotalDoProduto = valorTotalAdicionais + itemToAdd.valor;
+    const valorTotalDoProduto =
+      valorTotalAdicionais + itemToAdd.valor + valorSelecionado;
+
 
     const itemToAddWithQuantity = {
       ...itemToAdd,
       refrigeranteDoCombo,
       observacao,
       opicionais,
+      valorSelecionado,
       adicionais: totais,
       valorTotalAdicionais,
       valorTotalDoProduto,
@@ -164,7 +172,7 @@ export default function Menu() {
     setrefrigeranteDoCombo("");
     setOpicionais("");
     setObservacao("");
-  
+
     if (activeTab === "bebidas") {
       if (item) {
         const itemToAddWithQuantity = {
@@ -172,6 +180,7 @@ export default function Menu() {
           refrigeranteDoCombo,
           observacao,
           opicionais,
+          valorSelecionado,
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
@@ -185,6 +194,7 @@ export default function Menu() {
           refrigeranteDoCombo,
           observacao,
           opicionais,
+          valorSelecionado,
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
@@ -197,7 +207,6 @@ export default function Menu() {
       setIsSegundoModalOpen(true);
     }
   };
-  
 
   const handleSearchInputChange = (e) => {
     setSearchValue(e.target.value);
@@ -228,9 +237,9 @@ export default function Menu() {
         id="header"
         sx={{
           display: "flex",
-          backgroundColor: "#fbe9dd",
           width: "100%",
-          height: "21%",
+          height: "11rem",
+          minHeight: "7rem",
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -251,7 +260,8 @@ export default function Menu() {
           flexDirection: "row",
           justifyContent: "flex-start",
           alignItems: "center",
-          height: "20%",
+          height: "8rem",
+          minHeight: "5.9rem",
           width: "100%",
         }}
       >
@@ -289,7 +299,13 @@ export default function Menu() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          width: "100%",
+          width: "95%",
+          maxWidth: "574px",
+          background: "#f9e9df",
+          position: "relative",
+          zIndex: "3",
+          top: "0",
+          borderRadius: "15px",
         }}
       >
         <SearchIcon className="iconSearchFilterMenu" />
@@ -299,7 +315,17 @@ export default function Menu() {
           onChange={handleSearchInputChange}
         />
       </Box>
-      <Box className="fundoInputFiltro"></Box>
+      <Box
+        sx={{
+          position: "relative",
+          bottom: "2.7rem",
+          width: "100%",
+          maxWidth: "600px",
+          minHeight: "2.5rem",
+          borderRadius: " 35px 35px 0 0",
+          zIndex: "2",
+        }}
+      ></Box>
       <Box
         id="contentmenu"
         sx={{
@@ -310,7 +336,21 @@ export default function Menu() {
           marginTop: "0.2rem",
         }}
       >
-        <CustomTabPanel value={value} index={0} className="tabContents">
+        <CustomTabPanel
+          sx={{
+            position: "absolute",
+            top: "15rem",
+            height: "100%",
+            minHeight: "340px",
+            width: "100%",
+            minWidth: "320px",
+            overflow: "auto",
+            zIndex: "1",
+            padding: " 15px 13px 19.2rem 13px",
+          }}
+          value={value}
+          index={0}
+        >
           {promotions
             .filter((item) =>
               item.sabor.toLowerCase().includes(searchValue.toLowerCase())
@@ -347,7 +387,21 @@ export default function Menu() {
             ))}
         </CustomTabPanel>
 
-        <CustomTabPanel value={value} index={1} className="tabContents">
+        <CustomTabPanel
+          value={value}
+          index={1}
+          sx={{
+            position: "absolute",
+            top: "15rem",
+            height: "100%",
+            minHeight: "340px",
+            width: "100%",
+            minWidth: "320px",
+            overflow: "auto",
+            zIndex: "1",
+            padding: " 15px 13px 19.2rem 13px",
+          }}
+        >
           {pizza
             .filter((item) =>
               item.sabor.toLowerCase().includes(searchValue.toLowerCase())
@@ -384,7 +438,21 @@ export default function Menu() {
             ))}
         </CustomTabPanel>
 
-        <CustomTabPanel value={value} index={2} className="tabContents">
+        <CustomTabPanel
+          value={value}
+          index={2}
+          sx={{
+            position: "absolute",
+            top: "15rem",
+            height: "100%",
+            minHeight: "340px",
+            width: "100%",
+            minWidth: "320px",
+            overflow: "auto",
+            zIndex: "1",
+            padding: " 15px 13px 19.2rem 13px",
+          }}
+        >
           {hamburger
             .filter((item) =>
               item.sabor.toLowerCase().includes(searchValue.toLowerCase())
@@ -421,7 +489,21 @@ export default function Menu() {
             ))}
         </CustomTabPanel>
 
-        <CustomTabPanel value={value} index={3} className="tabContents">
+        <CustomTabPanel
+          value={value}
+          index={3}
+          sx={{
+            position: "absolute",
+            top: "15rem",
+            height: "100%",
+            minHeight: "340px",
+            width: "100%",
+            minWidth: "320px",
+            overflow: "auto",
+            zIndex: "1",
+            padding: " 15px 13px 19.2rem 13px",
+          }}
+        >
           {paoArabe
             .filter((item) =>
               item.sabor.toLowerCase().includes(searchValue.toLowerCase())
@@ -458,7 +540,21 @@ export default function Menu() {
             ))}
         </CustomTabPanel>
 
-        <CustomTabPanel value={value} index={4} className="tabContents">
+        <CustomTabPanel
+          value={value}
+          index={4}
+          sx={{
+            position: "absolute",
+            top: "15rem",
+            height: "100%",
+            minHeight: "340px",
+            width: "100%",
+            minWidth: "320px",
+            overflow: "auto",
+            zIndex: "1",
+            padding: " 15px 13px 19.2rem 13px",
+          }}
+        >
           {drink
             .filter((item) =>
               item.sabor.toLowerCase().includes(searchValue.toLowerCase())
@@ -589,20 +685,28 @@ export default function Menu() {
                 }}
               >
                 <Button
+                  className="click box-shadow"
                   sx={{
                     width: "30%",
                     backgroundColor: "#f76d26 ",
                     color: "#f7e9e1",
+                    "&:hover": {
+                      backgroundColor: "#f76d26",
+                    },
                   }}
                   onClick={() => setIsModalOpen(false)}
                 >
                   Voltar
                 </Button>
                 <Button
+                  className="click box-shadow"
                   sx={{
                     width: "30%",
                     backgroundColor: "#f76d26",
                     color: "#f7e9e1",
+                    "&:hover": {
+                      backgroundColor: "#f76d26",
+                    },
                   }}
                   onClick={() => {
                     schema
@@ -636,8 +740,8 @@ export default function Menu() {
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
-            alignItems: "start",
-            justifyContent: " space-around",
+            alignItems: "flex-start",
+            justifyContent: "space-evenly",
             backgroundColor: "#fae9de",
             position: " absolute",
             top: " 50%",
@@ -645,12 +749,11 @@ export default function Menu() {
             transform: "translate(-50%, -50%)",
             width: " 90%",
             maxWidth: "600px",
-            height: "35rem",
-            minHeight: " 100px",
+            height: "70%",
+            minHeight: "32rem",
             border: "6px solid #e5c7b3",
             borderRadius: " 30px",
             boxShadow: "5px 4px 5px 2px rgba(0, 0, 0, 0.2)",
-            paddingLeft: "0.6rem",
           }}
         >
           <Typography
@@ -670,6 +773,7 @@ export default function Menu() {
             sx={{
               fontSize: "18px",
               fontWeight: "bold",
+              paddingLeft: "0.8rem",
             }}
           >
             Adicionar ingredientes:
@@ -682,7 +786,6 @@ export default function Menu() {
                 flexDirection: "row",
                 alignItems: "center",
                 width: "100%",
-                justifyContent: "space-evenly",
               }}
             >
               <Box
@@ -692,6 +795,7 @@ export default function Menu() {
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  paddingLeft: "0.8rem",
                 }}
               >
                 <Typography>
@@ -701,8 +805,8 @@ export default function Menu() {
                   sx={{
                     display: "flex",
                     flexDirection: "row",
-                    width: "40%",
-                    justifyContent: "center",
+                    width: "37%",
+                    justifyContent: "flex-end",
                     alignItems: "center",
                   }}
                 >
@@ -728,9 +832,10 @@ export default function Menu() {
             sx={{
               fontSize: "18px",
               fontWeight: "bold",
+              paddingLeft: "0.8rem",
             }}
           >
-            Selecionar Opicionais:
+            Selecionar Opcionais:
           </Typography>
 
           <RadioGroup
@@ -739,6 +844,7 @@ export default function Menu() {
               gap: "1.2rem",
               justifyContent: "space-around",
               width: "100%",
+              paddingLeft: "0.8rem",
             }}
             aria-label="borda"
             name="borda"
@@ -765,11 +871,12 @@ export default function Menu() {
                   label={bordaOption.opcao}
                 />
                 <Typography sx={{ paddingRight: "5%" }}>
-                  {useFormat(bordaOption.valor)}
+                  {useFormat(bordaOption.valorAdc)}
                 </Typography>
               </Box>
             ))}
           </RadioGroup>
+
           <Box style={{ color: "red" }}>{refrigeranteError}</Box>
           <TextField
             sx={{
@@ -777,6 +884,10 @@ export default function Menu() {
               display: "flex",
               height: "15%",
               justifyContent: "center",
+              alignItems: "center",
+              "& div:first-of-type": {
+                width: "95%",
+              },
             }}
             placeholder="Observação ex: tirar cebola, verdura."
             variant="outlined"
@@ -796,6 +907,7 @@ export default function Menu() {
             }}
           >
             <Button
+              className="click box-shadow"
               sx={{
                 height: "100%",
                 width: "30%",
@@ -804,12 +916,16 @@ export default function Menu() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                "&:hover": {
+                  backgroundColor: "#f76d26",
+                },
               }}
               onClick={() => setIsSegundoModalOpen(false)}
             >
               Voltar
             </Button>
             <Button
+              className="click box-shadow"
               sx={{
                 height: "100%",
                 width: "50%",
@@ -818,10 +934,13 @@ export default function Menu() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                "&:hover": {
+                  backgroundColor: "#f76d26",
+                },
               }}
               onClick={() => {
                 if (!opicionais) {
-                  setRefrigeranteError("Escolha um opicional");
+                  setRefrigeranteError("Escolha um opcional");
                 } else {
                   modalCheckout();
                   setRefrigeranteError("");

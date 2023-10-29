@@ -1,4 +1,4 @@
-import { Alert, Box, Modal, Typography, capitalize } from "@mui/material";
+import { Box, Modal, Typography, capitalize } from "@mui/material";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
@@ -65,7 +65,7 @@ const schema = yup
 
 const Order = () => {
   const { cart, calculateSubtotal } = useCarrinho();
-  const [showAlert, setShowAlert] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChangeNeeded, setIsChangeNeeded] = useState(false);
   const [changeAmount, setChangeAmount] = useState("");
@@ -127,7 +127,7 @@ const Order = () => {
 
       sessionStorageData.forEach((item, index) => {
         message += `Item: ${item.sabor}\n`;
-        message += `Valor: R$ ${item.valor}0\n`;
+        message += `Valor: R$ ${item.valor}\n`;
         message += `Quantidade: ${item.quantidade}\n`;
 
         if (item.refrigeranteDoCombo) {
@@ -136,6 +136,17 @@ const Order = () => {
         if (item.opicionais) {
           message += `Opcionais: ${item.opicionais}\n`;
         }
+        if (
+          item.valorSelecionado === undefined ||
+          item.valorSelecionado === "" ||
+          item.valorSelecionado === 0
+        ) {
+          message += `Valor do opcional: Grátis\n`;
+          console.log(item.valorSelecionado);
+        } else {
+          message += `Valor do opcional: R$ ${item.valorSelecionado}\n`;
+        }
+
         if (item.adicionais && item.adicionais.length > 0) {
           message += "Adicionais:\n";
 
@@ -189,13 +200,13 @@ const Order = () => {
       } else {
         message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para: R$ ${changeAmount},00\n\n`;
+        message += `Troco para: ${changeAmount}\n\n`;
       }
 
       console.log(message);
 
       const encodedMessage = encodeURIComponent(message);
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585982168756&text=${encodedMessage}`;
+      const whatsappLink = `https://wa.me/5585982168756?text=${encodedMessage}`;
       window.open(whatsappLink);
     } else {
       let message = `Olá ${saudacao},\n\n`;
@@ -208,7 +219,7 @@ const Order = () => {
 
       sessionStorageData.forEach((item, index) => {
         message += `Item: ${item.sabor}\n`;
-        message += `Valor: R$ ${item.valor}0\n`;
+        message += `Valor: R$ ${item.valor}\n`;
         message += `Quantidade: ${item.quantidade}\n`;
 
         if (item.refrigeranteDoCombo) {
@@ -216,6 +227,16 @@ const Order = () => {
         }
         if (item.opicionais) {
           message += `Opcionais: ${item.opicionais}\n`;
+        }
+        if (
+          item.valorSelecionado === undefined ||
+          item.valorSelecionado === "" ||
+          item.valorSelecionado === 0
+        ) {
+          message += `Valor do opcional: Grátis\n`;
+          console.log(item.valorSelecionado);
+        } else {
+          message += `Valor do opcional: R$ ${item.valorSelecionado}\n`;
         }
         if (item.adicionais && item.adicionais.length > 0) {
           message += "Adicionais:\n";
@@ -256,7 +277,7 @@ const Order = () => {
       } else {
         message += "---------------------------------------\n";
         message += `Valor Total: R$ ${totalValue.toFixed(2)}\n`;
-        message += `Troco para: R$ ${changeAmount},00\n\n`;
+        message += `Troco para: ${changeAmount}\n\n`;
       }
 
       message += "---------------------------------------\n";
@@ -265,12 +286,12 @@ const Order = () => {
       message +=
         "Rua: Rua das maravilhas\nNúmero: 194\nPonto de referência: próximo ao campo da luz\nCidade: Caucaia\n\n";
       message +=
-        "Qualquer duvida eu acessor por essa localização pelo Google Maps:\nhttps://maps.app.goo.gl/6hMUzge2SxM1zGks9";
+        "Qualquer duvida eu acesso por essa localização pelo Google Maps:\nhttps://maps.app.goo.gl/6hMUzge2SxM1zGks9";
 
       console.log(message);
 
       const encodedMessage = encodeURIComponent(message);
-      const whatsappLink = `https://api.whatsapp.com/send?phone=5585982168756&text=${encodedMessage}`;
+      const whatsappLink = `https://wa.me/5585982168756?text=${encodedMessage}`;
       window.open(whatsappLink);
     }
   };
@@ -306,14 +327,7 @@ const Order = () => {
       alert(
         "Carrinho vazio. Adicione itens ao carrinho antes de enviar o pedido."
       );
-      return;
-    }
-
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-      createWhatsAppMessage(data);
-    }, 2000);
+    }else createWhatsAppMessage(data);
   };
 
   return (
@@ -583,9 +597,9 @@ const Order = () => {
                   display: "flex",
                   alignItems: "center",
                   position: " absolute",
-                  top: "0",
+                  top: "0.6rem",
                   width: "14rem",
-                  height: "2.7rem",
+                  height: "2.28rem",
                   background: "rgba(0, 0, 0, 0.87)",
                   borderRadius: " 0 30px 0px 0px",
                 }}
@@ -1012,8 +1026,10 @@ const Order = () => {
                   >
                     Troco para
                   </Typography>
-                  <input
+                  <InputMask
                     className="box-shadow"
+                    mask="R$ 999"
+                    maskChar={null}
                     style={{
                       border: "1px #f46c26 solid",
                       height: "2rem",
@@ -1109,16 +1125,6 @@ const Order = () => {
             </Box>
           </Modal>
 
-          <Box sx={{ mb: 2 }}>
-            {showAlert && (
-              <Alert severity="success">
-                <Typography>
-                  Pedido realizado com sucesso. <br />
-                  Muito obrigado!
-                </Typography>
-              </Alert>
-            )}
-          </Box>
           <Box className="totalPurchase">
             <Box
               sx={{
@@ -1132,9 +1138,6 @@ const Order = () => {
                 color: "#f9e9df",
               }}
             >
-              {/*  <Typography style={{ fontSize: "12px", height: "auto" }}>
-                + Entrega: R$ 3,00
-              </Typography>*/}
               <Typography variant="h6">
                 Total:{useFormat(calculateSubtotal(cart))}
               </Typography>
@@ -1143,6 +1146,10 @@ const Order = () => {
               className="btnSendRequest click"
               type="submit"
               value="Enviar"
+              onClick={() => {
+                 
+                onSubmit(); 
+              }}
             />
           </Box>
         </Box>

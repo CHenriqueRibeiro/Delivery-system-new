@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CarrinhoContext = createContext();
 
@@ -10,6 +10,7 @@ export function useCarrinho() {
 // eslint-disable-next-line react/prop-types
 export function CarrinhoProvider({ children }) {
   const [cart, setCart] = useState([]);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const saveCartToSessionStorage = (cart) => {
     sessionStorage.setItem("itensSelecionados", JSON.stringify(cart));
@@ -51,29 +52,35 @@ export function CarrinhoProvider({ children }) {
   };
 
   const addToCart = (item) => {
-    let updatedCart = [...cart];
-    let itemExists = false;
+    if (isAlertOpen) {
+      let updatedCart = [...cart];
+      let itemExists = false;
 
-    updatedCart = updatedCart.map((cartItem) => {
-      if (isSameCartItem(cartItem, item)) {
-        itemExists = true;
-        return {
-          ...cartItem,
-          quantidade: cartItem.quantidade + 1,
-        };
-      }
-      return cartItem;
-    });
-
-    if (!itemExists) {
-      updatedCart.push({
-        ...item,
-        quantidade: 1,
+      updatedCart = updatedCart.map((cartItem) => {
+        if (isSameCartItem(cartItem, item)) {
+          itemExists = true;
+          return {
+            ...cartItem,
+            quantidade: cartItem.quantidade + 1,
+          };
+        }
+        return cartItem;
       });
-    }
 
-    setCart(updatedCart);
-    saveCartToSessionStorage(updatedCart);
+      if (!itemExists) {
+        updatedCart.push({
+          ...item,
+          quantidade: 1,
+        });
+      }
+
+      setCart(updatedCart);
+      saveCartToSessionStorage(updatedCart);
+    } else {
+      console.log(
+        "Não é possível adicionar itens ao carrinho, o estabelecimento está fechado."
+      );
+    }
   };
 
   const removeQuantityFromCart = (itemId) => {
@@ -111,7 +118,8 @@ export function CarrinhoProvider({ children }) {
       }
 
       if (qtd > 0) {
-        const valorTotalItem = (item.valor + valorAdicionais) * qtd;
+        const valorTotalItem =
+          (item.valor + valorAdicionais + item.valorSelecionado) * qtd;
         subtotal += valorTotalItem;
       }
     });
@@ -119,12 +127,51 @@ export function CarrinhoProvider({ children }) {
     return subtotal;
   };
 
+  const clearCart = () => {
+    setCart([]);
+
+    sessionStorage.removeItem("itensSelecionados");
+  };
+
+  const openingHours = () => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const openingTime = 0;
+    const closingTime = 23;
+
+    if (
+      (currentHour > openingTime ||
+        (currentHour === openingTime && currentMinute >= 0)) &&
+      (currentHour < closingTime ||
+        (currentHour === closingTime && currentMinute <= 59))
+    ) {
+      setIsAlertOpen(true);
+      
+    } else {
+      setIsAlertOpen(false);
+      
+    }
+  };
+
+  const handleCloseAlert = () => {
+    setIsAlertOpen(false);
+  };
+  useEffect(() => {
+    openingHours();
+  }, []);
+
   return (
     <CarrinhoContext.Provider
       value={{
         cart,
         setCart,
         addToCart,
+        openingHours,
+        handleCloseAlert,
+        isAlertOpen,
+        setIsAlertOpen,
+        clearCart,
         deleteFromCart,
         removeQuantityFromCart,
         calculateSubtotal,

@@ -25,7 +25,7 @@ export default function Cart() {
   const [telefone, setTelefone] = useState("");
   const [usuarioValidado, setUsuarioValidado] = useState(false);
   const [loginMessage, setLoginMessage] = useState("");
-  const { cart, calculateSubtotal } = useCarrinho();
+  const { cart, calculateSubtotal, clearCart } = useCarrinho();
   const [showValidationModal, setShowValidationModal] = useState(false);
 
   const openListItems = () => {
@@ -102,28 +102,41 @@ export default function Cart() {
       <Box id="displayItems">
         <Box
           sx={{
+            backgroundColor: "#f76d26",
             overflow: "hidden",
             width: "100%",
-            height: "9%",
+            height: "4rem",
+            minHeight: "3rem",
             display: "flex",
             alignContent: "center",
+            alignItems: "center",
             justifyContent: "center",
             flexDirection: "row",
             zIndex: "3",
           }}
         >
-          <BottomNavigationAction
-            id="btnCartIconCarrinho"
-            label="Carrinho"
-            icon={<ShoppingCartOutlinedIcon id="cartIconCarrinho" />}
-            onClick={openListItems}
-          />
+          <Button
+            className="click box-shadow"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#fb6c1a",
+              border: "1px #fae9de solid",
+              borderRadius: "8px",
+              color: "#fae9de",
+              height: "75%",
+            }}
+            onClick={clearCart}
+          >
+            Limpar carrinho
+          </Button>
         </Box>
         <ListCart />
         <Box
           sx={{
             display: "flex",
-            width: "80%",
+            width: "95%",
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
@@ -178,6 +191,14 @@ export default function Cart() {
                 Ir para Pagamento
               </Button>
             </NavLink>
+          ) : cart.length === 0 ? (
+            <Button
+              className="btncheckout click"
+              variant="contained"
+              onClick={handleOpenModalCarrinho}
+            >
+              Finalizar Pagamento
+            </Button>
           ) : (
             <Button
               className="btncheckout click"
@@ -205,8 +226,17 @@ export default function Cart() {
                     >
                       Entre com seus dados
                     </Typography>
-                    <Typography id="transition-modal-description">
-                      <Box id="InputModal">
+                    <Typography
+                      sx={{
+                        height: " 100%",
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: " space-evenly",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box id="InputModal" sx={{}}>
                         <InputMask
                           placeholder="Nº telefone"
                           mask="99 9 99999999"
@@ -242,27 +272,34 @@ export default function Cart() {
                       <Button
                         variant="outlined"
                         className="btnIrParaPagamento click"
-                        sx={{ height: "2rem" }}
+                        sx={{ height: "2rem", width: "60%" }}
                         onClick={() => consultarDadosLocalStorage(true)}
                       >
                         Entrar
                       </Button>
-                      <Box>
-                        <Typography>
-                          Não tem cadastro?{" "}
+                      <Box sx={{width:"100%"}}>
+                        <Typography sx={{display:"flex", textAlign:"center", justifyContent:"center", flexWrap:"wrap",}}>
+                          Não tem cadastro?
                           <span>
-                            <NavLink className="btncheckout " to="/cadastro">
+                            <NavLink
+                              className="btncheckout "
+                              to="/cadastro"
+                              style={{ textDecoration: "none" }}
+                            >
                               Realizar Cadastro
                             </NavLink>
                           </span>
                         </Typography>
                       </Box>
                       ou
-                      <NavLink to="/pedidosemcadastro">
+                      <NavLink
+                        to="/pedidosemcadastro"
+                        style={{ textDecoration: "none" }}
+                      >
                         <Button
                           variant="outlined"
                           className="btnIrParaPagamento click"
-                          sx={{ height: "2rem" }}
+                         sx={{ height: "2rem", width: "100%" }}
                         >
                           Continuar sem cadastro
                         </Button>
@@ -295,7 +332,6 @@ export default function Cart() {
                   display: "flex",
                 }}
               >
-                {" "}
                 {cart.length === 0 ? (
                   <>
                     <ShoppingCartOutlinedIcon
@@ -356,7 +392,7 @@ export default function Cart() {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      backgroundColor: "#fb6c1a",
+                      backgroundColor: "red",
                       width: "17px",
                       height: "17px",
                       color: "#fff",
@@ -401,13 +437,12 @@ export default function Cart() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 52 52"
                 >
-                  {" "}
                   <Box
                     className="checkmark__circle"
                     cx="26"
                     cy="26"
                     r="25"
-                  ></Box>{" "}
+                  ></Box>
                   <path
                     className="checkmark__check"
                     fill="none"
@@ -417,7 +452,7 @@ export default function Cart() {
                 <Typography variant="h6">
                   Login Realizado com sucesso!
                 </Typography>
-                <NavLink to="/pedido">
+                <NavLink to="/pedido" style={{textDecoration:"none"}}>
                   <Button
                     sx={{
                       marginTop: "1.2rem",
