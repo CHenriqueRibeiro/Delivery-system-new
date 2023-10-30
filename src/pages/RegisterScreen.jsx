@@ -8,11 +8,16 @@ import { NavLink } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useCarrinho } from "../context/useCarrinho";
+
+// Agora você pode usar 'app' para acessar o Firebase inicializado com as configurações.
+
 import "./RegisterScreen.css";
 const campoObrigatorio = (
   <Typography variant="caption" style={{ color: "red", marginLeft: "5px" }}>
     Campo obrigatório
   </Typography>
+  
 );
 
 const schema = yup
@@ -37,7 +42,10 @@ const schema = yup
   })
   .required();
 
+
 const RegisterScreen = () => {
+  const { saveUserData} = useCarrinho();
+  
   const {
     register,
     handleSubmit,
@@ -47,18 +55,18 @@ const RegisterScreen = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  
 
   const [numberPhone, setNumberPhone] = useState("");
 
   const [open, setOpen] = useState(false);
 
   const handleFormSubmit = (data) => {
-    if (Object.keys(errors).length === 0) {
+    if (isValid) {
       console.log("Form submitted without errors");
       handleOpen();
-      Object.entries(data).forEach(([key, value]) => {
-        saveToLocalStorage(key, value);
-      });
+ 
+      saveUserData(data);
     } else {
       console.log("Form has errors:", errors);
     }
@@ -74,16 +82,7 @@ const RegisterScreen = () => {
     console.log(isValid);
   };
 
-  const saveToLocalStorage = (key, value) => {
-    const val = value
-      .split(" ")
-      .map((name) => name.charAt(0).toUpperCase() + name.slice(1))
-      .join(" ");
-    const formData = JSON.parse(localStorage.getItem("formData")) || {};
-    formData[key] = val;
-    localStorage.setItem("formData", JSON.stringify(formData));
-    console.log("Saved to Local Storage: ", key, val);
-  };
+
 
   const checkCEP = (e) => {
     const cep = e.target.value.replace(/\D/g, "");
@@ -200,9 +199,7 @@ const RegisterScreen = () => {
                   maskChar={null}
                   className="inputFormEndereco cep"
                   {...register("cep")}
-                  onChange={(e) => {
-                    saveToLocalStorage("cep", e.target.value);
-                  }}
+                  
                   onInput={() => removeError("cep")}
                   onBlur={checkCEP}
                 />
@@ -242,9 +239,7 @@ const RegisterScreen = () => {
                 name="rua"
                 className="inputFormEndereco"
                 {...register("rua")}
-                onChange={(e) => {
-                  saveToLocalStorage("rua", e.target.value);
-                }}
+                
                 onInput={() => removeError("rua")}
               />
               <p>{errors.rua?.message}</p>
@@ -262,9 +257,7 @@ const RegisterScreen = () => {
                 name="casaApto"
                 className="inputFormEndereco"
                 {...register("casaApto")}
-                onChange={(e) => {
-                  saveToLocalStorage("casaApto", e.target.value);
-                }}
+                
               />
               <p>{errors.casaApto?.message}</p>
             </Box>
@@ -282,9 +275,7 @@ const RegisterScreen = () => {
                 type="text"
                 className="inputFormEndereco"
                 {...register("complemento")}
-                onChange={(e) => {
-                  saveToLocalStorage("complemento", e.target.value);
-                }}
+                
               />
               <p>{errors.complemento?.message}</p>
             </Box>
@@ -299,9 +290,7 @@ const RegisterScreen = () => {
                 type="text"
                 className="inputFormEndereco"
                 {...register("bairro")}
-                onChange={(e) => {
-                  saveToLocalStorage("bairro", e.target.value);
-                }}
+                
               />
               <p>{errors.bairro?.message}</p>
             </Box>
@@ -317,9 +306,7 @@ const RegisterScreen = () => {
                   type="text"
                   className="inputFormEndereco"
                   {...register("cidade")}
-                  onChange={(e) => {
-                    saveToLocalStorage("cidade", e.target.value);
-                  }}
+                 
                 />
                 <p>{errors.cidade?.message}</p>
               </Box>
@@ -334,7 +321,7 @@ const RegisterScreen = () => {
                   type="text"
                   className="inputFormEndereco w4rem"
                   {...register("estado")}
-                  onBlur={(e) => saveToLocalStorage("estado", e.target.value)}
+                 
                 />
                 <p>{errors.estado?.message}</p>
               </Box>
@@ -353,7 +340,7 @@ const RegisterScreen = () => {
                 type="text"
                 className="inputFormEndereco "
                 {...register("nome")}
-                onBlur={(e) => saveToLocalStorage("nome", e.target.value)}
+                
               />
               <p>{errors.nome?.message}</p>
             </Box>
@@ -370,7 +357,7 @@ const RegisterScreen = () => {
                   onChange={(e) => {
                     console.log("Telefone alterado:", e.target.value);
                     setNumberPhone(e.target.value);
-                    saveToLocalStorage("telefone", e.target.value);
+                
                   }}
                 />
                 <p>{errors.telefone?.message}</p>
