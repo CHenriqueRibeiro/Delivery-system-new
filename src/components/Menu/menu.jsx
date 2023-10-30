@@ -73,11 +73,29 @@ export default function Menu() {
   const [adicional, setAdicional] = useState([]);
   const [refrigeranteError, setRefrigeranteError] = useState("");
 
+  const [firebaseData, setFirebaseData] = useState({});
+  useEffect(() => {
+    fetch(`https://chego-delivery-app-default-rtdb.firebaseio.com/.json`)
+      .then((response) => response.json())
+      .then((data) => {
+        setFirebaseData(data);
+       
+  
+       
+        const bordaOptions = data.opcionais[activeTab];
+       
+        
+          console.log( "opcional",bordaOptions );
+      }) 
+      .catch((error) => {
+        console.error("Erro ao buscar dados:", error);
+      });
+  }, []);
+  
+
   const bordaOptions = Data.opcionais[activeTab];
 
-  const valorSelecionado =
-    opicionais &&
-    bordaOptions.find((option) => option.opcao === opicionais)?.valorAdc;
+
 
   useEffect(() => {
     let objGenerico = [];
@@ -106,15 +124,14 @@ export default function Menu() {
             .reduce((accumulator, currentValue) => accumulator + currentValue)
         : 0;
     const valorTotalDoProduto =
-      valorTotalAdicionais + itemToAdd.valor + valorSelecionado;
-
+      valorTotalAdicionais + itemToAdd.valor;
 
     const itemToAddWithQuantity = {
       ...itemToAdd,
       refrigeranteDoCombo,
       observacao,
       opicionais,
-      valorSelecionado,
+    
       adicionais: totais,
       valorTotalAdicionais,
       valorTotalDoProduto,
@@ -180,7 +197,7 @@ export default function Menu() {
           refrigeranteDoCombo,
           observacao,
           opicionais,
-          valorSelecionado,
+        
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
@@ -194,7 +211,7 @@ export default function Menu() {
           refrigeranteDoCombo,
           observacao,
           opicionais,
-          valorSelecionado,
+         
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
@@ -221,11 +238,7 @@ export default function Menu() {
     setActiveTab(optionClass);
   };
 
-  const promotions = Data.combos;
-  const pizza = Data.pizzas;
-  const hamburger = Data.hamburger;
-  const paoArabe = Data.paoArabe;
-  const drink = Data.drinks;
+  
 
   window.onload = function () {
     sessionStorage.clear();
@@ -351,40 +364,41 @@ export default function Menu() {
           value={value}
           index={0}
         >
-          {promotions
-            .filter((item) =>
-              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card key={item.id} className="cardMenu">
-                <CardContent className="cardContent">
-                  <img src={item.imagem} alt="" />
-                  <Box className="descriptionCard">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ width: "100%" }}>
-                        {item.sabor}
-                      </Typography>
+          {firebaseData.combos &&
+            Object.values(firebaseData.combos)
+              .filter((item) =>
+                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((item) => (
+                <Card key={item.id} className="cardMenu">
+                  <CardContent className="cardContent">
+                    <img src={item.imagem} alt="" />
+                    <Box className="descriptionCard">
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography variant="h6" sx={{ width: "100%" }}>
+                          {item.sabor}
+                        </Typography>
+                      </Box>
+                      <Typography>{item.ingredientes}</Typography>
+                      <Box className="priceAndIcons">
+                        <Typography variant="h6">
+                          {useFormat(item.valor)}
+                        </Typography>
+                        <AddShoppingCartIcon
+                          className="iconAddProduct click"
+                          onClick={() => openConfirmationModal(item)}
+                        />
+                      </Box>
                     </Box>
-                    <Typography>{item.ingredientes}</Typography>
-                    <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {useFormat(item.valor)}
-                      </Typography>
-                      <AddShoppingCartIcon
-                        className="iconAddProduct click"
-                        onClick={() => openConfirmationModal(item)}
-                      />
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
         </CustomTabPanel>
 
         <CustomTabPanel
@@ -402,7 +416,8 @@ export default function Menu() {
             padding: " 15px 13px 19.2rem 13px",
           }}
         >
-          {pizza
+          {firebaseData.pizzas &&
+            Object.values(firebaseData.pizzas)
             .filter((item) =>
               item.sabor.toLowerCase().includes(searchValue.toLowerCase())
             )
@@ -453,7 +468,8 @@ export default function Menu() {
             padding: " 15px 13px 19.2rem 13px",
           }}
         >
-          {hamburger
+         {firebaseData.hamburger &&
+            Object.values(firebaseData.hamburger)
             .filter((item) =>
               item.sabor.toLowerCase().includes(searchValue.toLowerCase())
             )
@@ -504,7 +520,8 @@ export default function Menu() {
             padding: " 15px 13px 19.2rem 13px",
           }}
         >
-          {paoArabe
+          {firebaseData.paoArabe &&
+            Object.values(firebaseData.paoArabe)
             .filter((item) =>
               item.sabor.toLowerCase().includes(searchValue.toLowerCase())
             )
@@ -555,7 +572,8 @@ export default function Menu() {
             padding: " 15px 13px 19.2rem 13px",
           }}
         >
-          {drink
+          {firebaseData.drinks &&
+            Object.values(firebaseData.drinks)
             .filter((item) =>
               item.sabor.toLowerCase().includes(searchValue.toLowerCase())
             )
