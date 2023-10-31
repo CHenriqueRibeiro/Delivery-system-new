@@ -1,13 +1,11 @@
 import {
   Box,
   FormControlLabel,
-  
   Radio,
   RadioGroup,
   Typography,
- 
 } from "@mui/material";
-import {  useState } from "react";
+import { useState } from "react";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined";
@@ -44,8 +42,8 @@ const SignupSchema = yup.object().shape({
 
 const Order = () => {
   const [userId, setUserId] = useState(null);
-  const { sendOrder ,saveUserData} = useCarrinho();
-  
+  const { sendOrder, saveUserData } = useCarrinho();
+
   const {
     register,
     handleSubmit,
@@ -55,7 +53,6 @@ const Order = () => {
   } = useForm({
     resolver: yupResolver(SignupSchema),
   });
-  
 
   const [numberPhone, setNumberPhone] = useState("");
 
@@ -64,12 +61,11 @@ const Order = () => {
   const handleFormSubmit = async (data) => {
     if (isValid) {
       try {
-        // Envia os dados para o Firebase
         const userId = await saveUserData(data);
-        setUserId(userId); // Atualiza o estado com o ID
+        setUserId(userId);
+
+        await sendOrder(data, userId);
         handleOpen();
-        sendOrder (data)
-        console.log(sendOrder (data));
       } catch (error) {
         console.error("Erro ao salvar os dados:", error);
       }
@@ -80,16 +76,11 @@ const Order = () => {
 
   const handleOpen = () => {
     if (isValid) {
-     
       setOpen(true);
-      
     } else {
       console.log("Form is not valid");
     }
-    
   };
-
-
 
   const checkCEP = (e) => {
     const cep = e.target.value.replace(/\D/g, "");
@@ -121,8 +112,6 @@ const Order = () => {
     }
   };
 
-  
-  
   return (
     <Box
       sx={{
@@ -173,7 +162,7 @@ const Order = () => {
               </Typography>
               <Box className="nameAndTelephone">
                 <>
-                <Typography
+                  <Typography
                     sx={{ display: "flex", flexDirection: "row" }}
                     variant="h6"
                   >
@@ -191,12 +180,10 @@ const Order = () => {
                       mask="99 9 99999999"
                       maskChar={null}
                       value={numberPhone}
-                  {...register("telefone")}
-                  onChange={(e) => {
-                   
-                    setNumberPhone(e.target.value);
-                
-                  }}
+                      {...register("telefone")}
+                      onChange={(e) => {
+                        setNumberPhone(e.target.value);
+                      }}
                     />
                   </Typography>
                   <Typography
@@ -215,11 +202,9 @@ const Order = () => {
                         marginLeft: ".5rem",
                       }}
                       type="text"
-                     
                       {...register("nome")}
                     />
                   </Typography>
-                  
                 </>
               </Box>
             </Box>
@@ -262,11 +247,7 @@ const Order = () => {
                 Forma de Entrega
               </Typography>
 
-              <RadioGroup
-                sx={{ paddingLeft: "1.2rem" }}
-                name="formaDeEntrega"
-               
-              >
+              <RadioGroup sx={{ paddingLeft: "1.2rem" }} name="formaDeEntrega">
                 <Box
                   sx={{
                     display: "flex",
@@ -373,7 +354,6 @@ const Order = () => {
                       type="text"
                       name="cep"
                       {...register("cep")}
-                  
                       onInput={() => removeError("cep")}
                       onBlur={checkCEP}
                     />
@@ -397,7 +377,6 @@ const Order = () => {
                       type="text"
                       name="rua"
                       {...register("rua")}
-                
                       onInput={() => removeError("rua")}
                     />
                   </Typography>
@@ -418,10 +397,7 @@ const Order = () => {
                       }}
                       type="text"
                       name="casaApto"
-                    
                       {...register("casaApto")}
-                      
-                      
                     />
                   </Typography>
                   <Typography
@@ -553,7 +529,6 @@ const Order = () => {
                 <RadioGroup
                   sx={{ paddingLeft: "1.2rem" }}
                   name="formaDePagamento"
-                 
                 >
                   <FormControlLabel
                     sx={{ alignItems: "baseline" }}
@@ -649,7 +624,6 @@ const Order = () => {
                         </Box>
                       </>
                     }
-                   
                   />
                 </RadioGroup>
                 {errors.formaDePagamento && (
@@ -674,38 +648,34 @@ const Order = () => {
                   pl: 1,
                 }}
               >
-                <Typography variant="h6">
-                  
-                </Typography>
+                <Typography variant="h6"></Typography>
               </Box>
               <input
-              style={{
-                background: "#f16d2f",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontFamily: "Roboto",
-                height: "3rem",
-                minHeight: "3rem",
-                border: "1px solid #f46c26",
-                borderRadius: "10px",
-                color: "#f9e9df",
-                minWidth: "226px",
-                textDecoration: "none",
-                transition: "background-color 0.3s",
-                fontSize: "16px",
-                marginBottom: "1rem",
-              }}
-              className="click box-shadow"
-              type="submit"
-              value={"Finalizar Cadastro"}
-              onClick={handleOpen}
-            />
+                style={{
+                  background: "#f16d2f",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontFamily: "Roboto",
+                  height: "3rem",
+                  minHeight: "3rem",
+                  border: "1px solid #f46c26",
+                  borderRadius: "10px",
+                  color: "#f9e9df",
+                  minWidth: "226px",
+                  textDecoration: "none",
+                  transition: "background-color 0.3s",
+                  fontSize: "16px",
+                  marginBottom: "1rem",
+                }}
+                className="click box-shadow"
+                type="submit"
+                value={"Finalizar Cadastro"}
+                onClick={handleOpen}
+              />
             </Box>
           </Box>
         </Box>
-
-        
       </form>
     </Box>
   );

@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useCarrinho } from "../context/useCarrinho";
 
-// Agora você pode usar 'app' para acessar o Firebase inicializado com as configurações.
+
 
 import "./RegisterScreen.css";
 const campoObrigatorio = (

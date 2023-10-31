@@ -79,23 +79,21 @@ export default function Menu() {
       .then((response) => response.json())
       .then((data) => {
         setFirebaseData(data);
-       
-  
-       
+        console.log(setFirebaseData(data));
+        console.log("Dados do Firebase:", data);
+
         const bordaOptions = data.opcionais[activeTab];
-       
-        
-          console.log( "opcional",bordaOptions );
-      }) 
+
+        console.log("opcional", bordaOptions);
+      })
       .catch((error) => {
         console.error("Erro ao buscar dados:", error);
       });
   }, []);
-  
 
   const bordaOptions = Data.opcionais[activeTab];
-
-
+  console.log("borda inferior, :", bordaOptions);
+  console.log([activeTab]);
 
   useEffect(() => {
     let objGenerico = [];
@@ -123,15 +121,14 @@ export default function Menu() {
             .map((item) => item.total)
             .reduce((accumulator, currentValue) => accumulator + currentValue)
         : 0;
-    const valorTotalDoProduto =
-      valorTotalAdicionais + itemToAdd.valor;
+    const valorTotalDoProduto = valorTotalAdicionais + itemToAdd.valor;
 
     const itemToAddWithQuantity = {
       ...itemToAdd,
       refrigeranteDoCombo,
       observacao,
       opicionais,
-    
+
       adicionais: totais,
       valorTotalAdicionais,
       valorTotalDoProduto,
@@ -197,7 +194,7 @@ export default function Menu() {
           refrigeranteDoCombo,
           observacao,
           opicionais,
-        
+
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
@@ -211,7 +208,7 @@ export default function Menu() {
           refrigeranteDoCombo,
           observacao,
           opicionais,
-         
+
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
@@ -237,8 +234,6 @@ export default function Menu() {
     setValue(newValue);
     setActiveTab(optionClass);
   };
-
-  
 
   window.onload = function () {
     sessionStorage.clear();
@@ -418,39 +413,39 @@ export default function Menu() {
         >
           {firebaseData.pizzas &&
             Object.values(firebaseData.pizzas)
-            .filter((item) =>
-              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card key={item.id} className="cardMenu">
-                <CardContent className="cardContent">
-                  <img src={item.imagem} alt="" />
-                  <Box className="descriptionCard">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ width: "100%" }}>
-                        {item.sabor}
-                      </Typography>
+              .filter((item) =>
+                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((item) => (
+                <Card key={item.id} className="cardMenu">
+                  <CardContent className="cardContent">
+                    <img src={item.imagem} alt="" />
+                    <Box className="descriptionCard">
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography variant="h6" sx={{ width: "100%" }}>
+                          {item.sabor}
+                        </Typography>
+                      </Box>
+                      <Typography>{item.ingredientes}</Typography>
+                      <Box className="priceAndIcons">
+                        <Typography variant="h6">
+                          {useFormat(item.valor)}
+                        </Typography>
+                        <AddShoppingCartIcon
+                          className="iconAddProduct click"
+                          onClick={() => openConfirmationModal(item)}
+                        />
+                      </Box>
                     </Box>
-                    <Typography>{item.ingredientes}</Typography>
-                    <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {useFormat(item.valor)}
-                      </Typography>
-                      <AddShoppingCartIcon
-                        className="iconAddProduct click"
-                        onClick={() => openConfirmationModal(item)}
-                      />
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
         </CustomTabPanel>
 
         <CustomTabPanel
@@ -468,41 +463,41 @@ export default function Menu() {
             padding: " 15px 13px 19.2rem 13px",
           }}
         >
-         {firebaseData.hamburger &&
+          {firebaseData.hamburger &&
             Object.values(firebaseData.hamburger)
-            .filter((item) =>
-              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card key={item.id} className="cardMenu">
-                <CardContent className="cardContent">
-                  <img src={item.imagem} alt="" />
-                  <Box className="descriptionCard">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ width: "100%" }}>
-                        {item.sabor}
-                      </Typography>
+              .filter((item) =>
+                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((item) => (
+                <Card key={item.id} className="cardMenu">
+                  <CardContent className="cardContent">
+                    <img src={item.imagem} alt="" />
+                    <Box className="descriptionCard">
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography variant="h6" sx={{ width: "100%" }}>
+                          {item.sabor}
+                        </Typography>
+                      </Box>
+                      <Typography>{item.ingredientes}</Typography>
+                      <Box className="priceAndIcons">
+                        <Typography variant="h6">
+                          {useFormat(item.valor)}
+                        </Typography>
+                        <AddShoppingCartIcon
+                          className="iconAddProduct click"
+                          onClick={() => openConfirmationModal(item)}
+                        />
+                      </Box>
                     </Box>
-                    <Typography>{item.ingredientes}</Typography>
-                    <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {useFormat(item.valor)}
-                      </Typography>
-                      <AddShoppingCartIcon
-                        className="iconAddProduct click"
-                        onClick={() => openConfirmationModal(item)}
-                      />
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
         </CustomTabPanel>
 
         <CustomTabPanel
@@ -522,39 +517,39 @@ export default function Menu() {
         >
           {firebaseData.paoArabe &&
             Object.values(firebaseData.paoArabe)
-            .filter((item) =>
-              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card key={item.id} className="cardMenu">
-                <CardContent className="cardContent">
-                  <img src={item.imagem} alt="" />
-                  <Box className="descriptionCard">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ width: "100%" }}>
-                        {item.sabor}
-                      </Typography>
+              .filter((item) =>
+                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((item) => (
+                <Card key={item.id} className="cardMenu">
+                  <CardContent className="cardContent">
+                    <img src={item.imagem} alt="" />
+                    <Box className="descriptionCard">
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography variant="h6" sx={{ width: "100%" }}>
+                          {item.sabor}
+                        </Typography>
+                      </Box>
+                      <Typography>{item.ingredientes}</Typography>
+                      <Box className="priceAndIcons">
+                        <Typography variant="h6">
+                          {useFormat(item.valor)}
+                        </Typography>
+                        <AddShoppingCartIcon
+                          className="iconAddProduct click"
+                          onClick={() => openConfirmationModal(item)}
+                        />
+                      </Box>
                     </Box>
-                    <Typography>{item.ingredientes}</Typography>
-                    <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {useFormat(item.valor)}
-                      </Typography>
-                      <AddShoppingCartIcon
-                        className="iconAddProduct click"
-                        onClick={() => openConfirmationModal(item)}
-                      />
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
         </CustomTabPanel>
 
         <CustomTabPanel
@@ -574,39 +569,39 @@ export default function Menu() {
         >
           {firebaseData.drinks &&
             Object.values(firebaseData.drinks)
-            .filter((item) =>
-              item.sabor.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card key={item.id} className="cardMenu">
-                <CardContent className="cardContent">
-                  <img src={item.imagem} alt="" />
-                  <Box className="descriptionCard">
-                    <Box
-                      sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ width: "100%" }}>
-                        {item.sabor}
-                      </Typography>
+              .filter((item) =>
+                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((item) => (
+                <Card key={item.id} className="cardMenu">
+                  <CardContent className="cardContent">
+                    <img src={item.imagem} alt="" />
+                    <Box className="descriptionCard">
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography variant="h6" sx={{ width: "100%" }}>
+                          {item.sabor}
+                        </Typography>
+                      </Box>
+                      <Typography>{item.ingredientes}</Typography>
+                      <Box className="priceAndIcons">
+                        <Typography variant="h6">
+                          {useFormat(item.valor)}
+                        </Typography>
+                        <AddShoppingCartIcon
+                          className="iconAddProduct click"
+                          onClick={() => openConfirmationModal(item)}
+                        />
+                      </Box>
                     </Box>
-                    <Typography>{item.ingredientes}</Typography>
-                    <Box className="priceAndIcons">
-                      <Typography variant="h6">
-                        {useFormat(item.valor)}
-                      </Typography>
-                      <AddShoppingCartIcon
-                        className="iconAddProduct click"
-                        onClick={() => openConfirmationModal(item)}
-                      />
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
         </CustomTabPanel>
       </Box>
       <Box id="footer">
