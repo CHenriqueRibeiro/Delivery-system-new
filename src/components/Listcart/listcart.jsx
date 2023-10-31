@@ -25,7 +25,8 @@ export default function ListCart() {
       const primeiroItemNoCarrinho = cart[0];
       const novoValorTotalDoProduto =
         (primeiroItemNoCarrinho.valor +
-          primeiroItemNoCarrinho.valorTotalAdicionais + primeiroItemNoCarrinho.valorSelecionado) *
+          primeiroItemNoCarrinho.valorTotalAdicionais +
+          primeiroItemNoCarrinho.valorSelecionado) *
         primeiroItemNoCarrinho.quantidade;
 
       const itemAtualizado = itensSelecionados.find(
@@ -248,16 +249,6 @@ export default function ListCart() {
                               <em>
                                 <b>Valor do opcional: </b>
                               </em>
-                              {item.valorSelecionado === 0 || undefined ? (
-                                <p style={{ paddingLeft: "5px" }}>Grátis</p>
-                              ) : (
-                                <p style={{ paddingLeft: "5px" }}>
-                                  {item.valorSelecionado.toLocaleString(
-                                    "pt-BR",
-                                    { style: "currency", currency: "BRL" }
-                                  )}
-                                </p>
-                              )}
                             </Typography>
                           </>
                         )}
@@ -351,7 +342,9 @@ export default function ListCart() {
                     >
                       <Typography variant="h6">
                         {useFormat(
-                          (item.valor + item.valorTotalAdicionais + item.valorSelecionado) *
+                          (item.valor +
+                            item.valorTotalAdicionais +
+                            item.valorSelecionado) *
                             item.quantidade
                         )}
                       </Typography>
