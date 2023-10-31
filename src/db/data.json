@@ -305,8 +305,6 @@
       { "opcao": "Rap10 Intregral", "valorAdc": 1.9 },
       { "opcao": "Rap10 Multigrãos", "valorAdc": 1.9 }
     ],
-    "bebidas": [
-      
-    ]
+    "bebidas": []
   }
 }

@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 // eslint-disable-next-line no-unused-vars
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import Image1 from "../../../public/entrega-de-alimentos.png";
-import Image2 from "../../../public/pizza.png";
-import Image3 from "../../../public/hamburguer.png";
-import Image4 from "../../../public/comida-mexicana.png";
-import Image5 from "../../../public/refrigerantes.png";
-import SearchIcon from "@mui/icons-material/Search";
-import Data from "../../db/data.json";
-import * as Yup from "yup";
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import Image1 from '../../../public/entrega-de-alimentos.png';
+import Image2 from '../../../public/pizza.png';
+import Image3 from '../../../public/hamburguer.png';
+import Image4 from '../../../public/comida-mexicana.png';
+import Image5 from '../../../public/refrigerantes.png';
+import SearchIcon from '@mui/icons-material/Search';
+import Data from '../../db/data.json';
+import * as Yup from 'yup';
 import {
   Button,
   Card,
@@ -24,17 +24,20 @@ import {
   RadioGroup,
   TextField,
   Typography,
-} from "@mui/material";
-import Header from "../Header/header";
-import "./menu.css";
-import { useCarrinho } from "../../context/useCarrinho";
-import { useFormat } from "./../../utils/useFormat";
-import Cart from "../Cart/cart";
+} from '@mui/material';
+import Header from '../Header/header';
+import './menu.css';
+import { useCarrinho } from '../../context/useCarrinho';
+import { useFormat } from './../../utils/useFormat';
+import Cart from '../Cart/cart';
 
 const schema = Yup.object().shape({
   refrigeranteDoCombo: Yup.string()
-    .required("Escolha um refrigerante")
-    .oneOf(["Pepsi 1L", "Guarana Antartica 1L"], "Escolha uma opção"),
+    .required('Escolha um refrigerante')
+    .oneOf(
+      ['Pepsi 1L', 'Guarana Antartica 1L'],
+      'Escolha uma opção'
+    ),
 });
 
 function CustomTabPanel(props) {
@@ -61,55 +64,56 @@ CustomTabPanel.propTypes = {
 
 export default function Menu() {
   const [value, setValue] = useState(0);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToAdd, setItemToAdd] = useState(null);
   const { addToCart, cart } = useCarrinho();
-  const [refrigeranteDoCombo, setrefrigeranteDoCombo] = useState("");
-  const [isSegundoModalOpen, setIsSegundoModalOpen] = useState(false);
-  const [observacao, setObservacao] = useState("");
-  const [activeTab, setActiveTab] = useState("combos");
-  const [opicionais, setOpicionais] = useState([]);
+  const [refrigeranteDoCombo, setrefrigeranteDoCombo] =
+    useState('');
+  const [isSegundoModalOpen, setIsSegundoModalOpen] =
+    useState(false);
+  const [observacao, setObservacao] = useState('');
+  const [activeTab, setActiveTab] = useState('combos');
+  const [opcionais, setOpcionais] = useState([]);
   const [adicional, setAdicional] = useState([]);
-  const [refrigeranteError, setRefrigeranteError] = useState("");
+  const [refrigeranteError, setRefrigeranteError] =
+    useState('');
 
   const [firebaseData, setFirebaseData] = useState({});
+
   useEffect(() => {
-    fetch(`https://chego-delivery-app-default-rtdb.firebaseio.com/.json`)
+    fetch(
+      `https://chego-delivery-app-default-rtdb.firebaseio.com/.json`
+    )
       .then((response) => response.json())
       .then((data) => {
+        let objGenerico = [];
+        data.adicionais[activeTab].forEach((adicional) =>
+          objGenerico.push(adicional)
+        );
+        const optionalList = [];
+        data.opcionais[activeTab].forEach((optional) =>
+          optionalList.push(optional)
+        );
+        console.log(optionalList, 'opcionais aqui');
+        setOpcionais(optionalList);
+        setAdicional(objGenerico);
         setFirebaseData(data);
-        console.log(setFirebaseData(data));
-        console.log("Dados do Firebase:", data);
-
-        const bordaOptions = data.opcionais[activeTab];
-
-        console.log("opcional", bordaOptions);
+        setItemToAdd(null);
+        setrefrigeranteDoCombo('');
+        setObservacao('');
       })
-      .catch((error) => {
-        console.error("Erro ao buscar dados:", error);
-      });
-  }, []);
 
-  const bordaOptions = Data.opcionais[activeTab];
-  console.log("borda inferior, :", bordaOptions);
+      .catch((error) => {
+        console.error('Erro ao buscar dados:', error);
+      });
+  }, [activeTab]);
   console.log([activeTab]);
 
-  useEffect(() => {
-    let objGenerico = [];
-    Data.adicionais[activeTab].forEach((adicional) =>
-      objGenerico.push(adicional)
-    );
-
-    setAdicional(objGenerico);
-    setItemToAdd(null);
-    setrefrigeranteDoCombo("");
-    setOpicionais("");
-    setObservacao("");
-  }, [activeTab]);
-
   const modalCheckout = () => {
-    const adicionais = adicional.filter((item) => item.qtde > 0);
+    const adicionais = adicional.filter(
+      (item) => item.qtde > 0
+    );
     const totais = adicionais.map((item) => ({
       ...item,
       total: item.valor * item.qtde,
@@ -119,16 +123,19 @@ export default function Menu() {
       totais.length > 0
         ? totais
             .map((item) => item.total)
-            .reduce((accumulator, currentValue) => accumulator + currentValue)
+            .reduce(
+              (accumulator, currentValue) =>
+                accumulator + currentValue
+            )
         : 0;
-    const valorTotalDoProduto = valorTotalAdicionais + itemToAdd.valor;
+    const valorTotalDoProduto =
+      valorTotalAdicionais + itemToAdd.valor;
 
     const itemToAddWithQuantity = {
       ...itemToAdd,
       refrigeranteDoCombo,
       observacao,
-      opicionais,
-
+      opcionais,
       adicionais: totais,
       valorTotalAdicionais,
       valorTotalDoProduto,
@@ -139,7 +146,8 @@ export default function Menu() {
         item.sabor === itemToAddWithQuantity.sabor &&
         item.refrigeranteDoCombo ===
           itemToAddWithQuantity.refrigeranteDoCombo &&
-        item.opicionais === itemToAddWithQuantity.opicionais &&
+        item.opicionais ===
+          itemToAddWithQuantity.opicionais &&
         JSON.stringify(item.adicionais) ===
           JSON.stringify(itemToAddWithQuantity.adicionais)
       );
@@ -183,32 +191,30 @@ export default function Menu() {
 
   const openConfirmationModal = (item) => {
     setItemToAdd(item);
-    setrefrigeranteDoCombo("");
-    setOpicionais("");
-    setObservacao("");
+    setrefrigeranteDoCombo('');
+    setOpcionais();
+    setObservacao('');
 
-    if (activeTab === "bebidas") {
+    if (activeTab === 'bebidas') {
       if (item) {
         const itemToAddWithQuantity = {
           ...item,
           refrigeranteDoCombo,
           observacao,
-          opicionais,
-
+          opcionais,
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
         };
         addToCart(itemToAddWithQuantity);
       }
-    } else if (activeTab === "combos") {
+    } else if (activeTab === 'combos') {
       if (item && adicional.length === 0) {
         const itemToAddWithQuantity = {
           ...item,
           refrigeranteDoCombo,
           observacao,
-          opicionais,
-
+          opcionais,
           adicionais: [],
           valorTotalAdicionais: 0,
           valorTotalDoProduto: item.valor,
@@ -229,7 +235,7 @@ export default function Menu() {
   const handleChange = (event, newValue) => {
     const tabClasses = [...event.target.classList];
     const optionClass = tabClasses
-      .filter((item) => item.includes("opt"))[0]
+      .filter((item) => item.includes('opt'))[0]
       .substring(3);
     setValue(newValue);
     setActiveTab(optionClass);
@@ -244,12 +250,12 @@ export default function Menu() {
       <Box
         id="header"
         sx={{
-          display: "flex",
-          width: "100%",
-          height: "11rem",
-          minHeight: "7rem",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          width: '100%',
+          height: '11rem',
+          minHeight: '7rem',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <Header />
@@ -264,13 +270,13 @@ export default function Menu() {
         allowScrollButtonsMobile
         aria-label="scrollable force tabs example"
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          height: "8rem",
-          minHeight: "5.9rem",
-          width: "100%",
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          height: '8rem',
+          minHeight: '5.9rem',
+          width: '100%',
         }}
       >
         <Tab
@@ -304,16 +310,16 @@ export default function Menu() {
         id="boxInput"
         className="boxInputMenu"
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          width: "95%",
-          maxWidth: "574px",
-          background: "#f9e9df",
-          position: "relative",
-          zIndex: "3",
-          top: "0",
-          borderRadius: "15px",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          width: '95%',
+          maxWidth: '574px',
+          background: '#f9e9df',
+          position: 'relative',
+          zIndex: '3',
+          top: '0',
+          borderRadius: '15px',
         }}
       >
         <SearchIcon className="iconSearchFilterMenu" />
@@ -325,36 +331,36 @@ export default function Menu() {
       </Box>
       <Box
         sx={{
-          position: "relative",
-          bottom: "2.7rem",
-          width: "100%",
-          maxWidth: "600px",
-          minHeight: "2.5rem",
-          borderRadius: " 35px 35px 0 0",
-          zIndex: "2",
+          position: 'relative',
+          bottom: '2.7rem',
+          width: '100%',
+          maxWidth: '600px',
+          minHeight: '2.5rem',
+          borderRadius: ' 35px 35px 0 0',
+          zIndex: '2',
         }}
       ></Box>
       <Box
         id="contentmenu"
         sx={{
-          width: "100%",
-          borderRadius: "35px 35px 0 0",
-          height: "90%",
-          overflow: "hidden",
-          marginTop: "0.2rem",
+          width: '100%',
+          borderRadius: '35px 35px 0 0',
+          height: '90%',
+          overflow: 'hidden',
+          marginTop: '0.2rem',
         }}
       >
         <CustomTabPanel
           sx={{
-            position: "absolute",
-            top: "15rem",
-            height: "100%",
-            minHeight: "340px",
-            width: "100%",
-            minWidth: "320px",
-            overflow: "auto",
-            zIndex: "1",
-            padding: " 15px 13px 19.2rem 13px",
+            position: 'absolute',
+            top: '15rem',
+            height: '100%',
+            minHeight: '340px',
+            width: '100%',
+            minWidth: '320px',
+            overflow: 'auto',
+            zIndex: '1',
+            padding: ' 15px 13px 19.2rem 13px',
           }}
           value={value}
           index={0}
@@ -362,7 +368,9 @@ export default function Menu() {
           {firebaseData.combos &&
             Object.values(firebaseData.combos)
               .filter((item) =>
-                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+                item.sabor
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
               )
               .map((item) => (
                 <Card key={item.id} className="cardMenu">
@@ -371,23 +379,30 @@ export default function Menu() {
                     <Box className="descriptionCard">
                       <Box
                         sx={{
-                          display: "flex",
-                          width: "100%",
-                          justifyContent: "space-between",
+                          display: 'flex',
+                          width: '100%',
+                          justifyContent: 'space-between',
                         }}
                       >
-                        <Typography variant="h6" sx={{ width: "100%" }}>
+                        <Typography
+                          variant="h6"
+                          sx={{ width: '100%' }}
+                        >
                           {item.sabor}
                         </Typography>
                       </Box>
-                      <Typography>{item.ingredientes}</Typography>
+                      <Typography>
+                        {item.ingredientes}
+                      </Typography>
                       <Box className="priceAndIcons">
                         <Typography variant="h6">
                           {useFormat(item.valor)}
                         </Typography>
                         <AddShoppingCartIcon
                           className="iconAddProduct click"
-                          onClick={() => openConfirmationModal(item)}
+                          onClick={() =>
+                            openConfirmationModal(item)
+                          }
                         />
                       </Box>
                     </Box>
@@ -400,21 +415,23 @@ export default function Menu() {
           value={value}
           index={1}
           sx={{
-            position: "absolute",
-            top: "15rem",
-            height: "100%",
-            minHeight: "340px",
-            width: "100%",
-            minWidth: "320px",
-            overflow: "auto",
-            zIndex: "1",
-            padding: " 15px 13px 19.2rem 13px",
+            position: 'absolute',
+            top: '15rem',
+            height: '100%',
+            minHeight: '340px',
+            width: '100%',
+            minWidth: '320px',
+            overflow: 'auto',
+            zIndex: '1',
+            padding: ' 15px 13px 19.2rem 13px',
           }}
         >
           {firebaseData.pizzas &&
             Object.values(firebaseData.pizzas)
               .filter((item) =>
-                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+                item.sabor
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
               )
               .map((item) => (
                 <Card key={item.id} className="cardMenu">
@@ -423,23 +440,30 @@ export default function Menu() {
                     <Box className="descriptionCard">
                       <Box
                         sx={{
-                          display: "flex",
-                          width: "100%",
-                          justifyContent: "space-between",
+                          display: 'flex',
+                          width: '100%',
+                          justifyContent: 'space-between',
                         }}
                       >
-                        <Typography variant="h6" sx={{ width: "100%" }}>
+                        <Typography
+                          variant="h6"
+                          sx={{ width: '100%' }}
+                        >
                           {item.sabor}
                         </Typography>
                       </Box>
-                      <Typography>{item.ingredientes}</Typography>
+                      <Typography>
+                        {item.ingredientes}
+                      </Typography>
                       <Box className="priceAndIcons">
                         <Typography variant="h6">
                           {useFormat(item.valor)}
                         </Typography>
                         <AddShoppingCartIcon
                           className="iconAddProduct click"
-                          onClick={() => openConfirmationModal(item)}
+                          onClick={() =>
+                            openConfirmationModal(item)
+                          }
                         />
                       </Box>
                     </Box>
@@ -452,21 +476,23 @@ export default function Menu() {
           value={value}
           index={2}
           sx={{
-            position: "absolute",
-            top: "15rem",
-            height: "100%",
-            minHeight: "340px",
-            width: "100%",
-            minWidth: "320px",
-            overflow: "auto",
-            zIndex: "1",
-            padding: " 15px 13px 19.2rem 13px",
+            position: 'absolute',
+            top: '15rem',
+            height: '100%',
+            minHeight: '340px',
+            width: '100%',
+            minWidth: '320px',
+            overflow: 'auto',
+            zIndex: '1',
+            padding: ' 15px 13px 19.2rem 13px',
           }}
         >
           {firebaseData.hamburger &&
             Object.values(firebaseData.hamburger)
               .filter((item) =>
-                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+                item.sabor
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
               )
               .map((item) => (
                 <Card key={item.id} className="cardMenu">
@@ -475,23 +501,30 @@ export default function Menu() {
                     <Box className="descriptionCard">
                       <Box
                         sx={{
-                          display: "flex",
-                          width: "100%",
-                          justifyContent: "space-between",
+                          display: 'flex',
+                          width: '100%',
+                          justifyContent: 'space-between',
                         }}
                       >
-                        <Typography variant="h6" sx={{ width: "100%" }}>
+                        <Typography
+                          variant="h6"
+                          sx={{ width: '100%' }}
+                        >
                           {item.sabor}
                         </Typography>
                       </Box>
-                      <Typography>{item.ingredientes}</Typography>
+                      <Typography>
+                        {item.ingredientes}
+                      </Typography>
                       <Box className="priceAndIcons">
                         <Typography variant="h6">
                           {useFormat(item.valor)}
                         </Typography>
                         <AddShoppingCartIcon
                           className="iconAddProduct click"
-                          onClick={() => openConfirmationModal(item)}
+                          onClick={() =>
+                            openConfirmationModal(item)
+                          }
                         />
                       </Box>
                     </Box>
@@ -504,21 +537,23 @@ export default function Menu() {
           value={value}
           index={3}
           sx={{
-            position: "absolute",
-            top: "15rem",
-            height: "100%",
-            minHeight: "340px",
-            width: "100%",
-            minWidth: "320px",
-            overflow: "auto",
-            zIndex: "1",
-            padding: " 15px 13px 19.2rem 13px",
+            position: 'absolute',
+            top: '15rem',
+            height: '100%',
+            minHeight: '340px',
+            width: '100%',
+            minWidth: '320px',
+            overflow: 'auto',
+            zIndex: '1',
+            padding: ' 15px 13px 19.2rem 13px',
           }}
         >
           {firebaseData.paoArabe &&
             Object.values(firebaseData.paoArabe)
               .filter((item) =>
-                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+                item.sabor
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
               )
               .map((item) => (
                 <Card key={item.id} className="cardMenu">
@@ -527,23 +562,30 @@ export default function Menu() {
                     <Box className="descriptionCard">
                       <Box
                         sx={{
-                          display: "flex",
-                          width: "100%",
-                          justifyContent: "space-between",
+                          display: 'flex',
+                          width: '100%',
+                          justifyContent: 'space-between',
                         }}
                       >
-                        <Typography variant="h6" sx={{ width: "100%" }}>
+                        <Typography
+                          variant="h6"
+                          sx={{ width: '100%' }}
+                        >
                           {item.sabor}
                         </Typography>
                       </Box>
-                      <Typography>{item.ingredientes}</Typography>
+                      <Typography>
+                        {item.ingredientes}
+                      </Typography>
                       <Box className="priceAndIcons">
                         <Typography variant="h6">
                           {useFormat(item.valor)}
                         </Typography>
                         <AddShoppingCartIcon
                           className="iconAddProduct click"
-                          onClick={() => openConfirmationModal(item)}
+                          onClick={() =>
+                            openConfirmationModal(item)
+                          }
                         />
                       </Box>
                     </Box>
@@ -556,21 +598,23 @@ export default function Menu() {
           value={value}
           index={4}
           sx={{
-            position: "absolute",
-            top: "15rem",
-            height: "100%",
-            minHeight: "340px",
-            width: "100%",
-            minWidth: "320px",
-            overflow: "auto",
-            zIndex: "1",
-            padding: " 15px 13px 19.2rem 13px",
+            position: 'absolute',
+            top: '15rem',
+            height: '100%',
+            minHeight: '340px',
+            width: '100%',
+            minWidth: '320px',
+            overflow: 'auto',
+            zIndex: '1',
+            padding: ' 15px 13px 19.2rem 13px',
           }}
         >
           {firebaseData.drinks &&
             Object.values(firebaseData.drinks)
               .filter((item) =>
-                item.sabor.toLowerCase().includes(searchValue.toLowerCase())
+                item.sabor
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
               )
               .map((item) => (
                 <Card key={item.id} className="cardMenu">
@@ -579,23 +623,30 @@ export default function Menu() {
                     <Box className="descriptionCard">
                       <Box
                         sx={{
-                          display: "flex",
-                          width: "100%",
-                          justifyContent: "space-between",
+                          display: 'flex',
+                          width: '100%',
+                          justifyContent: 'space-between',
                         }}
                       >
-                        <Typography variant="h6" sx={{ width: "100%" }}>
+                        <Typography
+                          variant="h6"
+                          sx={{ width: '100%' }}
+                        >
                           {item.sabor}
                         </Typography>
                       </Box>
-                      <Typography>{item.ingredientes}</Typography>
+                      <Typography>
+                        {item.ingredientes}
+                      </Typography>
                       <Box className="priceAndIcons">
                         <Typography variant="h6">
                           {useFormat(item.valor)}
                         </Typography>
                         <AddShoppingCartIcon
                           className="iconAddProduct click"
-                          onClick={() => openConfirmationModal(item)}
+                          onClick={() =>
+                            openConfirmationModal(item)
+                          }
                         />
                       </Box>
                     </Box>
@@ -614,59 +665,65 @@ export default function Menu() {
         open={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
-          setrefrigeranteDoCombo("");
-          setRefrigeranteError("");
+          setrefrigeranteDoCombo('');
+          setRefrigeranteError('');
         }}
         aria-labelledby="confirmation-modal-title"
         aria-describedby="confirmation-modal-description"
       >
         <Box
           sx={{
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-            backgroundColor: "#fae9de",
-            position: " absolute",
-            top: " 50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: " 90%",
-            maxWidth: "600px",
-            height: "15rem",
-            minHeight: " 100px",
-            border: "6px solid #e5c7b3",
-            borderRadius: " 30px",
-            boxShadow: "5px 4px 5px 2px rgba(0, 0, 0, 0.2)",
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+            backgroundColor: '#fae9de',
+            position: ' absolute',
+            top: ' 50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: ' 90%',
+            maxWidth: '600px',
+            height: '15rem',
+            minHeight: ' 100px',
+            border: '6px solid #e5c7b3',
+            borderRadius: ' 30px',
+            boxShadow: '5px 4px 5px 2px rgba(0, 0, 0, 0.2)',
           }}
         >
-          <Typography variant="h6" id="confirmation-modal-title"></Typography>
+          <Typography
+            variant="h6"
+            id="confirmation-modal-title"
+          ></Typography>
           {itemToAdd && (
             <>
-              <Typography variant="h6" id="confirmation-modal-title">
+              <Typography
+                variant="h6"
+                id="confirmation-modal-title"
+              >
                 Escolha o refrigerante
               </Typography>
               <RadioGroup
                 sx={{
-                  display: "flex",
-                  height: "40%",
-                  justifyContent: "space-around",
+                  display: 'flex',
+                  height: '40%',
+                  justifyContent: 'space-around',
                 }}
                 aria-label="sabores"
                 name="sabores"
                 value={refrigeranteDoCombo}
                 onChange={(e) => {
                   setrefrigeranteDoCombo(e.target.value);
-                  setRefrigeranteError("");
+                  setRefrigeranteError('');
                 }}
               >
                 <FormControlLabel
                   sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    height: "1rem",
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    height: '1rem',
                   }}
                   value="Pepsi 1L"
                   control={<Radio />}
@@ -674,37 +731,39 @@ export default function Menu() {
                 />
                 <FormControlLabel
                   sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    height: "1rem",
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    height: '1rem',
                   }}
                   value="Guarana Antartica 1L"
                   control={<Radio />}
                   label="Guarana Antartica 1L"
                 />
               </RadioGroup>
-              <p style={{ color: "red", margin: "0.5rem 0" }}>
+              <p
+                style={{ color: 'red', margin: '0.5rem 0' }}
+              >
                 {refrigeranteError}
               </p>
 
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  width: "100%",
-                  justifyContent: "space-around",
-                  alignItems: "center",
+                  display: 'flex',
+                  flexDirection: 'row',
+                  width: '100%',
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
                 }}
               >
                 <Button
                   className="click box-shadow"
                   sx={{
-                    width: "30%",
-                    backgroundColor: "#f76d26 ",
-                    color: "#f7e9e1",
-                    "&:hover": {
-                      backgroundColor: "#f76d26",
+                    width: '30%',
+                    backgroundColor: '#f76d26 ',
+                    color: '#f7e9e1',
+                    '&:hover': {
+                      backgroundColor: '#f76d26',
                     },
                   }}
                   onClick={() => setIsModalOpen(false)}
@@ -714,11 +773,11 @@ export default function Menu() {
                 <Button
                   className="click box-shadow"
                   sx={{
-                    width: "30%",
-                    backgroundColor: "#f76d26",
-                    color: "#f7e9e1",
-                    "&:hover": {
-                      backgroundColor: "#f76d26",
+                    width: '30%',
+                    backgroundColor: '#f76d26',
+                    color: '#f7e9e1',
+                    '&:hover': {
+                      backgroundColor: '#f76d26',
                     },
                   }}
                   onClick={() => {
@@ -726,7 +785,7 @@ export default function Menu() {
                       .validate({ refrigeranteDoCombo })
                       .then(() => {
                         setIsSegundoModalOpen(true);
-                        setRefrigeranteError("");
+                        setRefrigeranteError('');
                       })
                       .catch((error) => {
                         setRefrigeranteError(error.message);
@@ -750,31 +809,31 @@ export default function Menu() {
       >
         <Box
           sx={{
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            justifyContent: "space-evenly",
-            backgroundColor: "#fae9de",
-            position: " absolute",
-            top: " 50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: " 90%",
-            maxWidth: "600px",
-            height: "70%",
-            minHeight: "32rem",
-            border: "6px solid #e5c7b3",
-            borderRadius: " 30px",
-            boxShadow: "5px 4px 5px 2px rgba(0, 0, 0, 0.2)",
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'space-evenly',
+            backgroundColor: '#fae9de',
+            position: ' absolute',
+            top: ' 50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: ' 90%',
+            maxWidth: '600px',
+            height: '70%',
+            minHeight: '32rem',
+            border: '6px solid #e5c7b3',
+            borderRadius: ' 30px',
+            boxShadow: '5px 4px 5px 2px rgba(0, 0, 0, 0.2)',
           }}
         >
           <Typography
             sx={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
             variant="h6"
             id="segundo-modal-title"
@@ -784,55 +843,61 @@ export default function Menu() {
 
           <Typography
             sx={{
-              fontSize: "18px",
-              fontWeight: "bold",
-              paddingLeft: "0.8rem",
+              fontSize: '18px',
+              fontWeight: 'bold',
+              paddingLeft: '0.8rem',
             }}
           >
             Adicionar ingredientes:
           </Typography>
-          {adicional.map((obj, idx) => (
+          {console.log(adicional, 'adicional')}
+          {adicional?.map((obj, idx) => (
             <Box
               key={idx}
               sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                width: "100%",
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
               }}
             >
               <Box
                 sx={{
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingLeft: "0.8rem",
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  paddingLeft: '0.8rem',
                 }}
               >
                 <Typography>
-                  {obj.name} <Box>{useFormat(obj.valor)}</Box>
+                  {obj.name}
+                  <Box>{useFormat(obj.valor)}</Box>
                 </Typography>
                 <Box
                   sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "37%",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '37%',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
                   }}
                 >
                   <Button
-                    sx={{ color: "black" }}
-                    onClick={() => handleIngredientDecrement(obj.name)}
+                    sx={{ color: 'black' }}
+                    onClick={() =>
+                      handleIngredientDecrement(obj.name)
+                    }
                   >
                     -
                   </Button>
                   <Typography>{obj.qtde}</Typography>
                   <Button
-                    sx={{ color: "black" }}
-                    onClick={() => handleIngredientIncrement(obj.name)}
+                    sx={{ color: 'black' }}
+                    onClick={() =>
+                      handleIngredientIncrement(obj.name)
+                    }
                   >
                     +
                   </Button>
@@ -843,9 +908,9 @@ export default function Menu() {
 
           <Typography
             sx={{
-              fontSize: "18px",
-              fontWeight: "bold",
-              paddingLeft: "0.8rem",
+              fontSize: '18px',
+              fontWeight: 'bold',
+              paddingLeft: '0.8rem',
             }}
           >
             Selecionar Opcionais:
@@ -853,53 +918,60 @@ export default function Menu() {
 
           <RadioGroup
             sx={{
-              display: "flex",
-              gap: "1.2rem",
-              justifyContent: "space-around",
-              width: "100%",
-              paddingLeft: "0.8rem",
+              display: 'flex',
+              gap: '1.2rem',
+              justifyContent: 'space-around',
+              width: '100%',
+              paddingLeft: '0.8rem',
             }}
             aria-label="borda"
             name="borda"
-            value={opicionais}
+            value={opcionais}
             onChange={(e) => {
-              setOpicionais(e.target.value);
-              setRefrigeranteError("");
+              setOpcionais(e.target.value);
+              setRefrigeranteError('');
             }}
           >
-            {bordaOptions.map((bordaOption, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  height: "1rem",
-                }}
-              >
-                <FormControlLabel
-                  value={bordaOption.opcao}
-                  control={<Radio />}
-                  label={bordaOption.opcao}
-                />
-                <Typography sx={{ paddingRight: "5%" }}>
-                  {useFormat(bordaOption.valorAdc)}
-                </Typography>
-              </Box>
-            ))}
+            {console.log(opcionais)}
+            {opcionais && opcionais.length > 0 ? (
+              opcionais?.map((item, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    height: '1rem',
+                  }}
+                >
+                  <FormControlLabel
+                    value={item.opcao}
+                    control={<Radio />}
+                    label={item.opcao}
+                  />
+                  <Typography sx={{ paddingRight: '5%' }}>
+                    {useFormat(item.valorAdc)}
+                  </Typography>
+                </Box>
+              ))
+            ) : (
+              <p>Aguardando dados...</p>
+            )}
           </RadioGroup>
 
-          <Box style={{ color: "red" }}>{refrigeranteError}</Box>
+          <Box style={{ color: 'red' }}>
+            {refrigeranteError}
+          </Box>
           <TextField
             sx={{
-              width: "100%",
-              display: "flex",
-              height: "15%",
-              justifyContent: "center",
-              alignItems: "center",
-              "& div:first-of-type": {
-                width: "95%",
+              width: '100%',
+              display: 'flex',
+              height: '15%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              '& div:first-of-type': {
+                width: '95%',
               },
             }}
             placeholder="Observação ex: tirar cebola, verdura."
@@ -911,26 +983,26 @@ export default function Menu() {
 
           <Box
             sx={{
-              height: "3rem",
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-evenly",
+              height: '3rem',
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
             }}
           >
             <Button
               className="click box-shadow"
               sx={{
-                height: "100%",
-                width: "30%",
-                backgroundColor: "#f76d26 ",
-                color: "#f7e9e1",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                "&:hover": {
-                  backgroundColor: "#f76d26",
+                height: '100%',
+                width: '30%',
+                backgroundColor: '#f76d26 ',
+                color: '#f7e9e1',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                '&:hover': {
+                  backgroundColor: '#f76d26',
                 },
               }}
               onClick={() => setIsSegundoModalOpen(false)}
@@ -940,23 +1012,25 @@ export default function Menu() {
             <Button
               className="click box-shadow"
               sx={{
-                height: "100%",
-                width: "50%",
-                backgroundColor: "#f76d26",
-                color: "#f7e9e1",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                "&:hover": {
-                  backgroundColor: "#f76d26",
+                height: '100%',
+                width: '50%',
+                backgroundColor: '#f76d26',
+                color: '#f7e9e1',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                '&:hover': {
+                  backgroundColor: '#f76d26',
                 },
               }}
               onClick={() => {
-                if (!opicionais) {
-                  setRefrigeranteError("Escolha um opcional");
+                if (!opcionais) {
+                  setRefrigeranteError(
+                    'Escolha um opcional'
+                  );
                 } else {
                   modalCheckout();
-                  setRefrigeranteError("");
+                  setRefrigeranteError('');
                 }
               }}
             >
