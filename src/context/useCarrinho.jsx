@@ -206,7 +206,7 @@ export function CarrinhoProvider({ children }) {
 
       if (qtd > 0) {
         const valorTotalItem =
-          (item.valor + valorAdicionais + item.valorSelecionado) * qtd;
+          (item.valor + valorAdicionais + item.valorAdcOpcaoEscolhida) * qtd;
         subtotal += valorTotalItem;
       }
     });

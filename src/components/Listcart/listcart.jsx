@@ -26,7 +26,7 @@ export default function ListCart() {
       const novoValorTotalDoProduto =
         (primeiroItemNoCarrinho.valor +
           primeiroItemNoCarrinho.valorTotalAdicionais +
-          primeiroItemNoCarrinho.valorSelecionado) *
+          primeiroItemNoCarrinho.valorAdcOpcaoEscolhida) *
         primeiroItemNoCarrinho.quantidade;
 
       const itemAtualizado = itensSelecionados.find(
@@ -53,7 +53,7 @@ export default function ListCart() {
     const newQuantidade = item.quantidade + 1;
 
     const newValorTotalDoProduto =
-      (item.valor + item.valorTotalAdicionais) * newQuantidade;
+      (item.valor + item.valorTotalAdicionais + item.valorAdcOpcaoEscolhida) * newQuantidade;
 
     const updatedItem = {
       ...item,
@@ -79,7 +79,7 @@ export default function ListCart() {
       const newQuantidade = item.quantidade - 1;
 
       const newValorTotalDoProduto =
-        (item.valor + item.valorTotalAdicionais) * newQuantidade;
+        (item.valor + item.valorTotalAdicionais + item.valorAdcOpcaoEscolhida) * newQuantidade;
 
       const updatedItem = {
         ...item,
@@ -217,7 +217,7 @@ export default function ListCart() {
                             </p>
                           </Typography>
                         )}
-                        {item.opicionais === "" || undefined ? (
+                        {item.opcionais === "" || undefined ? (
                           <Box></Box>
                         ) : (
                           <>
@@ -233,9 +233,7 @@ export default function ListCart() {
                               <em>
                                 <b>Opcional:</b>
                               </em>
-                              <p style={{ paddingLeft: "5px" }}>
-                                {item.opicionais}
-                              </p>
+                              <p style={{ paddingLeft: "5px" }}>{item.opcionais}</p>
                             </Typography>
                             <Typography
                               sx={{
@@ -249,6 +247,18 @@ export default function ListCart() {
                               <em>
                                 <b>Valor do opcional: </b>
                               </em>
+                              {item.valorAdcOpcaoEscolhida === 0 ||
+                              item.valorAdcOpcaoEscolhida === undefined ||
+                              item.valorAdcOpcaoEscolhida === null ? (
+                                <p style={{ paddingLeft: "5px" }}>Grátis</p>
+                              ) : (
+                                <p style={{ paddingLeft: "5px" }}>
+                                  {item.valorAdcOpcaoEscolhida.toLocaleString(
+                                    "pt-BR",
+                                    { style: "currency", currency: "BRL" }
+                                  )}
+                                </p>
+                              )}
                             </Typography>
                           </>
                         )}
@@ -344,7 +354,7 @@ export default function ListCart() {
                         {useFormat(
                           (item.valor +
                             item.valorTotalAdicionais +
-                            item.valorSelecionado) *
+                            item.valorAdcOpcaoEscolhida) *
                             item.quantidade
                         )}
                       </Typography>
