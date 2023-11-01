@@ -1,13 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
-import { Box, Button, Card, CardContent, Typography } from "@mui/material";
-import { useCarrinho } from "../../context/useCarrinho";
-import { useFormat } from "../../utils/useFormat";
-import DeleteIcon from "@mui/icons-material/Delete";
-import "../Listcart/listcart.css";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { useEffect } from "react";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Typography,
+} from '@mui/material';
+import { useCarrinho } from '../../context/useCarrinho';
+import { useFormat } from '../../utils/useFormat';
+import DeleteIcon from '@mui/icons-material/Delete';
+import '../Listcart/listcart.css';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { useEffect } from 'react';
 
 export default function ListCart() {
   const {
@@ -19,7 +25,9 @@ export default function ListCart() {
   } = useCarrinho();
   useEffect(() => {
     let itensSelecionados =
-      JSON.parse(sessionStorage.getItem("itensSelecionados")) || [];
+      JSON.parse(
+        sessionStorage.getItem('itensSelecionados')
+      ) || [];
 
     if (cart.length > 0) {
       const primeiroItemNoCarrinho = cart[0];
@@ -34,10 +42,11 @@ export default function ListCart() {
       );
 
       if (itemAtualizado) {
-        itemAtualizado.valorTotalDoProduto = novoValorTotalDoProduto;
+        itemAtualizado.valorTotalDoProduto =
+          novoValorTotalDoProduto;
 
         sessionStorage.setItem(
-          "itensSelecionados",
+          'itensSelecionados',
           JSON.stringify(itensSelecionados)
         );
       }
@@ -53,7 +62,10 @@ export default function ListCart() {
     const newQuantidade = item.quantidade + 1;
 
     const newValorTotalDoProduto =
-      (item.valor + item.valorTotalAdicionais + item.valorAdcOpcaoEscolhida) * newQuantidade;
+      (item.valor +
+        item.valorTotalAdicionais +
+        item.valorAdcOpcaoEscolhida) *
+      newQuantidade;
 
     const updatedItem = {
       ...item,
@@ -79,7 +91,10 @@ export default function ListCart() {
       const newQuantidade = item.quantidade - 1;
 
       const newValorTotalDoProduto =
-        (item.valor + item.valorTotalAdicionais + item.valorAdcOpcaoEscolhida) * newQuantidade;
+        (item.valor +
+          item.valorTotalAdicionais +
+          item.valorAdcOpcaoEscolhida) *
+        newQuantidade;
 
       const updatedItem = {
         ...item,
@@ -104,21 +119,21 @@ export default function ListCart() {
     <>
       <Box
         sx={{
-          position: "relative",
-          top: "-13rem",
-          marginTop: "-1.2rem",
-          width: "98%",
-          overflow: "auto",
-          paddingTop: "14rem",
+          position: 'relative',
+          top: '-13rem',
+          marginTop: '-1.2rem',
+          width: '98%',
+          overflow: 'auto',
+          paddingTop: '14rem',
         }}
       >
         <Box>
           <Box
             sx={{
-              height: "auto",
-              paddingLeft: "0.5rem",
-              paddingRight: "0.5rem",
-              paddingBottom: "2rem",
+              height: 'auto',
+              paddingLeft: '0.5rem',
+              paddingRight: '0.5rem',
+              paddingBottom: '2rem',
             }}
           >
             {cart.map((item) => (
@@ -126,49 +141,49 @@ export default function ListCart() {
                 id="itemCard"
                 key={item.id}
                 sx={{
-                  position: "relative",
-                  display: "flex",
-                  backgroundColor: "#fae9de",
-                  height: "auto",
-                  width: "100%",
-                  justifyContent: "flex-start",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  borderRadius: "29px !important",
-                  margin: "0.4rem 0 10px 0",
-                  border: "3px #f46c26 solid",
+                  position: 'relative',
+                  display: 'flex',
+                  backgroundColor: '#fae9de',
+                  height: 'auto',
+                  width: '100%',
+                  justifyContent: 'flex-start',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderRadius: '29px !important',
+                  margin: '0.4rem 0 10px 0',
+                  border: '3px #f46c26 solid',
                   boxShadow:
-                    "2px 8px 7px 5px #0003, 2px 2px 3px -1px #00000024, 2px 6px 4px #0000001f !important",
+                    '2px 8px 7px 5px #0003, 2px 2px 3px -1px #00000024, 2px 6px 4px #0000001f !important',
                 }}
               >
                 <CardContent
                   sx={{
-                    position: "relative",
-                    display: "flex",
-                    backgroundColor: "#fae9de",
-                    height: "100%",
-                    width: "100%",
-                    alignItems: "center",
-                    flexDirection: "row",
-                    padding: "0 !important",
+                    position: 'relative',
+                    display: 'flex',
+                    backgroundColor: '#fae9de',
+                    height: '100%',
+                    width: '100%',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    padding: '0 !important',
                   }}
                 >
                   <Box
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-around",
-                      alignItems: "start",
-                      backgroundColor: "#fae9de",
-                      height: "100%",
-                      width: "100%",
-                      paddingLeft: "1rem",
-                      paddingRight: "0.5rem;",
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-around',
+                      alignItems: 'start',
+                      backgroundColor: '#fae9de',
+                      height: '100%',
+                      width: '100%',
+                      paddingLeft: '1rem',
+                      paddingRight: '0.5rem;',
                     }}
                   >
                     <Typography
                       sx={{
-                        width: "100%",
+                        width: '100%',
                       }}
                       variant="h6"
                     >
@@ -176,35 +191,36 @@ export default function ListCart() {
                     </Typography>
                     <Typography
                       sx={{
-                        width: "100%",
-                        borderBottom: "2px dotted",
+                        width: '100%',
+                        borderBottom: '2px dotted',
                       }}
                     >
                       {item.ingredientes}
                     </Typography>
                     <Box
                       sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        width: "100%",
-                        height: "100%",
+                        display: 'flex',
+                        flexDirection: 'row',
+                        width: '100%',
+                        height: '100%',
                       }}
                     >
                       <Box
                         sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          width: "100%",
+                          display: 'flex',
+                          flexDirection: 'column',
+                          width: '100%',
                         }}
                       >
-                        {item.refrigeranteDoCombo === "" || undefined ? (
+                        {item.refrigeranteDoCombo === '' ||
+                        undefined ? (
                           <Box></Box>
                         ) : (
                           <Typography
                             sx={{
-                              width: "100%",
-                              display: "flex",
-                              flexDirection: "row",
+                              width: '100%',
+                              display: 'flex',
+                              flexDirection: 'row',
                             }}
                             variant="body2"
                             gutterBottom
@@ -212,20 +228,23 @@ export default function ListCart() {
                             <em>
                               <b>Opcional do combo:</b>
                             </em>
-                            <p style={{ paddingLeft: "5px" }}>
+                            <p
+                              style={{ paddingLeft: '5px' }}
+                            >
                               {item.refrigeranteDoCombo}
                             </p>
                           </Typography>
                         )}
-                        {item.opcionais === "" || undefined ? (
+                        {item.opcionais === '' ||
+                        undefined ? (
                           <Box></Box>
                         ) : (
                           <>
                             <Typography
                               sx={{
-                                width: "100%",
-                                display: "flex",
-                                flexDirection: "row",
+                                width: '100%',
+                                display: 'flex',
+                                flexDirection: 'row',
                               }}
                               variant="body2"
                               gutterBottom
@@ -233,13 +252,19 @@ export default function ListCart() {
                               <em>
                                 <b>Opcional:</b>
                               </em>
-                              <p style={{ paddingLeft: "5px" }}>{item.opcionais}</p>
+                              <p
+                                style={{
+                                  paddingLeft: '5px',
+                                }}
+                              >
+                                {item.opcionaisSelecionados}
+                              </p>
                             </Typography>
                             <Typography
                               sx={{
-                                width: "100%",
-                                display: "flex",
-                                flexDirection: "row",
+                                width: '100%',
+                                display: 'flex',
+                                flexDirection: 'row',
                               }}
                               variant="body2"
                               gutterBottom
@@ -247,65 +272,95 @@ export default function ListCart() {
                               <em>
                                 <b>Valor do opcional: </b>
                               </em>
-                              {item.valorAdcOpcaoEscolhida === 0 ||
-                              item.valorAdcOpcaoEscolhida === undefined ||
-                              item.valorAdcOpcaoEscolhida === null ? (
-                                <p style={{ paddingLeft: "5px" }}>Grátis</p>
+
+                              {/*o orblema ta aqui*/}
+                              {console.log(
+                                'valor do opcional é: ',
+                                item
+                              )}
+                              {item.valorAdcOpcaoEscolhida ===
+                                0 ||
+                              item.valorAdcOpcaoEscolhida ===
+                                undefined ||
+                              item.valorAdcOpcaoEscolhida ===
+                                null ? (
+                                <p
+                                  style={{
+                                    paddingLeft: '5px',
+                                  }}
+                                >
+                                  Grátis
+                                </p>
                               ) : (
-                                <p style={{ paddingLeft: "5px" }}>
+                                <p
+                                  style={{
+                                    paddingLeft: '5px',
+                                  }}
+                                >
                                   {item.valorAdcOpcaoEscolhida.toLocaleString(
-                                    "pt-BR",
-                                    { style: "currency", currency: "BRL" }
+                                    'pt-BR',
+                                    {
+                                      style: 'currency',
+                                      currency: 'BRL',
+                                    }
                                   )}
                                 </p>
                               )}
+
+                              {/*o orblema ta aqui*/}
                             </Typography>
                           </>
                         )}
 
-                        {item.adicionais && item.adicionais.length > 0 && (
-                          <Box>
-                            {item.adicionais === "" || undefined ? (
-                              <Box></Box>
-                            ) : (
-                              <Typography
-                                sx={{
-                                  width: "100%",
-                                }}
-                                variant="body2"
-                                gutterBottom
-                              >
-                                <em>
-                                  <b>Adicionais:</b>
-                                </em>
-                              </Typography>
-                            )}
+                        {item.adicionais &&
+                          item.adicionais.length > 0 && (
+                            <Box>
+                              {item.adicionais === '' ||
+                              undefined ? (
+                                <Box></Box>
+                              ) : (
+                                <Typography
+                                  sx={{
+                                    width: '100%',
+                                  }}
+                                  variant="body2"
+                                  gutterBottom
+                                >
+                                  <em>
+                                    <b>Adicionais:</b>
+                                  </em>
+                                </Typography>
+                              )}
 
-                            {item.adicionais.map((item) => (
-                              <Typography
-                                sx={{
-                                  width: "100%",
-                                  display: "flex",
-                                  flexDirection: "row",
-                                }}
-                                variant="body2"
-                                gutterBottom
-                                key={item.id}
-                              >
-                                ({item.qtde}x) {item.name} {""}
-                                {useFormat(item.valor)}
-                              </Typography>
-                            ))}
-                          </Box>
-                        )}
-                        {item.valorTotalAdicionais === 0 || undefined ? (
+                              {item.adicionais.map(
+                                (item) => (
+                                  <Typography
+                                    sx={{
+                                      width: '100%',
+                                      display: 'flex',
+                                      flexDirection: 'row',
+                                    }}
+                                    variant="body2"
+                                    gutterBottom
+                                    key={item.id}
+                                  >
+                                    ({item.qtde}x){' '}
+                                    {item.name} {''}
+                                    {useFormat(item.valor)}
+                                  </Typography>
+                                )
+                              )}
+                            </Box>
+                          )}
+                        {item.valorTotalAdicionais === 0 ||
+                        undefined ? (
                           <Box></Box>
                         ) : (
                           <Typography
                             sx={{
-                              width: "100%",
-                              display: "flex",
-                              flexDirection: "row",
+                              width: '100%',
+                              display: 'flex',
+                              flexDirection: 'row',
                             }}
                             variant="body2"
                             gutterBottom
@@ -313,19 +368,24 @@ export default function ListCart() {
                             <em>
                               <b>Valor Adicionais:</b>
                             </em>
-                            <p style={{ paddingLeft: "5px" }}>
-                              {useFormat(item.valorTotalAdicionais)}
+                            <p
+                              style={{ paddingLeft: '5px' }}
+                            >
+                              {useFormat(
+                                item.valorTotalAdicionais
+                              )}
                             </p>
                           </Typography>
                         )}
-                        {item.observacao === "" || undefined ? (
+                        {item.observacao === '' ||
+                        undefined ? (
                           <Box></Box>
                         ) : (
                           <Typography
                             sx={{
-                              width: "100%",
-                              display: "flex",
-                              flexDirection: "row",
+                              width: '100%',
+                              display: 'flex',
+                              flexDirection: 'row',
                             }}
                             variant="body2"
                             gutterBottom
@@ -333,7 +393,9 @@ export default function ListCart() {
                             <em>
                               <b>Observação:</b>
                             </em>
-                            <p style={{ paddingLeft: "5px" }}>
+                            <p
+                              style={{ paddingLeft: '5px' }}
+                            >
                               {item.observacao}
                             </p>
                           </Typography>
@@ -342,12 +404,12 @@ export default function ListCart() {
                     </Box>
                     <Box
                       sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        width: "100%",
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        width: '100%',
 
-                        borderTop: "2px dotted",
+                        borderTop: '2px dotted',
                       }}
                     >
                       <Typography variant="h6">
@@ -360,30 +422,34 @@ export default function ListCart() {
                       </Typography>
                       <Box
                         sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "5px",
-                          marginLeft: "1rem",
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '5px',
+                          marginLeft: '1rem',
                         }}
                       >
                         <DeleteIcon
                           className="click"
                           onClick={() => handleDelete(item)}
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: 'pointer' }}
                         />
                         <Button
-                          sx={{ color: "#201e1d" }}
-                          onClick={() => handleDecrement(item)}
+                          sx={{ color: '#201e1d' }}
+                          onClick={() =>
+                            handleDecrement(item)
+                          }
                           disabled={item.quantidade === 1}
                         >
                           <RemoveIcon />
                         </Button>
-                        <span style={{ maxWidth: "10px" }}>
+                        <span style={{ maxWidth: '10px' }}>
                           {item.quantidade}
                         </span>
                         <Button
-                          sx={{ color: "#201e1d" }}
-                          onClick={() => handleIncrement(item)}
+                          sx={{ color: '#201e1d' }}
+                          onClick={() =>
+                            handleIncrement(item)
+                          }
                         >
                           <AddIcon />
                         </Button>

@@ -1,7 +1,16 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState } from "react";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
-import app from "../Firebase/firebase";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import {
+  getFirestore,
+  doc,
+  setDoc,
+} from 'firebase/firestore';
+import app from '../Firebase/firebase';
 
 const CarrinhoContext = createContext();
 
@@ -45,28 +54,37 @@ export function CarrinhoProvider({ children }) {
           itens: tempProducts,
           dataPedido: new Date(),
         });
-        console.log("Pedido foi enviado para o usuário");
+        // console.log('Pedido foi enviado para o usuário');
       } else {
         const generalOrderPath = `Usuarios/${data.telefone}/Pedidos/${orderNumber}`;
-        const generalOrderDocRef = doc(db, generalOrderPath);
+        const generalOrderDocRef = doc(
+          db,
+          generalOrderPath
+        );
         await setDoc(generalOrderDocRef, {
           DadosPessoais,
           itens: tempProducts,
           dataPedido: new Date(),
         });
 
-        console.log("Pedido foi enviado para a coleção geral");
+        // console.log(
+        //   'Pedido foi enviado para a coleção geral'
+        // );
       }
 
       setTempProducts([]);
-      console.log("Pedido enviado com sucesso.");
+      // console.log('Pedido enviado com sucesso.');
     } catch (error) {
-      console.error("Erro ao enviar o pedido: ", error);
+      console.error('Erro ao enviar o pedido: ', error);
     }
   };
 
   const saveCartToSessionStorage = (cart) => {
-    sessionStorage.setItem("itensSelecionados", JSON.stringify(cart));
+    console.log(cart, 'cart 1');
+    sessionStorage.setItem(
+      'itensSelecionados',
+      JSON.stringify(cart)
+    );
   };
 
   const isSameCartItem = (item1, item2) => {
@@ -76,14 +94,18 @@ export function CarrinhoProvider({ children }) {
     return (
       item1.id === item2.id &&
       item1.opicionais === item2.opicionais &&
-      item1.refrigeranteDoCombo === item2.refrigeranteDoCombo &&
+      item1.refrigeranteDoCombo ===
+        item2.refrigeranteDoCombo &&
       item1.observacao === item2.observacao &&
       item1.valor === item2.valor &&
       areAdditionalsSame(item1.adicionais, item2.adicionais)
     );
   };
 
-  const areAdditionalsSame = (additionals1, additionals2) => {
+  const areAdditionalsSame = (
+    additionals1,
+    additionals2
+  ) => {
     if (!additionals1 || !additionals2) {
       return false;
     }
@@ -106,6 +128,8 @@ export function CarrinhoProvider({ children }) {
 
   const addToCart = (item) => {
     if (isAlertOpen) {
+      // console.log(cart, 'cart');
+      // console.log(item, 'item');
       let updatedCart = [...cart];
       let itemExists = false;
 
@@ -131,13 +155,15 @@ export function CarrinhoProvider({ children }) {
           numeroPedido: orderNumber,
         });
       }
-
       setCart(updatedCart);
       saveCartToSessionStorage(updatedCart);
-      setTempProducts((prevProducts) => [...prevProducts, item]);
+      setTempProducts((prevProducts) => [
+        ...prevProducts,
+        item,
+      ]);
     } else {
       console.log(
-        "Não é possível adicionar itens ao carrinho, o estabelecimento está fechado."
+        'Não é possível adicionar itens ao carrinho, o estabelecimento está fechado.'
       );
     }
   };
@@ -161,9 +187,9 @@ export function CarrinhoProvider({ children }) {
     if (tempProducts.length > 0) {
       try {
         setTempProducts([]);
-        console.log("Pedido enviado com sucesso.");
+        // console.log('Pedido enviado com sucesso.');
       } catch (error) {
-        console.error("Erro ao enviar o pedido: ", error);
+        console.error('Erro ao enviar o pedido: ', error);
       }
     }
 
@@ -185,7 +211,8 @@ export function CarrinhoProvider({ children }) {
 
   const deleteFromCart = (item) => {
     const updatedCart = cart.filter(
-      (itemCart) => JSON.stringify(itemCart) !== JSON.stringify(item)
+      (itemCart) =>
+        JSON.stringify(itemCart) !== JSON.stringify(item)
     );
     setCart(updatedCart);
     saveCartToSessionStorage(updatedCart);
@@ -199,14 +226,20 @@ export function CarrinhoProvider({ children }) {
       let valorAdicionais = 0;
 
       if (item.adicionais && item.adicionais.length > 0) {
-        valorAdicionais = item.adicionais.reduce((total, adicional) => {
-          return total + adicional.valor * adicional.qtde;
-        }, 0);
+        valorAdicionais = item.adicionais.reduce(
+          (total, adicional) => {
+            return total + adicional.valor * adicional.qtde;
+          },
+          0
+        );
       }
 
       if (qtd > 0) {
         const valorTotalItem =
-          (item.valor + valorAdicionais + item.valorAdcOpcaoEscolhida) * qtd;
+          (item.valor +
+            valorAdicionais +
+            item.valorAdcOpcaoEscolhida) *
+          qtd;
         subtotal += valorTotalItem;
       }
     });
@@ -217,7 +250,7 @@ export function CarrinhoProvider({ children }) {
   const clearCart = () => {
     setCart([]);
 
-    sessionStorage.removeItem("itensSelecionados");
+    sessionStorage.removeItem('itensSelecionados');
   };
 
   const openingHours = () => {
@@ -229,9 +262,11 @@ export function CarrinhoProvider({ children }) {
 
     if (
       (currentHour > openingTime ||
-        (currentHour === openingTime && currentMinute >= 0)) &&
+        (currentHour === openingTime &&
+          currentMinute >= 0)) &&
       (currentHour < closingTime ||
-        (currentHour === closingTime && currentMinute <= 59))
+        (currentHour === closingTime &&
+          currentMinute <= 59))
     ) {
       setIsAlertOpen(true);
     } else {
